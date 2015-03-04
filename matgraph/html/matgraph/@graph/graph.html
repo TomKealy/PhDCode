@@ -1,0 +1,124 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of graph</title>
+  <meta name="keywords" content="graph">
+  <meta name="description" content="graph: constructor for the graph class">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">matgraph</a> &gt; <a href="index.html">@graph</a> &gt; graph.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for matgraph/@graph&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>graph
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>graph: constructor for the graph class</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function g = graph(n) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> graph: constructor for the graph class
+ graph(n) --- create a new graph handle for a graph with n vertices
+ graph(h) --- copy h into a new graph
+ graph    --- create an empty graph
+ graph(edge_list) --- create graph from n-by-2 list of edges</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="add.html" class="code" title="function add(g,i,j)">add</a>	add --- add edge(s) to the graph</li><li><a href="full.html" class="code" title="function full(g)">full</a>	full(g) --- convert internal storage for g to full</li><li><a href="make_logical.html" class="code" title="function make_logical(g)">make_logical</a>	make_logical(g) --- ensure that the internal storage for g's matrix is a</li><li><a href="size.html" class="code" title="function [sz,tz] = size(g)">size</a>	size(g) --- returns [nv,ne] for the graph</li><li><a href="sparse.html" class="code" title="function sparse(g)">sparse</a>	sparse(g) --- convert internal storage for g to sparse</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="bridges.html" class="code" title="function blist = bridges(g,algo)">bridges</a>	bridges(g,algo) --- find all cut edges in g</li><li><a href="cube.html" class="code" title="function cube(g,k)">cube</a>	cube(g,k) --- create a k-cube (default k = 3)</li><li><a href="edge_color.html" class="code" title="function c = edge_color(g,algo)">edge_color</a>	edge_color(g,algo) --- find a proper edge coloring of the graph g</li><li><a href="euler_trail.html" class="code" title="function [elist, exists] = euler_trail(g)">euler_trail</a>	euler_trail(g) --- find an euler trail in g (if one exists)</li><li><a href="intersect.html" class="code" title="function intersect(g,h1,h2)">intersect</a>	intersect(g,h1,h2) --- g is set to the intersection of h1 and h2.</li><li><a href="iso.html" class="code" title="function [yn,p] = iso(g,h,options)">iso</a>	[yn,p] = iso(g,h,options) --- is g isomorphic to h?</li><li><a href="omega.html" class="code" title="function [w,S] = omega(g)">omega</a>	[w,S] = omega(g) --- clique number</li><li><a href="prufer.html" class="code" title="function output = prufer(g, code)">prufer</a>	prufer --- convert a tree to/from its Prufer code</li><li><a href="random_regular.html" class="code" title="function random_regular(g,n,k)">random_regular</a>	random_regular(g,n,k) --- create a random regular graph</li><li><a href="union.html" class="code" title="function union(g,h1,h2)">union</a>	union(g,h1,h2) --- set g equal to the union of h1 and h2.</li></ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function g = graph(n)</a>
+0002 <span class="comment">% graph: constructor for the graph class</span>
+0003 <span class="comment">% graph(n) --- create a new graph handle for a graph with n vertices</span>
+0004 <span class="comment">% graph(h) --- copy h into a new graph</span>
+0005 <span class="comment">% graph    --- create an empty graph</span>
+0006 <span class="comment">% graph(edge_list) --- create graph from n-by-2 list of edges</span>
+0007 
+0008 
+0009 <span class="comment">% make sure system has been initialized</span>
+0010 
+0011 <span class="keyword">if</span> ~graph_system_exists
+0012    graph_init;
+0013 <span class="keyword">end</span>
+0014 
+0015 <span class="keyword">global</span> GRAPH_MAGIC;
+0016 
+0017 <span class="comment">% get a slot to store this graph</span>
+0018 idx = find_available;
+0019 <span class="keyword">if</span> (idx == 0)
+0020     error(<span class="string">'Graph system memory is full; cannot create new graph'</span>);
+0021 <span class="keyword">end</span>
+0022 
+0023 <span class="comment">% default number of vertices is 0</span>
+0024 <span class="keyword">if</span> (nargin==0)
+0025     n = 0;
+0026 <span class="keyword">end</span>
+0027 
+0028 <span class="comment">% if n is a graph, then we perform a copy ...</span>
+0029 
+0030 <span class="keyword">if</span> (isa(n,<span class="string">'graph'</span>))
+0031     GRAPH_MAGIC.in_use(idx) = 1;
+0032     GRAPH_MAGIC.graphs{idx} = GRAPH_MAGIC.graphs{n.idx};
+0033     g.idx = idx;
+0034     g = class(g,<span class="string">'graph'</span>);
+0035     <a href="make_logical.html" class="code" title="function make_logical(g)">make_logical</a>(g);
+0036     <span class="keyword">return</span>
+0037 <span class="keyword">end</span>
+0038 
+0039 <span class="comment">% ... otherwise we create a new graph</span>
+0040 
+0041 [nr,nc] = <a href="size.html" class="code" title="function [sz,tz] = size(g)">size</a>(n);
+0042 <span class="keyword">if</span> (nc &gt; 2)
+0043     error(<span class="string">'Graph constructor argument is wrong shape'</span>)
+0044 <span class="keyword">end</span>
+0045 <span class="keyword">if</span> (nc==2)
+0046     v = max(max(n));  
+0047     GRAPH_MAGIC.in_use(idx) = 1;
+0048     GRAPH_MAGIC.graphs{idx}.array = logical(<a href="sparse.html" class="code" title="function sparse(g)">sparse</a>([],[],[],v,v,1));
+0049      g.idx = idx;
+0050     g = class(g,<span class="string">'graph'</span>);
+0051     
+0052     <span class="keyword">if</span> (v &lt;= GRAPH_MAGIC.large_size) 
+0053         <a href="full.html" class="code" title="function full(g)">full</a>(g);
+0054     <span class="keyword">end</span>
+0055     <a href="add.html" class="code" title="function add(g,i,j)">add</a>(g,n);
+0056     <span class="keyword">return</span>
+0057 <span class="keyword">end</span>
+0058     
+0059 
+0060 
+0061 GRAPH_MAGIC.in_use(idx) = 1;
+0062 GRAPH_MAGIC.graphs{idx}.array = logical(<a href="sparse.html" class="code" title="function sparse(g)">sparse</a>([],[],[],n,n,n));
+0063 
+0064 g.idx = idx;
+0065 g = class(g,<span class="string">'graph'</span>);
+0066 
+0067 
+0068 <span class="comment">% if the graph is &quot;small&quot; enough, convert to full storage</span>
+0069 
+0070 <span class="keyword">if</span> (n &lt; GRAPH_MAGIC.large_size) 
+0071     <a href="full.html" class="code" title="function full(g)">full</a>(g)
+0072 <span class="keyword">end</span>
+0073 
+0074 <a href="make_logical.html" class="code" title="function make_logical(g)">make_logical</a>(g);</pre></div>
+<hr><address>Generated on Fri 30-Apr-2010 07:51:16 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

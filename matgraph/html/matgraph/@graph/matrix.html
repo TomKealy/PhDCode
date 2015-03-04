@@ -1,0 +1,50 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of matrix</title>
+  <meta name="keywords" content="matrix">
+  <meta name="description" content="matrix(g) --- return (a copy of) the adjacency matrix of g">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">matgraph</a> &gt; <a href="index.html">@graph</a> &gt; matrix.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for matgraph/@graph&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>matrix
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>matrix(g) --- return (a copy of) the adjacency matrix of g</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function A = matrix(g) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> matrix(g) --- return (a copy of) the adjacency matrix of g</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="across.html" class="code" title="function elist = across(g,X,Y)">across</a>	across(g,X,Y) --- find all edges with one end in X and other end in Y.</li><li><a href="bipartition.html" class="code" title="function p = bipartition(g)">bipartition</a>	part = bipartition(g) --- find bipartition of a bipartite graph</li><li><a href="bipmatch.html" class="code" title="function elist = bipmatch(g,X,Y)">bipmatch</a>	bipmatch --- maximum matching in a bipartite graph</li><li><a href="chromatic_poly.html" class="code" title="function out = chromatic_poly(g)">chromatic_poly</a>	chrompoly(g) --- find the chromatic polynomial of g</li><li><a href="complement.html" class="code" title="function complement(g,h)">complement</a>	graph complement</li><li><a href="component.html" class="code" title="function vtcs = component(g,v)">component</a>	component(g,v) -- find vertices in v's component of g</li><li><a href="dist.html" class="code" title="function d = dist(g,v,w)">dist</a>	dist(g,v,w) and dist(g,v) --- find distance(s) between vertices</li><li><a href="dom.html" class="code" title="function [d,S] = dom(g)">dom</a>	[d,S] = dom(g) --- domination number of g</li><li><a href="eig.html" class="code" title="function v = eig(g)">eig</a>	eig(g) -- compute the eigenvalues of this graph</li><li><a href="intersect.html" class="code" title="function intersect(g,h1,h2)">intersect</a>	intersect(g,h1,h2) --- g is set to the intersection of h1 and h2.</li><li><a href="iso.html" class="code" title="function [yn,p] = iso(g,h,options)">iso</a>	[yn,p] = iso(g,h,options) --- is g isomorphic to h?</li><li><a href="laplacian.html" class="code" title="function m = laplacian(g,s)">laplacian</a>	laplacian(g) --- get the Laplacian matrix of g</li><li><a href="match_join.html" class="code" title="function match_join(g,h1,h2)">match_join</a>	match_join(g,h1,h2) --- overwrite g with a graph formed from disjoint</li><li><a href="mycielski.html" class="code" title="function mycielski(g,h)">mycielski</a>	mycielski(g,n) --- create n'th order Mycielski graph (n > 0)</li><li><a href="nsptrees.html" class="code" title="function nt = nsptrees(g)">nsptrees</a>	nsptrees(g) --- number of spanning trees of g.</li><li><a href="union.html" class="code" title="function union(g,h1,h2)">union</a>	union(g,h1,h2) --- set g equal to the union of h1 and h2.</li></ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function A = matrix(g)</a>
+0002 <span class="comment">% matrix(g) --- return (a copy of) the adjacency matrix of g</span>
+0003 <span class="keyword">global</span> GRAPH_MAGIC
+0004 A = GRAPH_MAGIC.graphs{g.idx}.array;</pre></div>
+<hr><address>Generated on Fri 30-Apr-2010 07:51:16 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of random_bipartite</title>
+  <meta name="keywords" content="random_bipartite">
+  <meta name="description" content="random_bipartite(g,n,m,p) --- create a random bipartite graph">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">matgraph</a> &gt; <a href="index.html">@graph</a> &gt; random_bipartite.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for matgraph/@graph&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>random_bipartite
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>random_bipartite(g,n,m,p) --- create a random bipartite graph</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function random_bipartite(g,n,m,p) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> random_bipartite(g,n,m,p) --- create a random bipartite graph
+ the graph g is overwritten with a bipartite grapn with part sizes n and m
+ with edge probability p. If p is missing, we take p = 1/2.</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="clear_labels.html" class="code" title="function clear_labels(g)">clear_labels</a>	clear_labels(g) --- delete all labels in g</li><li><a href="embed.html" class="code" title="function embed(g,xy)">embed</a>	embed --- create an embedding for a graph</li><li><a href="fast_set_matrix.html" class="code" title="function fast_set_matrix(g,A)">fast_set_matrix</a>	fast_set_matrix(g,A) --- overwrite the adjacency matrix of g with A</li><li><a href="rmxy.html" class="code" title="function rmxy(g)">rmxy</a>	rmxy(g) --- erase g's embedding</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function random_bipartite(g,n,m,p)</a>
+0002 <span class="comment">% random_bipartite(g,n,m,p) --- create a random bipartite graph</span>
+0003 <span class="comment">% the graph g is overwritten with a bipartite grapn with part sizes n and m</span>
+0004 <span class="comment">% with edge probability p. If p is missing, we take p = 1/2.</span>
+0005 
+0006 <span class="keyword">if</span> nargin == 3
+0007     p = 0.5;
+0008 <span class="keyword">end</span>
+0009 
+0010 
+0011 A = rand(n,m) &lt;= p;
+0012 <a href="fast_set_matrix.html" class="code" title="function fast_set_matrix(g,A)">fast_set_matrix</a>(g,  [ zeros(n,n), A; A', zeros(m,m) ] );
+0013 
+0014 
+0015 <a href="rmxy.html" class="code" title="function rmxy(g)">rmxy</a>(g);
+0016 
+0017 xy1 = [ (1:n)-n/2; -ones(1,n)*log(n+m+1) ]';
+0018 xy2 = [ (1:m)-m/2; ones(1,m)*log(n+m+1) ]';
+0019 xy = [xy1;xy2];
+0020 <a href="embed.html" class="code" title="function embed(g,xy)">embed</a>(g,xy);
+0021 
+0022 
+0023 <a href="clear_labels.html" class="code" title="function clear_labels(g)">clear_labels</a>(g);</pre></div>
+<hr><address>Generated on Fri 30-Apr-2010 07:51:16 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

@@ -1,0 +1,19 @@
+one two
+one 		three
+four
+five two
+two six      and the rest of this line is ignored
+seven
+eight nine
+nine two
+one one   <-- a loop is not created
+two nine
+
+eight seven
+eight one  fifty
+four six
+seven six
+four five
+   three five
+# this line should be skipped
+nine seven

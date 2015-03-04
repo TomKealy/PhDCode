@@ -1,0 +1,208 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of graffle</title>
+  <meta name="keywords" content="graffle">
+  <meta name="description" content="graffle(g, filename, width, rad) --- write graph in OmniGraffle format">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">matgraph</a> &gt; <a href="index.html">@graph</a> &gt; graffle.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for matgraph/@graph&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>graffle
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>graffle(g, filename, width, rad) --- write graph in OmniGraffle format</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function graffle(g, filename, width, rad) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> graffle(g, filename, width, rad) --- write graph in OmniGraffle format
+
+ This writes a graph to the disk with the file name specified in the
+ second argument (default is 'graph.graffle'). 
+ The width (3rd argument) gives the overall size of the plot
+ (default=450).
+ The radius (4th argument) gives the size of a vertex (default=12).
+ Note units are points = 1/72 inch. So 18 = 1/4 inch.
+ 
+ The output file can then be opened in OmniGraffle, a graph drawing 
+ program for Macintosh.</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="edges.html" class="code" title="function elist = edges(g)">edges</a>	edges(g) --- list the edges in g as a 2-column matrix</li><li><a href="embed.html" class="code" title="function embed(g,xy)">embed</a>	embed --- create an embedding for a graph</li><li><a href="getxy.html" class="code" title="function z = getxy(g)">getxy</a>	getxy(g) --- give g's embedding (or [] if g doesn't have one)</li><li><a href="hasxy.html" class="code" title="function yn = hasxy(g)">hasxy</a>	hasxy(g) --- determine if an embedding has been created for g</li><li><a href="ne.html" class="code" title="function m = ne(g,h)">ne</a>	ne(g) --- number of edges in g or ne(g,h) --- check for inequality</li><li><a href="nv.html" class="code" title="function n = nv(g)">nv</a>	nv(g) --- number of vertices in g</li><li><a href="scale.html" class="code" title="function scale(g,s)">scale</a>	scale(g,s) --- rescale the embedding of g by s</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+<h2><a name="_subfunctions"></a>SUBFUNCTIONS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="#_sub1" class="code">function write_key(fid,key_name)</a></li><li><a href="#_sub2" class="code">function write_string(fid, string)</a></li><li><a href="#_sub3" class="code">function write_integer(fid,n)</a></li><li><a href="#_sub4" class="code">function write_vertex(fid, v, x, y, r)</a></li><li><a href="#_sub5" class="code">function write_edge(fid, v, w)</a></li></ul>
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function graffle(g, filename, width, rad)</a>
+0002 <span class="comment">% graffle(g, filename, width, rad) --- write graph in OmniGraffle format</span>
+0003 <span class="comment">%</span>
+0004 <span class="comment">% This writes a graph to the disk with the file name specified in the</span>
+0005 <span class="comment">% second argument (default is 'graph.graffle').</span>
+0006 <span class="comment">% The width (3rd argument) gives the overall size of the plot</span>
+0007 <span class="comment">% (default=450).</span>
+0008 <span class="comment">% The radius (4th argument) gives the size of a vertex (default=12).</span>
+0009 <span class="comment">% Note units are points = 1/72 inch. So 18 = 1/4 inch.</span>
+0010 <span class="comment">%</span>
+0011 <span class="comment">% The output file can then be opened in OmniGraffle, a graph drawing</span>
+0012 <span class="comment">% program for Macintosh.</span>
+0013 
+0014 DEFAULT_FILE_NAME = <span class="string">'graph.graffle'</span>;
+0015 DEFAULT_RADIUS = 12;
+0016 PAGE_SIZE = 450;
+0017 
+0018 <span class="keyword">if</span> nargin == 1
+0019     filename = DEFAULT_FILE_NAME;
+0020 <span class="keyword">end</span>
+0021 
+0022 <span class="keyword">if</span> nargin &lt; 3
+0023     width = PAGE_SIZE;
+0024 <span class="keyword">end</span>
+0025 
+0026 <span class="keyword">if</span> nargin &lt; 4
+0027     rad = DEFAULT_RADIUS;
+0028 <span class="keyword">end</span>
+0029 
+0030 fid = fopen(filename,<span class="string">'w'</span>);
+0031 
+0032 <span class="keyword">if</span> (fid == -1)
+0033     error([<span class="string">'Cannot open '</span>, filename, <span class="string">' for output'</span>]);
+0034 <span class="keyword">end</span>
+0035 
+0036 <span class="keyword">if</span> (~<a href="hasxy.html" class="code" title="function yn = hasxy(g)">hasxy</a>(g))
+0037     <a href="embed.html" class="code" title="function embed(g,xy)">embed</a>(g)
+0038 <span class="keyword">end</span>
+0039 
+0040 xy = <a href="getxy.html" class="code" title="function z = getxy(g)">getxy</a>(g);
+0041 x = xy(:,1);
+0042 y = xy(:,2);
+0043 
+0044 
+0045 <span class="comment">% move lower left to 0,0</span>
+0046 x = x-min(x);
+0047 y = -y;
+0048 y = y-min(y);
+0049 
+0050 <span class="comment">% rescale to fit in reasonable square</span>
+0051 m = max([x;y]);
+0052 <a href="scale.html" class="code" title="function scale(g,s)">scale</a> = width/m;
+0053 
+0054 x = round(<a href="scale.html" class="code" title="function scale(g,s)">scale</a>*x)+5;
+0055 y = round(<a href="scale.html" class="code" title="function scale(g,s)">scale</a>*y)+5;
+0056 
+0057 
+0058 <span class="comment">% write XML header line</span>
+0059 fprintf(fid,<span class="string">'&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;\n'</span>);
+0060 
+0061 <span class="comment">% write start of XML GraphicsList array</span>
+0062 fprintf(fid,<span class="string">'&lt;dict&gt;\n'</span>);
+0063 <a href="#_sub1" class="code" title="subfunction write_key(fid,key_name)">write_key</a>(fid, <span class="string">'GraphicsList'</span>);
+0064 fprintf(fid,<span class="string">'&lt;array&gt;'</span>);
+0065 
+0066 
+0067 <span class="comment">% write vertices to XML file</span>
+0068 <span class="keyword">for</span> v = 1:<a href="nv.html" class="code" title="function n = nv(g)">nv</a>(g)
+0069     <a href="#_sub4" class="code" title="subfunction write_vertex(fid, v, x, y, r)">write_vertex</a>(fid, v, x(v), y(v), rad)
+0070 <span class="keyword">end</span>
+0071 
+0072 <span class="comment">% write edges</span>
+0073 elist = <a href="edges.html" class="code" title="function elist = edges(g)">edges</a>(g);
+0074 m = <a href="ne.html" class="code" title="function m = ne(g,h)">ne</a>(g);
+0075 <span class="keyword">for</span> i=1:m
+0076     u = elist(i,1);
+0077     v = elist(i,2);
+0078     <a href="#_sub5" class="code" title="subfunction write_edge(fid, v, w)">write_edge</a>(fid, u, v);
+0079 <span class="keyword">end</span>
+0080 
+0081 
+0082 <span class="comment">% end the array</span>
+0083 fprintf(fid,<span class="string">'&lt;/array&gt;\n'</span>);
+0084 <span class="comment">% end the dictionary</span>
+0085 fprintf(fid,<span class="string">'&lt;/dict&gt;\n'</span>);
+0086 
+0087 fclose(fid);
+0088 
+0089 
+0090 
+0091 <span class="comment">% page area:</span>
+0092 <span class="comment">% x values run 0 to 520 or so</span>
+0093 <span class="comment">% y values run 0 to 700 or so</span>
+0094 
+0095 
+0096 <a name="_sub1" href="#_subfunctions" class="code">function write_key(fid,key_name)</a>
+0097 fprintf(fid,[<span class="string">' &lt;key&gt;'</span>, key_name, <span class="string">'&lt;/key&gt;\n'</span>]);
+0098 
+0099 <a name="_sub2" href="#_subfunctions" class="code">function write_string(fid, string)</a>
+0100 fprintf(fid,[<span class="string">' &lt;string&gt;'</span>, string, <span class="string">'&lt;/string&gt;\n'</span>]);
+0101 
+0102 <a name="_sub3" href="#_subfunctions" class="code">function write_integer(fid,n)</a>
+0103 fprintf(fid,[<span class="string">' &lt;integer&gt;'</span>, int2str(n), <span class="string">'&lt;/integer&gt;\n'</span>]);
+0104 
+0105 
+0106 <span class="comment">% write vertex v @ coordinates (x,y) with radius r to output</span>
+0107 <a name="_sub4" href="#_subfunctions" class="code">function write_vertex(fid, v, x, y, r)</a>
+0108 fprintf(fid,<span class="string">'&lt;dict&gt;\n'</span>);
+0109 <a href="#_sub1" class="code" title="subfunction write_key(fid,key_name)">write_key</a>(fid,<span class="string">'Bounds'</span>);
+0110 fprintf(fid,[<span class="string">' &lt;string&gt;{{'</span>, int2str(x), <span class="string">','</span>, int2str(y), <span class="string">'}, {'</span>, <span class="keyword">...</span>
+0111     int2str(r), <span class="string">','</span>, int2str(r),<span class="string">'}}&lt;/string&gt;\n'</span>]);
+0112 <a href="#_sub1" class="code" title="subfunction write_key(fid,key_name)">write_key</a>(fid,<span class="string">'Class'</span>);
+0113 <a href="#_sub2" class="code" title="subfunction write_string(fid, string)">write_string</a>(fid, <span class="string">'ShapedGraphic'</span>);
+0114 <a href="#_sub1" class="code" title="subfunction write_key(fid,key_name)">write_key</a>(fid,<span class="string">'ID'</span>);
+0115 <a href="#_sub3" class="code" title="subfunction write_integer(fid,n)">write_integer</a>(fid,v);
+0116 <a href="#_sub1" class="code" title="subfunction write_key(fid,key_name)">write_key</a>(fid,<span class="string">'Shape'</span>);
+0117 <a href="#_sub2" class="code" title="subfunction write_string(fid, string)">write_string</a>(fid,<span class="string">'Circle'</span>);
+0118 <a href="#_sub1" class="code" title="subfunction write_key(fid,key_name)">write_key</a>(fid,<span class="string">'Style'</span>);
+0119 fprintf(fid,<span class="string">' &lt;dict&gt;\n'</span>);
+0120 <a href="#_sub1" class="code" title="subfunction write_key(fid,key_name)">write_key</a>(fid,<span class="string">'shadow'</span>);
+0121 fprintf(fid,<span class="string">' &lt;dict&gt;\n'</span>);
+0122 <a href="#_sub1" class="code" title="subfunction write_key(fid,key_name)">write_key</a>(fid,<span class="string">'Draws'</span>);
+0123 <a href="#_sub2" class="code" title="subfunction write_string(fid, string)">write_string</a>(fid, <span class="string">'NO'</span>);
+0124 fprintf(fid,<span class="string">' &lt;/dict&gt;\n &lt;/dict&gt;\n&lt;/dict&gt;\n\n'</span>);
+0125 
+0126 
+0127 
+0128 
+0129 <span class="comment">% write an edge</span>
+0130 <a name="_sub5" href="#_subfunctions" class="code">function write_edge(fid, v, w)</a>
+0131 fprintf(fid,<span class="string">'&lt;dict&gt;\n'</span>);
+0132 <a href="#_sub1" class="code" title="subfunction write_key(fid,key_name)">write_key</a>(fid,<span class="string">'Class'</span>);
+0133 <a href="#_sub2" class="code" title="subfunction write_string(fid, string)">write_string</a>(fid,<span class="string">'LineGraphic'</span>);
+0134 
+0135 <a href="#_sub1" class="code" title="subfunction write_key(fid,key_name)">write_key</a>(fid,<span class="string">'Head'</span>);
+0136 fprintf(fid,<span class="string">' &lt;dict&gt;\n'</span>);
+0137 <a href="#_sub1" class="code" title="subfunction write_key(fid,key_name)">write_key</a>(fid,<span class="string">'ID'</span>);
+0138 <a href="#_sub3" class="code" title="subfunction write_integer(fid,n)">write_integer</a>(fid,v);
+0139 fprintf(fid,<span class="string">' &lt;/dict&gt;\n'</span>);
+0140 
+0141 
+0142 <a href="#_sub1" class="code" title="subfunction write_key(fid,key_name)">write_key</a>(fid,<span class="string">'Tail'</span>);
+0143 fprintf(fid,<span class="string">' &lt;dict&gt;\n'</span>);
+0144 <a href="#_sub1" class="code" title="subfunction write_key(fid,key_name)">write_key</a>(fid,<span class="string">'ID'</span>);
+0145 <a href="#_sub3" class="code" title="subfunction write_integer(fid,n)">write_integer</a>(fid,w);
+0146 fprintf(fid,<span class="string">' &lt;/dict&gt;\n'</span>);
+0147 
+0148 fprintf(fid,<span class="string">'&lt;/dict&gt;\n'</span>);
+0149 
+0150</pre></div>
+<hr><address>Generated on Fri 30-Apr-2010 07:51:16 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

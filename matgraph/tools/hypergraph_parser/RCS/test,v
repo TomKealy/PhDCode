@@ -1,0 +1,106 @@
+head	1.4;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.4
+date	2006.11.03.01.13.17;	author ers;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2006.11.03.01.09.47;	author ers;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2006.11.03.01.05.00;	author ers;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2006.11.03.00.54.56;	author ers;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.4
+log
+@*** empty log message ***
+@
+text
+@# a standard hyperedge is created like this:
+first  one two three
+
+# a hyperedge can be specified on two (or more) lines like this:
+ second   one  four
+second five
+
+# on the next line "one" is a hyperedge and "one" is a vertex but they are
+# considered different objects
+one one
+
+
+# the hypergraph specified by this file has three hyperedges:
+# {one, two, three}   named first
+# {one, four, five}   named second
+# {one}               named one, but a different "one" from vertex "one"
+#
+# the output will be this:
+# 1       1   
+# 1       2
+# 1       3
+# 2       1
+# 2       4
+# 2       5
+# 3       1@
+
+
+1.3
+log
+@*** empty log message ***
+@
+text
+@d4 2
+a5 2
+# a hyper edge can be specified on two (or more) lines like this:
+second one four
+d8 1
+a8 1
+# on the next line "one" is an edge and "one" is a vertex but they are
+d10 16
+a25 1
+one one@
+
+
+1.2
+log
+@*** empty log message ***
+@
+text
+@d1 1
+a1 1
+# a standard hyper edge is created like this:
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d1 2
+a2 3
+one two
+two one
+one one three
+d4 7
+a10 2
+#ignore this
+two two@

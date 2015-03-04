@@ -1,0 +1,154 @@
+<html xmlns:mwsh="http://www.mathworks.com/namespace/mcode/v1/syntaxhighlight.dtd">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <!--
+This HTML is auto-generated from an M-file.
+To make changes, update the M-file and republish this document.
+      -->
+      <title>Finding and displaying Hamiltonian cycles in Matgraph</title>
+      <meta name="generator" content="MATLAB 7.2">
+      <meta name="date" content="2007-03-10">
+      <meta name="m-file" content="hamiltonian"><style>
+
+body {
+  background-color: white;
+  margin:10px;
+}
+
+h1 {
+  color: #990000; 
+  font-size: x-large;
+}
+
+h2 {
+  color: #990000;
+  font-size: medium;
+}
+
+/* Make the text shrink to fit narrow windows, but not stretch too far in 
+wide windows.  On Gecko-based browsers, the shrink-to-fit doesn't work. */ 
+p,h1,h2,div.content div {
+  /* for MATLAB's browser */
+  width: 600px;
+  /* for Mozilla, but the "width" tag overrides it anyway */
+  max-width: 600px;
+  /* for IE */
+  width:expression(document.body.clientWidth > 620 ? "600px": "auto" );
+}
+
+pre.codeinput {
+  background: #EEEEEE;
+  padding: 10px;
+}
+@media print {
+  pre.codeinput {word-wrap:break-word; width:100%;}
+} 
+
+span.keyword {color: #0000FF}
+span.comment {color: #228B22}
+span.string {color: #A020F0}
+span.untermstring {color: #B20000}
+span.syscmd {color: #B28C00}
+
+pre.codeoutput {
+  color: #666666;
+  padding: 10px;
+}
+
+pre.error {
+  color: red;
+}
+
+p.footer {
+  text-align: right;
+  font-size: xx-small;
+  font-weight: lighter;
+  font-style: italic;
+  color: gray;
+}
+
+  </style></head>
+   <body>
+      <div class="content">
+         <h1>Finding and displaying Hamiltonian cycles in Matgraph</h1>
+         <introduction>
+            <p>We illustrate how to find a Hamiltonian cycle in a graph, convert that cycle into a subgraph, and then display the results.</p>
+         </introduction>
+         <h2>Contents</h2>
+         <div>
+            <ul>
+               <li><a href="#1">Create a graph and find a Hamiltonian cycle</a></li>
+               <li><a href="#2">Convert the list of vertices into a cycle graph</a></li>
+               <li><a href="#3">Copy the embedding of the original graph to the cycle</a></li>
+               <li><a href="#4">Create the drawing</a></li>
+               <li><a href="#5">Release graphs</a></li>
+            </ul>
+         </div>
+         <h2>Create a graph and find a Hamiltonian cycle<a name="1"></a></h2>
+         <p>For this illustration, we use the dodecahedron graph.</p>
+         <p>Note: The dodecahedron graph comes with a built-in embedding. We use this embedding later when we draw the graph and its Hamiltonian
+            cycle.
+         </p><pre class="codeinput">g = graph;
+dodecahedron(g);
+c = hamiltonian_cycle(g);
+disp(c')
+</pre><pre class="codeoutput">  Columns 1 through 14 
+
+     1     2     3     4     5    10    14     9    13     8    12     7    11    16
+
+  Columns 15 through 20 
+
+    17    18    19    20    15     6
+
+</pre><h2>Convert the list of vertices into a cycle graph<a name="2"></a></h2><pre class="codeinput">n = nv(g);
+h = graph(n);
+<span class="keyword">for</span> k=1:n-1
+	add(h,c(k),c(k+1))
+<span class="keyword">end</span>
+add(h,c(1),c(n))
+</pre><h2>Copy the embedding of the original graph to the cycle<a name="3"></a></h2><pre class="codeinput">embed(h, getxy(g))
+</pre><h2>Create the drawing<a name="4"></a></h2>
+         <p>We first draw <tt>g</tt> with dotted lines and then overlay the result with <tt>h</tt> drawn with solid lines.
+         </p><pre class="codeinput">draw(g,<span class="string">':'</span>)
+draw(h)
+</pre><img vspace="5" hspace="5" src="hamiltonian_01.png"> <h2>Release graphs<a name="5"></a></h2><pre class="codeinput">free(g)
+free(h)
+</pre><p class="footer"><br>
+            Published with MATLAB&reg; 7.2<br></p>
+      </div>
+      <!--
+##### SOURCE BEGIN #####
+%% Finding and displaying Hamiltonian cycles in Matgraph
+% We illustrate how to find a Hamiltonian cycle in a graph, convert that
+% cycle into a subgraph, and then display the results.
+%% Create a graph and find a Hamiltonian cycle
+% For this illustration, we use the dodecahedron graph. 
+%
+% Note: The dodecahedron graph comes with a built-in embedding. We use this
+% embedding later when we draw the graph and its Hamiltonian cycle.
+g = graph;
+dodecahedron(g); 
+c = hamiltonian_cycle(g);
+disp(c')
+%% Convert the list of vertices into a cycle graph
+n = nv(g);
+h = graph(n); 
+for k=1:n-1
+	add(h,c(k),c(k+1))
+end
+add(h,c(1),c(n))
+%% Copy the embedding of the original graph to the cycle
+embed(h, getxy(g))
+%% Create the drawing
+% We first draw |g| with dotted lines and then overlay the result with |h|
+% drawn with solid lines.
+draw(g,':')
+draw(h)
+%% Release graphs 
+free(g)
+free(h)
+##### SOURCE END #####
+-->
+   </body>
+</html>

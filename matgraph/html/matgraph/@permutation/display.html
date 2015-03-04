@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of display</title>
+  <meta name="keywords" content="display">
+  <meta name="description" content="display(p) --- display a permutation in disjoint cycle form.">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">matgraph</a> &gt; <a href="index.html">@permutation</a> &gt; display.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for matgraph/@permutation&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>display
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>display(p) --- display a permutation in disjoint cycle form.</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function st = display(p) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> display(p) --- display a permutation in disjoint cycle form.</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="cycles.html" class="code" title="function c = cycles(p)">cycles</a>	cycles(p) returns a cell array containing the cycle structure of p</li><li><a href="isempty.html" class="code" title="function yn = isempty(p)">isempty</a>	isempty(p) --- check if the permutation p is of size 0</li><li><a href="length.html" class="code" title="function s = length(p)">length</a>	length(p) gives the size of the permutation</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+<h2><a name="_subfunctions"></a>SUBFUNCTIONS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="#_sub1" class="code">function str = list_to_cycle(list)</a></li></ul>
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function st = display(p)</a>
+0002 <span class="comment">% display(p) --- display a permutation in disjoint cycle form.</span>
+0003 
+0004 
+0005 <span class="comment">% special case if the permutation is empty</span>
+0006 <span class="keyword">if</span> <a href="isempty.html" class="code" title="function yn = isempty(p)">isempty</a>(p)
+0007     st= <span class="string">'()'</span>;
+0008     <span class="keyword">if</span> nargout == 0
+0009         disp(st)
+0010     <span class="keyword">end</span>
+0011     <span class="keyword">return</span>
+0012 <span class="keyword">end</span>
+0013 
+0014 c = <a href="cycles.html" class="code" title="function c = cycles(p)">cycles</a>(p);
+0015 outstr = <span class="string">''</span>;
+0016 
+0017 <span class="keyword">for</span> k=1:<a href="length.html" class="code" title="function s = length(p)">length</a>(c)
+0018     outstr = [outstr,<a href="#_sub1" class="code" title="subfunction str = list_to_cycle(list)">list_to_cycle</a>(c{k})];
+0019 <span class="keyword">end</span>
+0020 
+0021 
+0022 <span class="keyword">if</span> nargout &gt; 0
+0023     st = outstr;
+0024 <span class="keyword">else</span>
+0025     disp(outstr)
+0026 <span class="keyword">end</span>
+0027 
+0028 
+0029 <a name="_sub1" href="#_subfunctions" class="code">function str = list_to_cycle(list)</a>
+0030 <span class="keyword">if</span> <a href="isempty.html" class="code" title="function yn = isempty(p)">isempty</a>(list) 
+0031     str = <span class="string">'()'</span>;
+0032     <span class="keyword">return</span>
+0033 <span class="keyword">end</span>
+0034 
+0035 str = <span class="string">'('</span>;
+0036 <span class="keyword">for</span> k=1:<a href="length.html" class="code" title="function s = length(p)">length</a>(list)
+0037     str = [str,int2str(list(k))];
+0038     <span class="keyword">if</span> k &lt; <a href="length.html" class="code" title="function s = length(p)">length</a>(list)
+0039         str = [str,<span class="string">','</span>];
+0040     <span class="keyword">else</span>
+0041         str = [str,<span class="string">')'</span>];
+0042     <span class="keyword">end</span>
+0043 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Fri 30-Apr-2010 07:51:16 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

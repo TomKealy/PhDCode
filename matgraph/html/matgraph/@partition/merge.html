@@ -1,0 +1,73 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of merge</title>
+  <meta name="keywords" content="merge">
+  <meta name="description" content="merge(p,x,y) --- form a partition from p by combining x and y's parts.">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">matgraph</a> &gt; <a href="index.html">@partition</a> &gt; merge.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for matgraph/@partition&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>merge
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>merge(p,x,y) --- form a partition from p by combining x and y's parts.</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function q = merge(p,x,y) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> merge(p,x,y) --- form a partition from p by combining x and y's parts.
+ If x or y are out of range, p is returned.</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="np.html" class="code" title="function m = np(p)">np</a>	np(p) --- number of parts in the partition p</li><li><a href="nv.html" class="code" title="function n = nv(p)">nv</a>	nv(p) --- number of vertices (elements) of a partition</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="plus.html" class="code" title="function r = plus(p,q)">plus</a>	plus --- p+q is the join of p and q</li></ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function q = merge(p,x,y)</a>
+0002 <span class="comment">% merge(p,x,y) --- form a partition from p by combining x and y's parts.</span>
+0003 <span class="comment">% If x or y are out of range, p is returned.</span>
+0004 
+0005 q = p;
+0006 n = <a href="nv.html" class="code" title="function n = nv(p)">nv</a>(p);
+0007 
+0008 <span class="keyword">if</span> (x&lt;1) || (x&gt;n) || (y&lt;1) || (y&gt;n) || (x==y)
+0009     <span class="keyword">return</span>
+0010 <span class="keyword">end</span>
+0011 
+0012 rx = find(p.array(:,x));
+0013 ry = find(p.array(:,y));
+0014 
+0015 <span class="keyword">if</span> rx == ry
+0016     <span class="keyword">return</span>
+0017 <span class="keyword">end</span>
+0018 
+0019 <span class="comment">% merge row ry into row rx</span>
+0020 q.array(rx,:) = q.array(rx,:) | q.array(ry,:);
+0021 
+0022 <span class="comment">% remove row ry</span>
+0023 
+0024 idx = [1:ry-1,ry+1:<a href="np.html" class="code" title="function m = np(p)">np</a>(p)];
+0025 q.array = q.array(idx,:);
+0026 q.array = sortrows(q.array);</pre></div>
+<hr><address>Generated on Fri 30-Apr-2010 07:51:16 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

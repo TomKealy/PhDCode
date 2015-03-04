@@ -1,0 +1,25 @@
+\BOOKMARK [1][-]{section*.1}{Overview}{}
+\BOOKMARK [1][-]{section.1}{1. Getting Matgraph}{}
+\BOOKMARK [2][-]{subsection.1.1}{1.1. Download and install}{section.1}
+\BOOKMARK [2][-]{subsection.1.2}{1.2. License}{section.1}
+\BOOKMARK [1][-]{section.2}{2. Using Matgraph}{}
+\BOOKMARK [2][-]{subsection.2.1}{2.1. Basic principles}{section.2}
+\BOOKMARK [2][-]{subsection.2.2}{2.2. Starting Matgraph}{section.2}
+\BOOKMARK [2][-]{subsection.2.3}{2.3. Declaring graph objects and memory management}{section.2}
+\BOOKMARK [2][-]{subsection.2.4}{2.4. Basic graph operations}{section.2}
+\BOOKMARK [2][-]{subsection.2.5}{2.5. Standard graphs}{section.2}
+\BOOKMARK [2][-]{subsection.2.6}{2.6. Graph operations}{section.2}
+\BOOKMARK [2][-]{subsection.2.7}{2.7. Graph inspectors}{section.2}
+\BOOKMARK [2][-]{subsection.2.8}{2.8. Graph--matrix conversions}{section.2}
+\BOOKMARK [2][-]{subsection.2.9}{2.9. Graph invariants and partitions}{section.2}
+\BOOKMARK [2][-]{subsection.2.10}{2.10. Input-output}{section.2}
+\BOOKMARK [2][-]{subsection.2.11}{2.11. Handling large graphs}{section.2}
+\BOOKMARK [2][-]{subsection.2.12}{2.12. Labels}{section.2}
+\BOOKMARK [2][-]{subsection.2.13}{2.13. Visualization}{section.2}
+\BOOKMARK [1][-]{section.3}{3. Documentation}{}
+\BOOKMARK [1][-]{section.4}{4. The Permutation Class}{}
+\BOOKMARK [1][-]{section.5}{5. The Partition Class}{}
+\BOOKMARK [1][-]{section.6}{6. Under the Hood \(Stuff You Don't Need to Know\)}{}
+\BOOKMARK [2][-]{subsection.6.1}{6.1. The GRAPH\137MAGIC structure}{section.6}
+\BOOKMARK [2][-]{subsection.6.2}{6.2. The graph type}{section.6}
+\BOOKMARK [1][-]{section.7}{7. Future Projects}{}

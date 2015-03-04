@@ -1,0 +1,73 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of resistance</title>
+  <meta name="keywords" content="resistance">
+  <meta name="description" content="R = resistance(g) --- calculate resistances between vertices">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">matgraph</a> &gt; <a href="index.html">@graph</a> &gt; resistance.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for matgraph/@graph&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>resistance
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>R = resistance(g) --- calculate resistances between vertices</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function R = resistance(g) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> R = resistance(g) --- calculate resistances between vertices
+ g is a connected, undirected weighted graph. Returns a matrix R whose 
+ (i,j)-entry is the effective resistance between vertices i and j 
+ where we assume each edge represents a resistance equal to the weight 
+ of the edge.
+
+ Author: Somit Gupta</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="isconnected.html" class="code" title="function yn = isconnected(g)">isconnected</a>	isconnected(g) --- test if g is a connected graph</li><li><a href="laplacian.html" class="code" title="function m = laplacian(g,s)">laplacian</a>	laplacian(g) --- get the Laplacian matrix of g</li><li><a href="nv.html" class="code" title="function n = nv(g)">nv</a>	nv(g) --- number of vertices in g</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function R = resistance(g)</a>
+0002 <span class="comment">% R = resistance(g) --- calculate resistances between vertices</span>
+0003 <span class="comment">% g is a connected, undirected weighted graph. Returns a matrix R whose</span>
+0004 <span class="comment">% (i,j)-entry is the effective resistance between vertices i and j</span>
+0005 <span class="comment">% where we assume each edge represents a resistance equal to the weight</span>
+0006 <span class="comment">% of the edge.</span>
+0007 <span class="comment">%</span>
+0008 <span class="comment">% Author: Somit Gupta</span>
+0009 
+0010 <span class="keyword">if</span>(<a href="isconnected.html" class="code" title="function yn = isconnected(g)">isconnected</a>(g)) <span class="comment">%to test for connected graphs as the formulae works only for connected graphs</span>
+0011     l= <a href="laplacian.html" class="code" title="function m = laplacian(g,s)">laplacian</a>(g); <span class="comment">% gets the laplacian of the graph</span>
+0012     m=<a href="nv.html" class="code" title="function n = nv(g)">nv</a>(g); <span class="comment">%no of vertices</span>
+0013     <span class="comment">% R=[0];</span>
+0014     lp=pinv(l);
+0015 
+0016     d=diag(lp);
+0017     rowMatrix=d*ones(1,m);
+0018     R = rowMatrix+rowMatrix'-2*lp;
+0019 <span class="keyword">else</span>
+0020     error(<span class="string">'The graph is not connected'</span>)
+0021 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Fri 30-Apr-2010 07:51:16 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

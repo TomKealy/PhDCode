@@ -1,0 +1,111 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of icosahedron</title>
+  <meta name="keywords" content="icosahedron">
+  <meta name="description" content="icosahedron(g) --- overwrite g with the icosahedron graph">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">matgraph</a> &gt; <a href="index.html">@graph</a> &gt; icosahedron.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for matgraph/@graph&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>icosahedron
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>icosahedron(g) --- overwrite g with the icosahedron graph</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function icosahedron(g) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> icosahedron(g) --- overwrite g with the icosahedron graph</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="add.html" class="code" title="function add(g,i,j)">add</a>	add --- add edge(s) to the graph</li><li><a href="clear_edges.html" class="code" title="function clear_edges(g)">clear_edges</a>	clear_edges(g) --- delete all edges of g</li><li><a href="embed.html" class="code" title="function embed(g,xy)">embed</a>	embed --- create an embedding for a graph</li><li><a href="full.html" class="code" title="function full(g)">full</a>	full(g) --- convert internal storage for g to full</li><li><a href="resize.html" class="code" title="function resize(g, n)">resize</a>	resize(g,n) --- change the number of vertices in g to n</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function icosahedron(g)</a>
+0002 <span class="comment">% icosahedron(g) --- overwrite g with the icosahedron graph</span>
+0003 
+0004 <a href="resize.html" class="code" title="function resize(g, n)">resize</a>(g,12);
+0005 <a href="clear_edges.html" class="code" title="function clear_edges(g)">clear_edges</a>(g);
+0006 <a href="full.html" class="code" title="function full(g)">full</a>(g);
+0007 
+0008 elist = [
+0009     1   2
+0010     1   3
+0011     1   4
+0012     1   5
+0013     1   9
+0014     2   3
+0015     2   5
+0016     2   6
+0017     2   7
+0018     3   7
+0019     3   8
+0020     3   9
+0021     4   5
+0022     4   9
+0023     4   10
+0024     4   12
+0025     5   6
+0026     5   10
+0027     6   7
+0028     6   10
+0029     6   11
+0030     7   8
+0031     7   11
+0032     8   9
+0033     8   11
+0034     8   12
+0035     9   12
+0036     10  11
+0037     10  12
+0038     11  12
+0039     ];
+0040 <a href="add.html" class="code" title="function add(g,i,j)">add</a>(g,elist);
+0041 
+0042 t0 = 0;
+0043 t1 = -2*pi/3;
+0044 t2 = 2*t1;
+0045 
+0046 outer = [
+0047     sin(t0)     cos(t0)
+0048     sin(t1)     cos(t1)
+0049     sin(t2)     cos(t2)
+0050     ];
+0051 
+0052 hex = [];
+0053 
+0054 <span class="keyword">for</span> k=0:5
+0055     hex = [hex; sin(-k*pi/3), cos(-k*pi/3)];
+0056 <span class="keyword">end</span>
+0057 
+0058 inner = outer*[cos(pi/3), sin(pi/3); -sin(pi/3), cos(pi/3)];
+0059 
+0060 
+0061 xy = [3*outer; hex; inner/3];
+0062 <a href="embed.html" class="code" title="function embed(g,xy)">embed</a>(g,xy)
+0063 
+0064     
+0065</pre></div>
+<hr><address>Generated on Fri 30-Apr-2010 07:51:16 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

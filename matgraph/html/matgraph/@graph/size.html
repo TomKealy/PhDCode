@@ -1,0 +1,55 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of size</title>
+  <meta name="keywords" content="size">
+  <meta name="description" content="size(g) --- returns [nv,ne] for the graph">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">matgraph</a> &gt; <a href="index.html">@graph</a> &gt; size.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for matgraph/@graph&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>size
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>size(g) --- returns [nv,ne] for the graph</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function [sz,tz] = size(g) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> size(g) --- returns [nv,ne] for the graph</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="ne.html" class="code" title="function m = ne(g,h)">ne</a>	ne(g) --- number of edges in g or ne(g,h) --- check for inequality</li><li><a href="nv.html" class="code" title="function n = nv(g)">nv</a>	nv(g) --- number of vertices in g</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="add.html" class="code" title="function add(g,i,j)">add</a>	add --- add edge(s) to the graph</li><li><a href="alpha.html" class="code" title="function [a,S] = alpha(g)">alpha</a>	[a,S] = alpha(g) --- indepencence number</li><li><a href="cayley.html" class="code" title="function cayley(g,perms,verbose)">cayley</a>	cayley(g,perms) -- create a Cayley graph (undirected)</li><li><a href="cdraw.html" class="code" title="function cdraw(g,coloring,line_style,color_matrix)">cdraw</a>	cdraw(g,coloring) -- draw g with a given vertex coloring</li><li><a href="chromatic_poly.html" class="code" title="function out = chromatic_poly(g)">chromatic_poly</a>	chrompoly(g) --- find the chromatic polynomial of g</li><li><a href="delete.html" class="code" title="function delete(g,i,j)">delete</a>	delete --- delete vertices or edges from a graph</li><li><a href="distxy.html" class="code" title="function e = distxy(g, D)">distxy</a>	distxy(g) -- give g a distance based embedding</li><li><a href="embed.html" class="code" title="function embed(g,xy)">embed</a>	embed --- create an embedding for a graph</li><li><a href="eq.html" class="code" title="function yn = eq(g,h)">eq</a>	yn = eq(g,h) --- check if two graphs are equal (identical)</li><li><a href="graph.html" class="code" title="function g = graph(n)">graph</a>	graph: constructor for the graph class</li><li><a href="hasxy.html" class="code" title="function yn = hasxy(g)">hasxy</a>	hasxy(g) --- determine if an embedding has been created for g</li><li><a href="incidence_matrix.html" class="code" title="function M = incidence_matrix(g,type)">incidence_matrix</a>	incidence_matrix(g) --- return the vertex/edge incidence matrix.</li><li><a href="interval_graph.html" class="code" title="function interval_graph(g,ilist)">interval_graph</a>	interval_graph(g,ilist) --- create an interval graph</li><li><a href="iso.html" class="code" title="function [yn,p] = iso(g,h,options)">iso</a>	[yn,p] = iso(g,h,options) --- is g isomorphic to h?</li><li><a href="line_graph.html" class="code" title="function line_graph(g,h)">line_graph</a>	line_graph(g,h) --- set g to be the line graph of h</li><li><a href="ne.html" class="code" title="function m = ne(g,h)">ne</a>	ne(g) --- number of edges in g or ne(g,h) --- check for inequality</li><li><a href="random_planar.html" class="code" title="function random_planar(g,n)">random_planar</a>	random_planar(g,n) --- create a random planar triangulation</li><li><a href="sgf.html" class="code" title="function A = sgf(g,M)">sgf</a>	sgf --- simple graph format: a 2-column matrix representation</li><li><a href="sl2graph.html" class="code" title="function sl2graph(g,p)">sl2graph</a>	sl2graph(g,p) -- create an SL(2,p) graph</li></ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function [sz,tz] = size(g)</a>
+0002 <span class="comment">% size(g) --- returns [nv,ne] for the graph</span>
+0003 
+0004 <span class="keyword">if</span> nargout &gt;= 2
+0005     sz = <a href="nv.html" class="code" title="function n = nv(g)">nv</a>(g);
+0006     tz = <a href="ne.html" class="code" title="function m = ne(g,h)">ne</a>(g);
+0007 <span class="keyword">else</span>
+0008     sz = [<a href="nv.html" class="code" title="function n = nv(g)">nv</a>(g),<a href="ne.html" class="code" title="function m = ne(g,h)">ne</a>(g)];
+0009 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Fri 30-Apr-2010 07:51:16 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

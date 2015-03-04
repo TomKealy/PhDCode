@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of induce</title>
+  <meta name="keywords" content="induce">
+  <meta name="description" content="induce --- create induced subgraphs">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">matgraph</a> &gt; <a href="index.html">@graph</a> &gt; induce.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for matgraph/@graph&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>induce
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>induce --- create induced subgraphs</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function induce(g,arg1,arg2) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> induce --- create induced subgraphs
+ induce(g,vset) --- g overwritten with induced subgraph on vset
+ induce(g,h,vset) --- g overwritten with induced subgraph of h on vertex
+                      set vset</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="embed.html" class="code" title="function embed(g,xy)">embed</a>	embed --- create an embedding for a graph</li><li><a href="getxy.html" class="code" title="function z = getxy(g)">getxy</a>	getxy(g) --- give g's embedding (or [] if g doesn't have one)</li><li><a href="hasxy.html" class="code" title="function yn = hasxy(g)">hasxy</a>	hasxy(g) --- determine if an embedding has been created for g</li><li><a href="is_labeled.html" class="code" title="function yn = is_labeled(g)">is_labeled</a>	is_labeled(g) --- determine if there are labels on vertices.</li><li><a href="label.html" class="code" title="function label(g,v,name)">label</a>	Assign labels to vertices of g</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function induce(g,arg1,arg2)</a>
+0002 <span class="comment">% induce --- create induced subgraphs</span>
+0003 <span class="comment">% induce(g,vset) --- g overwritten with induced subgraph on vset</span>
+0004 <span class="comment">% induce(g,h,vset) --- g overwritten with induced subgraph of h on vertex</span>
+0005 <span class="comment">%                      set vset</span>
+0006 
+0007 
+0008 <span class="keyword">global</span> GRAPH_MAGIC
+0009 
+0010 <span class="keyword">if</span> nargin == 2
+0011     vset = arg1;
+0012     <span class="keyword">if</span> <a href="hasxy.html" class="code" title="function yn = hasxy(g)">hasxy</a>(g)
+0013         GRAPH_MAGIC.graphs{g.idx}.xy = <span class="keyword">...</span>
+0014             GRAPH_MAGIC.graphs{g.idx}.xy(vset,:);
+0015     <span class="keyword">end</span>
+0016     <span class="keyword">if</span> <a href="is_labeled.html" class="code" title="function yn = is_labeled(g)">is_labeled</a>(g)
+0017         GRAPH_MAGIC.graphs{g.idx}.labels =  <span class="keyword">...</span>
+0018             GRAPH_MAGIC.graphs{g.idx}.labels(vset);
+0019     <span class="keyword">end</span>
+0020     GRAPH_MAGIC.graphs{g.idx}.array = <span class="keyword">...</span>
+0021         GRAPH_MAGIC.graphs{g.idx}.array(vset,vset);
+0022     <span class="keyword">return</span>
+0023 <span class="keyword">end</span>
+0024 
+0025 h = arg1;
+0026 vset = arg2;
+0027 
+0028 GRAPH_MAGIC.graphs{g.idx}.array = <span class="keyword">...</span>
+0029     GRAPH_MAGIC.graphs{h.idx}.array(vset,vset);
+0030 
+0031 <span class="keyword">if</span> (<a href="hasxy.html" class="code" title="function yn = hasxy(g)">hasxy</a>(h))
+0032     xy = <a href="getxy.html" class="code" title="function z = getxy(g)">getxy</a>(h);
+0033     xy = xy(vset,:);
+0034     <a href="embed.html" class="code" title="function embed(g,xy)">embed</a>(g,xy);
+0035 <span class="keyword">end</span>
+0036 
+0037 <span class="keyword">if</span> <a href="is_labeled.html" class="code" title="function yn = is_labeled(g)">is_labeled</a>(g)
+0038     <a href="label.html" class="code" title="function label(g,v,name)">label</a>(h);
+0039     GRAPH_MAGIC.graphs{g.idx}.labels = <span class="keyword">...</span>
+0040         GRAPH_MAGIC.graphs{h.idx}.labels(vset);
+0041 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Fri 30-Apr-2010 07:51:16 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

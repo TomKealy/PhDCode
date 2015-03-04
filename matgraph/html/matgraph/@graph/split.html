@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of split</title>
+  <meta name="keywords" content="split">
+  <meta name="description" content="part = split(g) --- partition the vertices of g into two subsets">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">matgraph</a> &gt; <a href="index.html">@graph</a> &gt; split.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for matgraph/@graph&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>split
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>part = split(g) --- partition the vertices of g into two subsets</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function part = split(g,how) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> part = split(g) --- partition the vertices of g into two subsets
+ The graph is partitioned based on the eigenvector associated with the 2nd
+ smallest eigenvalue of the Laplacian of g. 
+ split(g,'even') splits the graph into two equal (or as close as possible)
+ parts</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="eig.html" class="code" title="function v = eig(g)">eig</a>	eig(g) -- compute the eigenvalues of this graph</li><li><a href="laplacian.html" class="code" title="function m = laplacian(g,s)">laplacian</a>	laplacian(g) --- get the Laplacian matrix of g</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+<h2><a name="_subfunctions"></a>SUBFUNCTIONS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="#_sub1" class="code">function m = mymedian(list)</a></li></ul>
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function part = split(g,how)</a>
+0002 <span class="comment">% part = split(g) --- partition the vertices of g into two subsets</span>
+0003 <span class="comment">% The graph is partitioned based on the eigenvector associated with the 2nd</span>
+0004 <span class="comment">% smallest eigenvalue of the Laplacian of g.</span>
+0005 <span class="comment">% split(g,'even') splits the graph into two equal (or as close as possible)</span>
+0006 <span class="comment">% parts</span>
+0007 
+0008 L = <a href="laplacian.html" class="code" title="function m = laplacian(g,s)">laplacian</a>(g);
+0009 
+0010 [V,d] = <a href="eig.html" class="code" title="function v = eig(g)">eig</a>(L);
+0011 v2 = V(:,2);
+0012 
+0013 a = 0; <span class="comment">% place to cut v2</span>
+0014 
+0015 <span class="keyword">if</span> (nargin == 2)
+0016     <span class="keyword">if</span> (strcmp(how, <span class="string">'even'</span>))
+0017         a = <a href="#_sub1" class="code" title="subfunction m = mymedian(list)">mymedian</a>(v2);
+0018     <span class="keyword">end</span>
+0019 <span class="keyword">end</span>
+0020 
+0021 
+0022 
+0023 
+0024 part = cell(1,2);
+0025 
+0026 part{1} = find(v2 &gt; a);
+0027 part{2} = find(v2 &lt;= a);
+0028 part = partition(part);
+0029 
+0030 <a name="_sub1" href="#_subfunctions" class="code">function m = mymedian(list) </a>
+0031 
+0032 n = length(list);
+0033 <span class="keyword">if</span> (mod(n,2)==1)
+0034     m = median(list);
+0035 <span class="keyword">else</span>
+0036     list = sort(list);
+0037     nn = n/2;
+0038     m = (list(nn)+list(nn+1))/2;
+0039 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Fri 30-Apr-2010 07:51:16 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of shiftgraph</title>
+  <meta name="keywords" content="shiftgraph">
+  <meta name="description" content="shiftgraph(g,k,t) -- create a shiftgraph g based on t-tuples of k symbols">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">matgraph</a> &gt; <a href="index.html">@graph</a> &gt; shiftgraph.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for matgraph/@graph&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>shiftgraph
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>shiftgraph(g,k,t) -- create a shiftgraph g based on t-tuples of k symbols</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function shiftgraph(g,k,t) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> shiftgraph(g,k,t) -- create a shiftgraph g based on t-tuples of k symbols</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="add.html" class="code" title="function add(g,i,j)">add</a>	add --- add edge(s) to the graph</li><li><a href="dot.html" class="code" title="function dot(g,filename)">dot</a>	dot(g,filename) --- save graph for use by graphviz.</li><li><a href="label.html" class="code" title="function label(g,v,name)">label</a>	Assign labels to vertices of g</li><li><a href="resize.html" class="code" title="function resize(g, n)">resize</a>	resize(g,n) --- change the number of vertices in g to n</li><li><a href="sparse.html" class="code" title="function sparse(g)">sparse</a>	sparse(g) --- convert internal storage for g to sparse</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+<h2><a name="_subfunctions"></a>SUBFUNCTIONS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="#_sub1" class="code">function tup = num2tuple(n,k,t)</a></li><li><a href="#_sub2" class="code">function n = tuple2num(tup, k)</a></li><li><a href="#_sub3" class="code">function tt = shift(t,s)</a></li></ul>
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function shiftgraph(g,k,t)</a>
+0002 <span class="comment">% shiftgraph(g,k,t) -- create a shiftgraph g based on t-tuples of k symbols</span>
+0003 
+0004 <a href="resize.html" class="code" title="function resize(g, n)">resize</a>(g,0);
+0005 n = k^t;
+0006 <span class="keyword">if</span> (n&gt;1000) 
+0007     <a href="sparse.html" class="code" title="function sparse(g)">sparse</a>(g)
+0008 <span class="keyword">end</span>
+0009 <a href="resize.html" class="code" title="function resize(g, n)">resize</a>(g,n);
+0010 
+0011 edgelist = [];
+0012 
+0013 
+0014 <span class="keyword">for</span> v=1:n
+0015     vec = <a href="#_sub1" class="code" title="subfunction tup = num2tuple(n,k,t)">num2tuple</a>(v-1,k,t);
+0016     <a href="label.html" class="code" title="function label(g,v,name)">label</a>(g,v,int2str(vec))
+0017     <span class="keyword">for</span> j=0:k-1
+0018         wec = <a href="#_sub3" class="code" title="subfunction tt = shift(t,s)">shift</a>(vec,j);
+0019         w = <a href="#_sub2" class="code" title="subfunction n = tuple2num(tup, k)">tuple2num</a>(wec,k)+1;
+0020         <span class="keyword">if</span> (v~=w)
+0021             edgelist = [edgelist; [v,w]];
+0022         <span class="keyword">end</span>
+0023     <span class="keyword">end</span>
+0024 <span class="keyword">end</span>
+0025 <a href="add.html" class="code" title="function add(g,i,j)">add</a>(g,edgelist);
+0026 
+0027 
+0028 <a name="_sub1" href="#_subfunctions" class="code">function tup = num2tuple(n,k,t)</a>
+0029 <span class="comment">% convert a number into a base-k t-tuple</span>
+0030 tup = zeros(1,t);
+0031 <span class="keyword">for</span> i=1:t
+0032     tup(i) = mod(n,k);
+0033     n = n - tup(i);
+0034     n = n/k;
+0035 <span class="keyword">end</span>
+0036 
+0037 
+0038 <a name="_sub2" href="#_subfunctions" class="code">function n = tuple2num(tup, k)</a>
+0039 <span class="comment">% convert a base-k tuple into a number</span>
+0040 t = length(tup);
+0041 pows = k.^(0:t-1);
+0042 n = <a href="dot.html" class="code" title="function dot(g,filename)">dot</a>(pows,tup);
+0043 
+0044 
+0045 <a name="_sub3" href="#_subfunctions" class="code">function tt = shift(t,s)</a>
+0046 <span class="comment">% shift type symbol s into the tuple t and drop the last element</span>
+0047 n = length(t);
+0048 tt = [s, t(1:n-1)];</pre></div>
+<hr><address>Generated on Fri 30-Apr-2010 07:51:16 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

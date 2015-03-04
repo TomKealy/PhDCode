@@ -1,0 +1,204 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of chromatic_poly</title>
+  <meta name="keywords" content="chromatic_poly">
+  <meta name="description" content="chrompoly(g) --- find the chromatic polynomial of g">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">matgraph</a> &gt; <a href="index.html">@graph</a> &gt; chromatic_poly.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for matgraph/@graph&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>chromatic_poly
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>chrompoly(g) --- find the chromatic polynomial of g</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function out = chromatic_poly(g) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> chrompoly(g) --- find the chromatic polynomial of g
+ Warning: This algorithm is slow and unusable except for small graphs.
+ Author: James Preen</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="matrix.html" class="code" title="function A = matrix(g)">matrix</a>	matrix(g) --- return (a copy of) the adjacency matrix of g</li><li><a href="size.html" class="code" title="function [sz,tz] = size(g)">size</a>	size(g) --- returns [nv,ne] for the graph</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+<h2><a name="_subfunctions"></a>SUBFUNCTIONS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="#_sub1" class="code">function out = chrompoly(A)</a></li></ul>
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function out = chromatic_poly(g)</a>
+0002 <span class="comment">% chrompoly(g) --- find the chromatic polynomial of g</span>
+0003 <span class="comment">% Warning: This algorithm is slow and unusable except for small graphs.</span>
+0004 <span class="comment">% Author: James Preen</span>
+0005 
+0006 out = <a href="#_sub1" class="code" title="subfunction out = chrompoly(A)">chrompoly</a>(double(<a href="matrix.html" class="code" title="function A = matrix(g)">matrix</a>(g)));
+0007 
+0008 <span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+0009 <span class="comment">% Here is James Preen's .m file very lightly edited %</span>
+0010 <span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+0011 <a name="_sub1" href="#_subfunctions" class="code">function out = chrompoly(A)</a>
+0012 
+0013 out=[];
+0014 n=<a href="size.html" class="code" title="function [sz,tz] = size(g)">size</a>(A,1);
+0015 e=sum(sum(A))/2;
+0016 
+0017 <span class="keyword">if</span> e==0,
+0018     out(n+1)=0;out(1)=1;
+0019     <span class="comment">%  disp(['that is k bar ' num2str(n)]);</span>
+0020 <span class="keyword">else</span>
+0021     somenew=1;
+0022     nb=ceil(rand(1)*n);
+0023     <span class="keyword">while</span> somenew,
+0024         nb2=rem(find(A(nb',:)')-1,n)+1;
+0025         nb2=nb2';
+0026         nb3=unique([nb nb2]);
+0027         <span class="keyword">if</span> <a href="size.html" class="code" title="function [sz,tz] = size(g)">size</a>(nb3,2)==<a href="size.html" class="code" title="function [sz,tz] = size(g)">size</a>(nb,2), somenew=0;<span class="keyword">end</span>;
+0028         nb=nb3;
+0029     <span class="keyword">end</span>
+0030     <span class="keyword">if</span> <a href="size.html" class="code" title="function [sz,tz] = size(g)">size</a>(nb,2)&lt;n,
+0031         <span class="comment">%       disp(['disconnected set: ' num2str([nb])]);</span>
+0032         nb2=setdiff(1:n,nb);
+0033         A1=A;A1(:,nb2)=[];A1(nb2,:)=[];
+0034         A2=A;A2(:,nb)=[];A2(nb,:)=[];
+0035         out=conv(<a href="#_sub1" class="code" title="subfunction out = chrompoly(A)">chrompoly</a>(A1),<a href="#_sub1" class="code" title="subfunction out = chrompoly(A)">chrompoly</a>(A2));
+0036     <span class="keyword">else</span>
+0037         valseq=sum(A);
+0038         <span class="comment">% v1 = min(find(valseq==max(valseq)));</span>
+0039         v1 = find(valseq==max(valseq),1);
+0040         <span class="keyword">if</span> valseq(v1)==n-1,
+0041             <span class="comment">%   disp(['deleting vertex ' num2str([v1])]);</span>
+0042             A(v1,:)=[];A(:,v1)=[];
+0043             p=<a href="#_sub1" class="code" title="subfunction out = chrompoly(A)">chrompoly</a>(A);
+0044             bp=[1 -1];tp=1;
+0045             len=<a href="size.html" class="code" title="function [sz,tz] = size(g)">size</a>(p,2);m3a=[];
+0046             <span class="keyword">for</span> i=1:<a href="size.html" class="code" title="function [sz,tz] = size(g)">size</a>(p,2)
+0047                 m3a=[0 m3a] + p(len+1-i)*tp;
+0048                 tp=conv(tp,bp);
+0049             <span class="keyword">end</span>;
+0050             out=[m3a 0];
+0051         <span class="keyword">else</span>
+0052     
+0053             <span class="keyword">if</span> e &lt; n*(n-1)/2,
+0054                 <span class="comment">%     %choose 2 random vertices</span>
+0055                 <span class="comment">%     p=find(valseq&gt;0);</span>
+0056                 <span class="comment">%     v1=p(ceil(rand(1)*size(p,2)));</span>
+0057                 <span class="comment">%     nb1=find(A(v1,:)==1);</span>
+0058                 <span class="comment">%     v2=nb1(ceil(rand(1)*valseq(v1)));</span>
+0059 
+0060                 nb1=find(A(v1,:)==1);
+0061                 nbv=valseq(nb1);
+0062                 v2=nb1(min(find(nbv==max(nbv))));
+0063 
+0064                 <span class="comment">%deletion</span>
+0065                 <span class="comment">%   disp(['deleting edge ' num2str([v1 v2])]);</span>
+0066                 A1=A;
+0067                 A1(v1,v2)=0;A1(v2,v1)=0;
+0068                 m1=<a href="#_sub1" class="code" title="subfunction out = chrompoly(A)">chrompoly</a>(A1);
+0069     
+0070                 <span class="comment">%contraction</span>
+0071                 <span class="comment">%    disp(['contracting edge ' num2str([v1 v2])]);</span>
+0072                 A2=A;
+0073                 A2(v1,:)=(A2(v2,:)+A2(v1,:))&gt;0;
+0074                 A2(:,v1)=(A2(:,v2)+A2(:,v1))&gt;0;
+0075                 A2(v1,v1)=0;A2(:,v2)=[];A2(v2,:)=[];
+0076                 m2=<a href="#_sub1" class="code" title="subfunction out = chrompoly(A)">chrompoly</a>(A2);
+0077     
+0078                 s1=<a href="size.html" class="code" title="function [sz,tz] = size(g)">size</a>(m1,2);
+0079                 s2=<a href="size.html" class="code" title="function [sz,tz] = size(g)">size</a>(m2,2);
+0080                 pd=zeros(1,abs(s2-s1));
+0081     
+0082                 <span class="keyword">if</span> s1&gt;s2,
+0083                     out=m1 - [pd m2];
+0084                 <span class="keyword">elseif</span> s2&gt;s1,
+0085                     out=[pd m1] - m2;
+0086                 <span class="keyword">else</span>
+0087                     out= m1 - m2;
+0088                 <span class="keyword">end</span>
+0089             <span class="keyword">else</span>
+0090     
+0091                 nb1=find(A(v1,:)==0);
+0092                 nbv=valseq(nb1);
+0093                 v2=v1;
+0094                 <span class="keyword">while</span> v2==v1, v2=nb1(min(find(nbv==max(nbv)))); <span class="keyword">end</span>;
+0095 
+0096                 <span class="comment">%deletion</span>
+0097                 <span class="comment">%   disp(['adding edge ' num2str([v1 v2])]);</span>
+0098                 A1=A;
+0099                 A1(v1,v2)=1;A1(v2,v1)=1;
+0100                 m1=<a href="#_sub1" class="code" title="subfunction out = chrompoly(A)">chrompoly</a>(A1);
+0101     
+0102                 <span class="comment">%contraction</span>
+0103                 <span class="comment">%    disp(['contracting edge ' num2str([v1 v2])]);</span>
+0104                 A2=A;
+0105                 A2(v1,:)=(A2(v2,:)+A2(v1,:))&gt;0;
+0106                 A2(:,v1)=(A2(:,v2)+A2(:,v1))&gt;0;
+0107                 A2(v1,v1)=0;A2(:,v2)=[];A2(v2,:)=[];
+0108                 m2=<a href="#_sub1" class="code" title="subfunction out = chrompoly(A)">chrompoly</a>(A2);
+0109     
+0110                 s1=<a href="size.html" class="code" title="function [sz,tz] = size(g)">size</a>(m1,2);
+0111                 s2=<a href="size.html" class="code" title="function [sz,tz] = size(g)">size</a>(m2,2);
+0112                 pd=zeros(1,abs(s2-s1));
+0113     
+0114                 <span class="keyword">if</span> s1&gt;s2,
+0115                     out=m1 + [pd m2];
+0116                 <span class="keyword">elseif</span> s2&gt;s1,
+0117                     out=[pd m1] + m2;
+0118                 <span class="keyword">else</span>
+0119                     out= m1 + m2;
+0120                 <span class="keyword">end</span>
+0121 
+0122             <span class="keyword">end</span>; <span class="comment">%del-cont  / add-id</span>
+0123         <span class="keyword">end</span>;
+0124     <span class="keyword">end</span>;
+0125 <span class="keyword">end</span>; <span class="comment">%if e==0</span>
+0126 
+0127 
+0128 
+0129 <span class="comment">%%% OLD VERSION</span>
+0130 <span class="comment">%</span>
+0131 <span class="comment">% n = nv(g);</span>
+0132 <span class="comment">% m = ne(g);</span>
+0133 <span class="comment">%</span>
+0134 <span class="comment">% if m==0</span>
+0135 <span class="comment">%     p = zeros(1,n+1);</span>
+0136 <span class="comment">%     p(1) = 1;</span>
+0137 <span class="comment">%     return</span>
+0138 <span class="comment">% end</span>
+0139 <span class="comment">%</span>
+0140 <span class="comment">% elist = edges(g);</span>
+0141 <span class="comment">% u = elist(1,1);</span>
+0142 <span class="comment">% v = elist(1,2);</span>
+0143 <span class="comment">%</span>
+0144 <span class="comment">% h = graph;</span>
+0145 <span class="comment">% copy(h,g);</span>
+0146 <span class="comment">%</span>
+0147 <span class="comment">% delete(h,u,v);</span>
+0148 <span class="comment">% p1 = chrompoly(h);</span>
+0149 <span class="comment">% contract(h,u,v);</span>
+0150 <span class="comment">% p2 = chrompoly(h);</span>
+0151 <span class="comment">%</span>
+0152 <span class="comment">% p = p1 - [0,p2];</span>
+0153 <span class="comment">%</span>
+0154 <span class="comment">% free(h);</span></pre></div>
+<hr><address>Generated on Fri 30-Apr-2010 07:51:16 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

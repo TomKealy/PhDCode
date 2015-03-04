@@ -1,0 +1,28 @@
+\BOOKMARK [1][-]{section.1}{1. Getting Started}{}
+\BOOKMARK [2][-]{subsection.1.1}{1.1. Download Matgraph}{section.1}
+\BOOKMARK [2][-]{subsection.1.2}{1.2. Design Principles}{section.1}
+\BOOKMARK [2][-]{subsection.1.3}{1.3. A first session}{section.1}
+\BOOKMARK [1][-]{section.2}{2. Basics}{}
+\BOOKMARK [2][-]{subsection.2.1}{2.1. A path}{section.2}
+\BOOKMARK [2][-]{subsection.2.2}{2.2. Adding and deleting}{section.2}
+\BOOKMARK [2][-]{subsection.2.3}{2.3. Neighbors, degrees, etc.}{section.2}
+\BOOKMARK [2][-]{subsection.2.4}{2.4. Matrices}{section.2}
+\BOOKMARK [2][-]{subsection.2.5}{2.5. Standard graph constructors}{section.2}
+\BOOKMARK [1][-]{section.3}{3. Embeddings}{}
+\BOOKMARK [2][-]{subsection.3.1}{3.1. Basics}{section.3}
+\BOOKMARK [2][-]{subsection.3.2}{3.2. Automatic graph layout}{section.3}
+\BOOKMARK [1][-]{section.4}{4. Helper Classes: Partitions and Permutations}{}
+\BOOKMARK [2][-]{subsection.4.1}{4.1. Partitions}{section.4}
+\BOOKMARK [2][-]{subsection.4.2}{4.2. Permutations}{section.4}
+\BOOKMARK [1][-]{section.5}{5. Vertex Numbers and Labels}{}
+\BOOKMARK [1][-]{section.6}{6. Graph Operations}{}
+\BOOKMARK [1][-]{section.7}{7. Graph Computations}{}
+\BOOKMARK [2][-]{subsection.7.1}{7.1. Basic invariants}{section.7}
+\BOOKMARK [2][-]{subsection.7.2}{7.2. Connection}{section.7}
+\BOOKMARK [2][-]{subsection.7.3}{7.3. Coloring}{section.7}
+\BOOKMARK [1][-]{section.8}{8. Sparse Graphs}{}
+\BOOKMARK [1][-]{section.9}{9. Input and Output}{}
+\BOOKMARK [2][-]{subsection.9.1}{9.1. Saving graphs to disk with save and load}{section.9}
+\BOOKMARK [2][-]{subsection.9.2}{9.2. SGF: Simple Graph Format}{section.9}
+\BOOKMARK [2][-]{subsection.9.3}{9.3. A C++ graph parser}{section.9}
+\BOOKMARK [2][-]{subsection.9.4}{9.4. Connecting with other programs}{section.9}

@@ -1,0 +1,59 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of graph_destroy</title>
+  <meta name="keywords" content="graph_destroy">
+  <meta name="description" content="destroy the GRAPH_MAGIC system">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">matgraph</a> &gt; graph_destroy.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for matgraph&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>graph_destroy
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>destroy the GRAPH_MAGIC system</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>function graph_destroy </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> destroy the GRAPH_MAGIC system</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function graph_destroy</a>
+0002 <span class="comment">% destroy the GRAPH_MAGIC system</span>
+0003 
+0004 disp(<span class="string">'WARNING: This will delete all graphs and invalidate all graph handles'</span>)
+0005 yn = input(<span class="string">'Are you sure you want to proceed? 1 = YES, 0 = NO --&gt; '</span>);
+0006 
+0007 <span class="keyword">if</span> (yn == 1)
+0008     clear <span class="keyword">global</span> GRAPH_MAGIC
+0009     disp(<span class="string">'All graphs destroyed. Start over with graph_init'</span>);
+0010 <span class="keyword">else</span>
+0011     disp(<span class="string">'Destruction canceled'</span>);
+0012 <span class="keyword">end</span>
+0013</pre></div>
+<hr><address>Generated on Fri 30-Apr-2010 07:51:16 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

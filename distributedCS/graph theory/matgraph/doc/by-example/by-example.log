@@ -1,0 +1,515 @@
+This is pdfeTeX, Version 3.141592-1.21a-2.2 (Web2C 7.5.4) (format=pdflatex 2006.9.13)  11 OCT 2006 10:00
+entering extended mode
+**by-example
+(./by-example.tex
+LaTeX2e <2003/12/01>
+Babel <v3.8d> and hyphenation patterns for american, french, german, ngerman, b
+ahasa, basque, bulgarian, catalan, croatian, czech, danish, dutch, esperanto, e
+stonian, finnish, greek, icelandic, irish, italian, latin, magyar, norsk, polis
+h, portuges, romanian, russian, serbian, slovak, slovene, spanish, swedish, tur
+kish, ukrainian, nohyphenation, loaded.
+(/sw/share/texmf-dist/tex/latex/amscls/amsart.cls
+Document Class: amsart 2004/08/06 v2.20
+\linespacing=\dimen102
+\normalparindent=\dimen103
+\normaltopskip=\skip41
+(/sw/share/texmf-dist/tex/latex/amsmath/amsmath.sty
+Package: amsmath 2000/07/18 v2.13 AMS math features
+\@mathmargin=\skip42
+
+For additional information on amsmath, use the `?' option.
+(/sw/share/texmf-dist/tex/latex/amsmath/amstext.sty
+Package: amstext 2000/06/29 v2.01
+
+(/sw/share/texmf-dist/tex/latex/amsmath/amsgen.sty
+File: amsgen.sty 1999/11/30 v2.0
+\@emptytoks=\toks14
+\ex@=\dimen104
+))
+(/sw/share/texmf-dist/tex/latex/amsmath/amsbsy.sty
+Package: amsbsy 1999/11/29 v1.2d
+\pmbraise@=\dimen105
+)
+(/sw/share/texmf-dist/tex/latex/amsmath/amsopn.sty
+Package: amsopn 1999/12/14 v2.01 operator names
+)
+\inf@bad=\count79
+LaTeX Info: Redefining \frac on input line 211.
+\uproot@=\count80
+\leftroot@=\count81
+LaTeX Info: Redefining \overline on input line 307.
+\classnum@=\count82
+\DOTSCASE@=\count83
+LaTeX Info: Redefining \ldots on input line 379.
+LaTeX Info: Redefining \dots on input line 382.
+LaTeX Info: Redefining \cdots on input line 467.
+\Mathstrutbox@=\box26
+\strutbox@=\box27
+\big@size=\dimen106
+LaTeX Font Info:    Redeclaring font encoding OML on input line 567.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 568.
+\macc@depth=\count84
+\c@MaxMatrixCols=\count85
+\dotsspace@=\muskip10
+\c@parentequation=\count86
+\dspbrk@lvl=\count87
+\tag@help=\toks15
+\row@=\count88
+\column@=\count89
+\maxfields@=\count90
+\andhelp@=\toks16
+\eqnshift@=\dimen107
+\alignsep@=\dimen108
+\tagshift@=\dimen109
+\tagwidth@=\dimen110
+\totwidth@=\dimen111
+\lineht@=\dimen112
+\@envbody=\toks17
+\multlinegap=\skip43
+\multlinetaggap=\skip44
+\mathdisplay@stack=\toks18
+LaTeX Info: Redefining \[ on input line 2666.
+LaTeX Info: Redefining \] on input line 2667.
+)
+LaTeX Font Info:    Try loading font information for U+msa on input line 407.
+
+(/sw/share/texmf-dist/tex/latex/amsfonts/umsa.fd
+File: umsa.fd 2002/01/19 v2.2g AMS font definitions
+)
+(/sw/share/texmf-dist/tex/latex/amsfonts/amsfonts.sty
+Package: amsfonts 2001/10/25 v2.2f
+\symAMSa=\mathgroup4
+\symAMSb=\mathgroup5
+LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
+(Font)                  U/euf/m/n --> U/euf/b/n on input line 132.
+)
+\copyins=\insert233
+\abstractbox=\box28
+\listisep=\skip45
+\c@part=\count91
+\c@section=\count92
+\c@subsection=\count93
+\c@subsubsection=\count94
+\c@paragraph=\count95
+\c@subparagraph=\count96
+\c@figure=\count97
+\c@table=\count98
+\abovecaptionskip=\skip46
+\belowcaptionskip=\skip47
+\captionindent=\dimen113
+\thm@style=\toks19
+\thm@bodyfont=\toks20
+\thm@headfont=\toks21
+\thm@notefont=\toks22
+\thm@headpunct=\toks23
+\thm@preskip=\skip48
+\thm@postskip=\skip49
+\thm@headsep=\skip50
+\dth@everypar=\toks24
+) (./superdate.sty
+Package: superdate 
+\c@h@ur=\count99
+\c@h@urs=\count100
+\c@m@nute=\count101
+\c@m@nth=\count102
+\c@d@y=\count103
+\c@h@12=\count104
+)
+(/sw/share/texmf-dist/tex/latex/psnfss/times.sty
+Package: times 2004/09/15 PSNFSS-v9.2 (SPQR) 
+)
+(/sw/share/texmf-dist/tex/latex/psnfss/mathptmx.sty
+Package: mathptmx 2004/09/15 PSNFSS-v9.2 Times w/ Math, improved (SPQR, WaS) 
+LaTeX Font Info:    Redeclaring symbol font `operators' on input line 28.
+LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
+(Font)                  OT1/cmr/m/n --> OT1/ztmcm/m/n on input line 28.
+LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
+(Font)                  OT1/cmr/bx/n --> OT1/ztmcm/m/n on input line 28.
+LaTeX Font Info:    Redeclaring symbol font `letters' on input line 29.
+LaTeX Font Info:    Overwriting symbol font `letters' in version `normal'
+(Font)                  OML/cmm/m/it --> OML/ztmcm/m/it on input line 29.
+LaTeX Font Info:    Overwriting symbol font `letters' in version `bold'
+(Font)                  OML/cmm/b/it --> OML/ztmcm/m/it on input line 29.
+LaTeX Font Info:    Redeclaring symbol font `symbols' on input line 30.
+LaTeX Font Info:    Overwriting symbol font `symbols' in version `normal'
+(Font)                  OMS/cmsy/m/n --> OMS/ztmcm/m/n on input line 30.
+LaTeX Font Info:    Overwriting symbol font `symbols' in version `bold'
+(Font)                  OMS/cmsy/b/n --> OMS/ztmcm/m/n on input line 30.
+LaTeX Font Info:    Redeclaring symbol font `largesymbols' on input line 31.
+LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `normal'
+(Font)                  OMX/cmex/m/n --> OMX/ztmcm/m/n on input line 31.
+LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `bold'
+(Font)                  OMX/cmex/m/n --> OMX/ztmcm/m/n on input line 31.
+\symbold=\mathgroup6
+\symitalic=\mathgroup7
+LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 34.
+LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
+(Font)                  OT1/cmr/bx/n --> OT1/ptm/bx/n on input line 34.
+LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `bold'
+(Font)                  OT1/cmr/bx/n --> OT1/ptm/bx/n on input line 34.
+LaTeX Font Info:    Redeclaring math alphabet \mathit on input line 35.
+LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
+(Font)                  OT1/cmr/m/it --> OT1/ptm/m/it on input line 35.
+LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
+(Font)                  OT1/cmr/bx/it --> OT1/ptm/m/it on input line 35.
+LaTeX Info: Redefining \hbar on input line 50.
+)
+(/sw/share/texmf-dist/tex/latex/psnfss/courier.sty
+Package: courier 2004/09/15 PSNFSS-v9.2 (WaS) 
+)
+(/sw/share/texmf-dist/tex/latex/hyperref/hyperref.sty
+Package: hyperref 2003/11/30 v6.74m Hypertext links for LaTeX
+
+(/sw/share/texmf-dist/tex/latex/graphics/keyval.sty
+Package: keyval 1999/03/16 v1.13 key=value parser (DPC)
+\KV@toks@=\toks25
+)
+\@linkdim=\dimen114
+\Hy@linkcounter=\count105
+\Hy@pagecounter=\count106
+
+(/sw/share/texmf-dist/tex/latex/hyperref/pd1enc.def
+File: pd1enc.def 2003/11/30 v6.74m Hyperref: PDFDocEncoding definition (HO)
+)
+(/sw/share/texmf-dist/tex/latex/hyperref/hyperref.cfg
+File: hyperref.cfg 2002/06/06 v1.2 hyperref configuration of TeXLive and teTeX
+)
+Package hyperref Info: Hyper figures OFF on input line 1880.
+Package hyperref Info: Link nesting OFF on input line 1885.
+Package hyperref Info: Hyper index ON on input line 1888.
+Package hyperref Info: Plain pages ON on input line 1893.
+Package hyperref Info: Backreferencing OFF on input line 1900.
+
+Implicit mode ON; LaTeX internals redefined
+Package hyperref Info: Bookmarks ON on input line 2004.
+(/sw/share/texmf-dist/tex/latex/url/url.sty
+\Urlmuskip=\muskip11
+Package: url 2004/03/15  ver 3.1  Verb mode for urls, etc.
+)
+LaTeX Info: Redefining \url on input line 2143.
+\Fld@menulength=\count107
+\Field@Width=\dimen115
+\Fld@charsize=\dimen116
+\Choice@toks=\toks26
+\Field@toks=\toks27
+Package hyperref Info: Hyper figures OFF on input line 2618.
+Package hyperref Info: Link nesting OFF on input line 2623.
+Package hyperref Info: Hyper index ON on input line 2626.
+Package hyperref Info: backreferencing OFF on input line 2633.
+Package hyperref Info: Link coloring OFF on input line 2638.
+\c@Item=\count108
+\c@Hfootnote=\count109
+)
+*hyperref using default driver hpdftex*
+(/sw/share/texmf-dist/tex/latex/hyperref/hpdftex.def
+File: hpdftex.def 2003/11/30 v6.74m Hyperref driver for pdfTeX
+
+(/sw/share/texmf-dist/tex/latex/psnfss/pifont.sty
+Package: pifont 2004/09/15 PSNFSS-v9.2 Pi font support (SPQR) 
+LaTeX Font Info:    Try loading font information for U+pzd on input line 63.
+
+(/sw/share/texmf-dist/tex/latex/psnfss/upzd.fd
+File: upzd.fd 2001/06/04 font definitions for U/pzd.
+)
+LaTeX Font Info:    Try loading font information for U+psy on input line 64.
+
+(/sw/share/texmf-dist/tex/latex/psnfss/upsy.fd
+File: upsy.fd 2001/06/04 font definitions for U/psy.
+))
+\Fld@listcount=\count110
+\@outlinefile=\write3
+)
+(/sw/share/texmf-dist/tex/latex/geometry/geometry.sty
+Package: geometry 2002/07/08 v3.2 Page Geometry
+\Gm@cnth=\count111
+\Gm@cntv=\count112
+\c@Gm@tempcnt=\count113
+\Gm@bindingoffset=\dimen117
+\Gm@wd@mp=\dimen118
+\Gm@odd@mp=\dimen119
+\Gm@even@mp=\dimen120
+\Gm@dimlist=\toks28
+
+(/sw/share/texmf-dist/tex/latex/geometry/geometry.cfg))
+(/sw/share/texmf-dist/tex/latex/graphics/graphicx.sty
+Package: graphicx 1999/02/16 v1.0f Enhanced LaTeX Graphics (DPC,SPQR)
+
+(/sw/share/texmf-dist/tex/latex/graphics/graphics.sty
+Package: graphics 2001/07/07 v1.0n Standard LaTeX Graphics (DPC,SPQR)
+
+(/sw/share/texmf-dist/tex/latex/graphics/trig.sty
+Package: trig 1999/03/16 v1.09 sin cos tan (DPC)
+)
+(/sw/share/texmf-dist/tex/latex/graphics/graphics.cfg
+File: graphics.cfg 2005/02/03 v1.3 graphics configuration of teTeX/TeXLive
+)
+Package graphics Info: Driver file: pdftex.def on input line 80.
+
+(/sw/share/texmf-dist/tex/latex/graphics/pdftex.def
+File: pdftex.def 2002/06/19 v0.03k graphics/color for pdftex
+\Gread@gobject=\count114
+))
+\Gin@req@height=\dimen121
+\Gin@req@width=\dimen122
+) (./by-example.aux)
+\openout1 = `by-example.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 25.
+LaTeX Font Info:    ... okay on input line 25.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 25.
+LaTeX Font Info:    ... okay on input line 25.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 25.
+LaTeX Font Info:    ... okay on input line 25.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 25.
+LaTeX Font Info:    ... okay on input line 25.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 25.
+LaTeX Font Info:    ... okay on input line 25.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 25.
+LaTeX Font Info:    ... okay on input line 25.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 25.
+LaTeX Font Info:    ... okay on input line 25.
+LaTeX Font Info:    Try loading font information for OT1+ptm on input line 25.
+
+(/sw/share/texmf-dist/tex/latex/psnfss/ot1ptm.fd
+File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
+)
+LaTeX Font Info:    Try loading font information for OT1+ztmcm on input line 25
+.
+
+(/sw/share/texmf-dist/tex/latex/psnfss/ot1ztmcm.fd
+File: ot1ztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OT1/ztmcm.
+)
+LaTeX Font Info:    Try loading font information for OML+ztmcm on input line 25
+.
+
+(/sw/share/texmf-dist/tex/latex/psnfss/omlztmcm.fd
+File: omlztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OML/ztmcm.
+)
+LaTeX Font Info:    Try loading font information for OMS+ztmcm on input line 25
+.
+
+(/sw/share/texmf-dist/tex/latex/psnfss/omsztmcm.fd
+File: omsztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OMS/ztmcm.
+)
+LaTeX Font Info:    Try loading font information for OMX+ztmcm on input line 25
+.
+
+(/sw/share/texmf-dist/tex/latex/psnfss/omxztmcm.fd
+File: omxztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OMX/ztmcm.
+)
+LaTeX Font Info:    Try loading font information for U+msa on input line 25.
+
+(/sw/share/texmf-dist/tex/latex/amsfonts/umsa.fd
+File: umsa.fd 2002/01/19 v2.2g AMS font definitions
+)
+LaTeX Font Info:    Try loading font information for U+msb on input line 25.
+
+(/sw/share/texmf-dist/tex/latex/amsfonts/umsb.fd
+File: umsb.fd 2002/01/19 v2.2g AMS font definitions
+)
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 25.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7.4> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 25.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <6> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 25.
+Package hyperref Info: Link coloring OFF on input line 25.
+
+(/sw/share/texmf-dist/tex/latex/hyperref/nameref.sty
+Package: nameref 2003/12/03 v2.21 Cross-referencing by name of section
+\c@section@level=\count115
+)
+LaTeX Info: Redefining \ref on input line 25.
+LaTeX Info: Redefining \pageref on input line 25.
+ (./by-example.out)
+(./by-example.out)
+\openout3 = `by-example.out'.
+
+-------------------- Geometry parameters
+paper: class default
+landscape: --
+twocolumn: --
+twoside: true
+asymmetric: --
+h-parts: 72.26999pt, 469.75502pt, 72.26999pt
+v-parts: 72.26999pt, 650.43001pt, 72.26999pt
+hmarginratio: --
+vmarginratio: --
+lines: --
+heightrounded: --
+bindingoffset: 0.0pt
+truedimen: --
+includehead: --
+includefoot: --
+includemp: --
+driver: pdftex
+-------------------- Page layout dimensions and switches
+\paperwidth  614.295pt
+\paperheight 794.96999pt
+\textwidth  469.75502pt
+\textheight 650.43001pt
+\oddsidemargin  0.0pt
+\evensidemargin 0.0pt
+\topmargin  -22.0pt
+\headheight 8.0pt
+\headsep    14.0pt
+\footskip   12.0pt
+\marginparwidth 90.0pt
+\marginparsep   11.0pt
+\columnsep  10.0pt
+\skip\footins  7.0pt plus 11.0pt
+\hoffset 0.0pt
+\voffset 0.0pt
+\mag 1000
+\@twosidetrue \@mparswitchtrue 
+(1in=72.27pt, 1cm=28.45pt)
+-----------------------
+ (/sw/share/texmf-dist/tex/context/base/supp-pdf.tex
+(/sw/share/texmf-dist/tex/context/base/supp-mis.tex
+loading : Context Support Macros / Miscellaneous (2004.10.26)
+\protectiondepth=\count116
+\scratchcounter=\count117
+\scratchtoks=\toks29
+\scratchdimen=\dimen123
+\scratchskip=\skip51
+\scratchmuskip=\muskip12
+\scratchbox=\box29
+\scratchread=\read1
+\scratchwrite=\write4
+\zeropoint=\dimen124
+\onepoint=\dimen125
+\onebasepoint=\dimen126
+\minusone=\count118
+\thousandpoint=\dimen127
+\onerealpoint=\dimen128
+\emptytoks=\toks30
+\nextbox=\box30
+\nextdepth=\dimen129
+\everyline=\toks31
+\!!counta=\count119
+\!!countb=\count120
+\recursecounter=\count121
+)
+loading : Context Support Macros / PDF (2004.03.26)
+\nofMPsegments=\count122
+\nofMParguments=\count123
+\MPscratchCnt=\count124
+\MPscratchDim=\dimen130
+\MPnumerator=\count125
+\everyMPtoPDFconversion=\toks32
+)
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 28.
+LaTeX Font Info:    Try loading font information for OT1+pcr on input line 32.
+ (/sw/share/texmf-dist/tex/latex/psnfss/ot1pcr.fd
+File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
+)
+LaTeX Font Info:    Font shape `OT1/ptm/bx/sc' in size <12> not available
+(Font)              Font shape `OT1/ptm/b/sc' tried instead on input line 44.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <9> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 72.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 72.
+LaTeX Font Info:    Try loading font information for OMS+ptm on input line 78.
+
+(/sw/share/texmf-dist/tex/latex/psnfss/omsptm.fd
+File: omsptm.fd 
+)
+LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <12> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 78.
+ [1{/sw/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
+<figs/petersen.pdf, id=147, 540.0175pt x 405.515pt>
+File: figs/petersen.pdf Graphic file (type pdf)
+ <use figs/petersen.pdf>
+[2 <./figs/petersen.pdf>]
+LaTeX Font Info:    Font shape `OT1/pcr/bx/n' in size <12> not available
+(Font)              Font shape `OT1/pcr/b/n' tried instead on input line 182.
+
+<figs/petersen-vertex.pdf, id=161, 540.0175pt x 405.515pt>
+File: figs/petersen-vertex.pdf Graphic file (type pdf)
+
+<use figs/petersen-vertex.pdf> [3] [4 <./figs/petersen-vertex.pdf>] [5]
+<figs/grid34.pdf, id=185, 614.295pt x 462.72874pt>
+File: figs/grid34.pdf Graphic file (type pdf)
+ <use figs/grid34.pdf>
+[6] [7 <./figs/grid34.pdf>] [8] [9]
+<figs/randtree-yuck.pdf, id=215, 614.295pt x 462.72874pt>
+File: figs/randtree-yuck.pdf Graphic file (type pdf)
+
+<use figs/randtree-yuck.pdf>
+<figs/randtree-nice.pdf, id=216, 614.295pt x 462.72874pt>
+File: figs/randtree-nice.pdf Graphic file (type pdf)
+
+<use figs/randtree-nice.pdf> [10 <./figs/randtree-yuck.pdf> <./figs/randtree-ni
+ce.pdf>] [11] [12] [13]
+<figs/labeled-path.pdf, id=255, 540.0175pt x 405.515pt>
+File: figs/labeled-path.pdf Graphic file (type pdf)
+
+<use figs/labeled-path.pdf>
+Underfull \vbox (badness 1635) has occurred while \output is active []
+
+ [14 <./figs/labeled-path.pdf>]
+Overfull \hbox (12.64478pt too wide) in paragraph at lines 955--955
+[]\OT1/pcr/m/n/12 >> complement(g);   % g is now the complement of C_5 (which i
+s C_5)[] 
+ []
+
+[15] <figs/product-graph.pdf, id=272, 540.0175pt x 405.515pt>
+File: figs/product-graph.pdf Graphic file (type pdf)
+
+<use figs/product-graph.pdf>
+<figs/bfstree.pdf, id=273, 540.0175pt x 405.515pt>
+File: figs/bfstree.pdf Graphic file (type pdf)
+ <use figs/bfstree.pdf>
+[16 <./figs/product-graph.pdf>]
+<figs/ham-cycle.pdf, id=287, 540.0175pt x 405.515pt>
+File: figs/ham-cycle.pdf Graphic file (type pdf)
+ <use figs/ham-cycle.pdf>
+[17 <./figs/bfstree.pdf> <./figs/ham-cycle.pdf>] [18] [19]
+<figs/bucky.png, id=313, 539.616pt x 404.712pt>
+File: figs/bucky.png Graphic file (type png)
+ <use figs/bucky.png>
+<figs/split-grid.png, id=314, 539.616pt x 404.712pt>
+File: figs/split-grid.png Graphic file (type png)
+ <use figs/split-grid.png>
+[20 <./figs/bucky.png>] [21 <./figs/split-grid.png>] [22] [23]
+<figs/star.pdf, id=335, 549.05125pt x 160.6pt>
+File: figs/star.pdf Graphic file (type pdf)
+ <use figs/star.pdf> [24 <./figs/star.pdf>]
+LaTeX Font Info:    Font shape `OT1/pcr/m/it' in size <12> not available
+(Font)              Font shape `OT1/pcr/m/sl' tried instead on input line 1495.
+
+ [25] <figs/parsed.pdf, id=356, 1542.76375pt x 894.34125pt>
+File: figs/parsed.pdf Graphic file (type pdf)
+
+<use figs/parsed.pdf> <figs/four-cube.pdf, id=357, 309.155pt x 307.1475pt>
+File: figs/four-cube.pdf Graphic file (type pdf)
+
+<use figs/four-cube.pdf> [26]
+<figs/graffle.pdf, id=369, 310.15875pt x 335.2525pt>
+File: figs/graffle.pdf Graphic file (type pdf)
+ <use figs/graffle.pdf>
+[27 <./figs/parsed.pdf> <./figs/four-cube.pdf>] [28 <./figs/graffle.pdf>]
+(./by-example.aux) ) 
+Here is how much of TeX's memory you used:
+ 4459 strings out of 94500
+ 58096 string characters out of 1176114
+ 113538 words of memory out of 1000000
+ 7285 multiletter control sequences out of 10000+50000
+ 43689 words of font info for 100 fonts, out of 500000 for 2000
+ 741 hyphenation exceptions out of 1000
+ 34i,12n,39p,265b,329s stack positions out of 1500i,500n,5000p,200000b,5000s
+PDF statistics:
+ 393 PDF objects out of 300000
+ 82 named destinations out of 131072
+ 316 words of extra memory for PDF output out of 65536
+{/sw/share/texmf-dist/fonts/enc/dvips/psnfss/8r.enc}</sw/sh
+are/texmf-dist/fonts/type1/urw/courier/ucrro8a.pfb></sw/share/texmf-dist/fonts/
+type1/bluesky/cm/cmex10.pfb></sw/share/texmf-dist/fonts/type1/urw/symbol/usyr.p
+fb></sw/share/texmf-dist/fonts/type1/bluesky/cm/cmr10.pfb></sw/share/texmf-dist
+/fonts/type1/urw/courier/ucrb8a.pfb></sw/share/texmf-dist/fonts/type1/bluesky/c
+m/cmmi10.pfb></sw/share/texmf-dist/fonts/type1/bluesky/cm/cmsy10.pfb></sw/share
+/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></sw/share/texmf-dist/fonts/type
+1/urw/times/utmri8a.pfb></sw/share/texmf-dist/fonts/type1/urw/times/utmr8a.pfb>
+</sw/share/texmf-dist/fonts/type1/urw/times/utmb8a.pfb>
+Output written on by-example.pdf (28 pages, 223190 bytes).

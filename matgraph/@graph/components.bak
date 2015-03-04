@@ -1,0 +1,20 @@
+function p = components(g)
+% components(g) --- find the components of the graph g
+% If g has n vertices, this returns a partition of the [n] based on the
+% components of g.
+
+
+n = nv(g);
+
+p = partition(n);
+
+e = edges(g);
+m = ne(g);
+
+for k=1:m
+    u = e(k,1);
+    v = e(k,2);
+    if ~p(u,v)
+        p = merge(p,u,v);
+    end
+end

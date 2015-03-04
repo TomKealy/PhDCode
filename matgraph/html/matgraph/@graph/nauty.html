@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of nauty</title>
+  <meta name="keywords" content="nauty">
+  <meta name="description" content="nauty(g,filename) -- save a graph in nauty format">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">matgraph</a> &gt; <a href="index.html">@graph</a> &gt; nauty.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for matgraph/@graph&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>nauty
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>nauty(g,filename) -- save a graph in nauty format</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function nauty(g, filename) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> nauty(g,filename) -- save a graph in nauty format
+ g is the graph, filename is a string containing the filename.
+ It is recommended that the file name end &quot;.dre&quot;
+
+ nauty is a program for computing automorphisms of graphs. It can be
+ downloaded from http://cs.anu.edu.au/~bdm/nauty/
+
+ Inside the dreadnaut program, type &lt;filename to load the graph saved by
+ this function.</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="neighbors.html" class="code" title="function nlist = neighbors(g,v)">neighbors</a>	neighbors(g,v) --- neighbors of v as a list.</li><li><a href="nv.html" class="code" title="function n = nv(g)">nv</a>	nv(g) --- number of vertices in g</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function nauty(g, filename)</a>
+0002 <span class="comment">% nauty(g,filename) -- save a graph in nauty format</span>
+0003 <span class="comment">% g is the graph, filename is a string containing the filename.</span>
+0004 <span class="comment">% It is recommended that the file name end &quot;.dre&quot;</span>
+0005 <span class="comment">%</span>
+0006 <span class="comment">% nauty is a program for computing automorphisms of graphs. It can be</span>
+0007 <span class="comment">% downloaded from http://cs.anu.edu.au/~bdm/nauty/</span>
+0008 <span class="comment">%</span>
+0009 <span class="comment">% Inside the dreadnaut program, type &lt;filename to load the graph saved by</span>
+0010 <span class="comment">% this function.</span>
+0011 
+0012 
+0013 fid = fopen(filename,<span class="string">'w'</span>);
+0014 
+0015 <span class="keyword">if</span> (fid == -1)
+0016     error([<span class="string">'Cannot open &quot;'</span>, filename, <span class="string">'&quot; for output'</span>]);
+0017 <span class="keyword">end</span>
+0018 
+0019 n = <a href="nv.html" class="code" title="function n = nv(g)">nv</a>(g);
+0020 
+0021 fprintf(fid,<span class="string">'$ 1\n'</span>);     <span class="comment">% sets nauty to start number vertices from 1</span>
+0022 fprintf(fid,<span class="string">'n=%d\n'</span>, n); <span class="comment">% write the number of vertices</span>
+0023 fprintf(fid,<span class="string">'g\n'</span>);       <span class="comment">% begin the graph</span>
+0024 
+0025 <span class="keyword">for</span> v=1:n
+0026     Nv = <a href="neighbors.html" class="code" title="function nlist = neighbors(g,v)">neighbors</a>(g,v);
+0027     Nv = Nv(Nv&gt;v);
+0028     <span class="keyword">if</span> isempty(Nv)
+0029         <span class="keyword">continue</span>
+0030     <span class="keyword">end</span>
+0031     fprintf(fid,<span class="string">'%d: '</span>, v);
+0032     fprintf(fid,<span class="string">'%d '</span>, Nv);
+0033     fprintf(fid,<span class="string">';\n'</span>);
+0034 <span class="keyword">end</span>
+0035 
+0036 
+0037 fprintf(fid,<span class="string">'.\n'</span>);       <span class="comment">% end writing the graph</span>
+0038</pre></div>
+<hr><address>Generated on Fri 30-Apr-2010 07:51:16 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

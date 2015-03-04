@@ -1,0 +1,70 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of embed</title>
+  <meta name="keywords" content="embed">
+  <meta name="description" content="embed --- create an embedding for a graph">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">matgraph</a> &gt; <a href="index.html">@graph</a> &gt; embed.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for matgraph/@graph&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>embed
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>embed --- create an embedding for a graph</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function embed(g,xy) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> embed --- create an embedding for a graph
+ embed(g,xy) --- set the embedding to xy (an n-by-2 matrix)
+ embed(g) --- default circulat embedding</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="nv.html" class="code" title="function n = nv(g)">nv</a>	nv(g) --- number of vertices in g</li><li><a href="size.html" class="code" title="function [sz,tz] = size(g)">size</a>	size(g) --- returns [nv,ne] for the graph</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="bfstree.html" class="code" title="function bfstree(t,g,v)">bfstree</a>	bfstree(t,g,v) --- create a breadth-first spanning tree of g</li><li><a href="bucky.html" class="code" title="function bucky(g)">bucky</a>	bucky(g) --- overwrite g with the Buckyball graph (and give a nice</li><li><a href="cartesian.html" class="code" title="function cartesian(g,h1,h2)">cartesian</a>	cartesian(g,h1,h2) --- overwrite g with the product of h1 and h2</li><li><a href="cdraw.html" class="code" title="function cdraw(g,coloring,line_style,color_matrix)">cdraw</a>	cdraw(g,coloring) -- draw g with a given vertex coloring</li><li><a href="cube.html" class="code" title="function cube(g,k)">cube</a>	cube(g,k) --- create a k-cube (default k = 3)</li><li><a href="cycle.html" class="code" title="function cycle(g,n)">cycle</a>	cycle(g,n) --- create a cycle graph on n vertices</li><li><a href="dfstree.html" class="code" title="function dfstree(t,g,v)">dfstree</a>	dfstree(t,g,v) --- create a depth-first spanning tree of g</li><li><a href="disjoint_union.html" class="code" title="function disjoint_union(g,h,k)">disjoint_union</a>	disjoint_union(g,h,k) --- overwrite g with the disjoint union of the</li><li><a href="distxy.html" class="code" title="function e = distxy(g, D)">distxy</a>	distxy(g) -- give g a distance based embedding</li><li><a href="dodecahedron.html" class="code" title="function dodecahedron(g)">dodecahedron</a>	dodecahedron(g) --- overwrite g with the dodecahedron graph</li><li><a href="draw.html" class="code" title="function draw(g,line_style)">draw</a>	draw(g) --- draw g in a figure window</li><li><a href="graffle.html" class="code" title="function graffle(g, filename, width, rad)">graffle</a>	graffle(g, filename, width, rad) --- write graph in OmniGraffle format</li><li><a href="grid.html" class="code" title="function grid(g,a,b)">grid</a>	grid(g,a,b) --- create an a-by-b grid graph</li><li><a href="icosahedron.html" class="code" title="function icosahedron(g)">icosahedron</a>	icosahedron(g) --- overwrite g with the icosahedron graph</li><li><a href="induce.html" class="code" title="function induce(g,arg1,arg2)">induce</a>	induce --- create induced subgraphs</li><li><a href="join.html" class="code" title="function join(g,h1,h2)">join</a>	join(g,h1,h2) --- overwrite g with the join of h1 and h2</li><li><a href="line_graph.html" class="code" title="function line_graph(g,h)">line_graph</a>	line_graph(g,h) --- set g to be the line graph of h</li><li><a href="load.html" class="code" title="function load(g,filename)">load</a>	load(g,filename) --- read a saved graph on disk</li><li><a href="mdsxy.html" class="code" title="function DD = mdsxy(g,D)">mdsxy</a>	mdsxy(g) -- create an embedding based on multidimensional scaling</li><li><a href="mobius.html" class="code" title="function mobius(g,nverts)">mobius</a>	mobius(g,nverts) --- create a Mobius ladder graph</li><li><a href="octahedron.html" class="code" title="function octahedron(g)">octahedron</a>	octahedron(g) --- overwrite g with the octahedron graph, K(2,2,2)</li><li><a href="path.html" class="code" title="function path(g,n)">path</a>	path(g,n) --- make g a path on n vertices</li><li><a href="petersen.html" class="code" title="function petersen(g)">petersen</a>	petersen(g) --- overwrite g with the Petersen graph</li><li><a href="random_bipartite.html" class="code" title="function random_bipartite(g,n,m,p)">random_bipartite</a>	random_bipartite(g,n,m,p) --- create a random bipartite graph</li><li><a href="random_planar.html" class="code" title="function random_planar(g,n)">random_planar</a>	random_planar(g,n) --- create a random planar triangulation</li><li><a href="randxy.html" class="code" title="function randxy(g)">randxy</a>	randxy(g) --- give g a random embedding in the plane</li><li><a href="renumber.html" class="code" title="function renumber(g,perm)">renumber</a>	renumber the vertices of a graph</li><li><a href="scale.html" class="code" title="function scale(g,s)">scale</a>	scale(g,s) --- rescale the embedding of g by s</li><li><a href="sgf.html" class="code" title="function A = sgf(g,M)">sgf</a>	sgf --- simple graph format: a 2-column matrix representation</li><li><a href="springxy.html" class="code" title="function e=springxy(g)">springxy</a>	springxy(g) --- find a spring embedding of g</li></ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function embed(g,xy)</a>
+0002 <span class="comment">% embed --- create an embedding for a graph</span>
+0003 <span class="comment">% embed(g,xy) --- set the embedding to xy (an n-by-2 matrix)</span>
+0004 <span class="comment">% embed(g) --- default circulat embedding</span>
+0005 
+0006 <span class="keyword">global</span> GRAPH_MAGIC;
+0007 
+0008 n = <a href="nv.html" class="code" title="function n = nv(g)">nv</a>(g);
+0009 
+0010 <span class="keyword">if</span> (nargin == 1)
+0011     t = (0:n-1)*2*pi/n;
+0012     x = n * cos(t)/6;
+0013     y = n * sin(t)/6;
+0014     xy = [x',y'];
+0015 <span class="keyword">end</span>
+0016 
+0017 [nr,nc] = <a href="size.html" class="code" title="function [sz,tz] = size(g)">size</a>(xy);
+0018 <span class="keyword">if</span> (nr ~= n) || (nc ~= 2)
+0019     error(<span class="string">'Embedding must be an n-by-2 matrix'</span>);
+0020 <span class="keyword">end</span>
+0021 
+0022 GRAPH_MAGIC.graphs{g.idx}.xy = xy;</pre></div>
+<hr><address>Generated on Fri 30-Apr-2010 07:51:16 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

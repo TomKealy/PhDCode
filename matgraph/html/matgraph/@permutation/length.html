@@ -1,0 +1,49 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of length</title>
+  <meta name="keywords" content="length">
+  <meta name="description" content="length(p) gives the size of the permutation">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">matgraph</a> &gt; <a href="index.html">@permutation</a> &gt; length.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for matgraph/@permutation&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>length
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>length(p) gives the size of the permutation</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function s = length(p) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> length(p) gives the size of the permutation</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="length.html" class="code" title="function s = length(p)">length</a>	length(p) gives the size of the permutation</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="cycles.html" class="code" title="function c = cycles(p)">cycles</a>	cycles(p) returns a cell array containing the cycle structure of p</li><li><a href="display.html" class="code" title="function st = display(p)">display</a>	display(p) --- display a permutation in disjoint cycle form.</li><li><a href="eq.html" class="code" title="function tf = eq(p,q)">eq</a>	test if p == q</li><li><a href="length.html" class="code" title="function s = length(p)">length</a>	length(p) gives the size of the permutation</li><li><a href="longest_cycle.html" class="code" title="function maxlen = longest_cycle(p)">longest_cycle</a>	longest_cycle(p) -- return the length of the longest cycle in p</li><li><a href="matrix.html" class="code" title="function A = matrix(p)">matrix</a>	matrix(p) gives a permutation matrix version of p</li><li><a href="miss.html" class="code" title="function s = miss(p,dir)">miss</a>	miss(p) -- maximum increasing subsequence</li><li><a href="mpower.html" class="code" title="function q = mpower(p,t)">mpower</a>	p^t is p multiplied by itself t times. May have t <= 0.</li><li><a href="mtimes.html" class="code" title="function r = mtimes(p,q)">mtimes</a>	p*q is the composition of p and q</li><li><a href="permutation.html" class="code" title="function p = permutation(n)">permutation</a>	constructor for the permutation class</li><li><a href="random.html" class="code" title="function q = random(p)">random</a>	random(p) --- return a random reordering of the elements of p</li><li><a href="sign.html" class="code" title="function s = sign(p)">sign</a>	sign of a permutation (1 for even, -1 for odd)</li><li><a href="size.html" class="code" title="function s = size(p)">size</a>	size(p) returns the number of elements permuted and the number of cycles.</li><li><a href="subsref.html" class="code" title="function j = subsref(p,S)">subsref</a>	p(k) returns the result of p applied to k.</li></ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function s = length(p)</a>
+0002 <span class="comment">% length(p) gives the size of the permutation</span>
+0003 s = <a href="length.html" class="code" title="function s = length(p)">length</a>(p.array);</pre></div>
+<hr><address>Generated on Fri 30-Apr-2010 07:51:16 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

@@ -1,0 +1,179 @@
+<html xmlns:mwsh="http://www.mathworks.com/namespace/mcode/v1/syntaxhighlight.dtd">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <!--
+This HTML is auto-generated from an M-file.
+To make changes, update the M-file and republish this document.
+      -->
+      <title>Matchings in bipartite graphs</title>
+      <meta name="generator" content="MATLAB 7.2">
+      <meta name="date" content="2007-03-10">
+      <meta name="m-file" content="matching"><style>
+
+body {
+  background-color: white;
+  margin:10px;
+}
+
+h1 {
+  color: #990000; 
+  font-size: x-large;
+}
+
+h2 {
+  color: #990000;
+  font-size: medium;
+}
+
+/* Make the text shrink to fit narrow windows, but not stretch too far in 
+wide windows.  On Gecko-based browsers, the shrink-to-fit doesn't work. */ 
+p,h1,h2,div.content div {
+  /* for MATLAB's browser */
+  width: 600px;
+  /* for Mozilla, but the "width" tag overrides it anyway */
+  max-width: 600px;
+  /* for IE */
+  width:expression(document.body.clientWidth > 620 ? "600px": "auto" );
+}
+
+pre.codeinput {
+  background: #EEEEEE;
+  padding: 10px;
+}
+@media print {
+  pre.codeinput {word-wrap:break-word; width:100%;}
+} 
+
+span.keyword {color: #0000FF}
+span.comment {color: #228B22}
+span.string {color: #A020F0}
+span.untermstring {color: #B20000}
+span.syscmd {color: #B28C00}
+
+pre.codeoutput {
+  color: #666666;
+  padding: 10px;
+}
+
+pre.error {
+  color: red;
+}
+
+p.footer {
+  text-align: right;
+  font-size: xx-small;
+  font-weight: lighter;
+  font-style: italic;
+  color: gray;
+}
+
+  </style></head>
+   <body>
+      <div class="content">
+         <h1>Matchings in bipartite graphs</h1>
+         <introduction>
+            <p>We illustrate the use of <tt>bipmatch</tt> to find maximum matchings in bipartite graphs.
+            </p>
+         </introduction>
+         <h2>Contents</h2>
+         <div>
+            <ul>
+               <li><a href="#1">Grid graph</a></li>
+               <li><a href="#2">Draw the result</a></li>
+               <li><a href="#3">A random tree</a></li>
+               <li><a href="#4">A random bipartite graph</a></li>
+               <li><a href="#5">Release storage</a></li>
+            </ul>
+         </div>
+         <h2>Grid graph<a name="1"></a></h2>
+         <p>We begin with a 3-by-5 grid graph.</p><pre class="codeinput">g = graph;
+grid(g,3,5);
+p = bipartition(g); <span class="comment">% find the bipartion of the graph</span>
+m = bipmatch(g,p);
+disp(m)
+</pre><pre class="codeoutput">     1     2
+     3     6
+     5     4
+     7     8
+     9    12
+    11    10
+    13    14
+
+</pre><h2>Draw the result<a name="2"></a></h2>
+         <p>We create a function <tt>edraw</tt> to draw a graph with a selected set of edges solid and the remaining edges dotted.
+         </p>
+         <p>The code for <tt>edraw</tt> is in the file <tt>edraw.m</tt> and is <i>not</i> part of that standard Matgraph distribution. The code is repeated here:
+         </p><pre class="codeinput"><span class="comment">% function edraw(g,elist)</span>
+<span class="comment">% n = nv(g);</span>
+<span class="comment">% h = graph(n);       % create a graph with same number of vertices as g</span>
+<span class="comment">% add(h,elist);       % add edges in elist to h</span>
+<span class="comment">% embed(h, getxy(g)); % copy g's embedding</span>
+<span class="comment">% draw(g,':');        % draw g with dotted lines</span>
+<span class="comment">% draw(h);            % overdraw h with solid lines</span>
+<span class="comment">% free(h);            % release h</span>
+
+clf;edraw(g,m);
+</pre><img vspace="5" hspace="5" src="matching_01.png"> <h2>A random tree<a name="3"></a></h2><pre class="codeinput">random_tree(g,25);
+distxy(g);
+p = bipartition(g);
+m = bipmatch(g,p);
+clf;edraw(g,m);
+</pre><pre class="codeoutput">Optimization terminated: relative function value
+ changing by less than OPTIONS.TolFun.
+Embedding score = 26.8465
+Elapsed time is 3.617853 seconds.
+</pre><img vspace="5" hspace="5" src="matching_02.png"> <h2>A random bipartite graph<a name="4"></a></h2><pre class="codeinput">random_bipartite(g,8,10,.4);
+p = bipartition(g);
+m = bipmatch(g,p);
+clf;edraw(g,m);
+</pre><img vspace="5" hspace="5" src="matching_03.png"> <h2>Release storage<a name="5"></a></h2><pre class="codeinput">free(g)
+</pre><p class="footer"><br>
+            Published with MATLAB&reg; 7.2<br></p>
+      </div>
+      <!--
+##### SOURCE BEGIN #####
+%% Matchings in bipartite graphs
+% We illustrate the use of |bipmatch| to find maximum matchings in
+% bipartite graphs.
+%% Grid graph
+% We begin with a 3-by-5 grid graph.
+g = graph;
+grid(g,3,5);
+p = bipartition(g); % find the bipartion of the graph
+m = bipmatch(g,p);
+disp(m)
+%% Draw the result
+% We create a function |edraw| to draw a graph with a selected set of edges
+% solid and the remaining edges dotted.
+%
+% The code for |edraw| is in the file |edraw.m| and is _not_ part of that
+% standard Matgraph distribution. The code is repeated here:
+
+% function edraw(g,elist)
+% n = nv(g);
+% h = graph(n);       % create a graph with same number of vertices as g
+% add(h,elist);       % add edges in elist to h
+% embed(h, getxy(g)); % copy g's embedding
+% draw(g,':');        % draw g with dotted lines
+% draw(h);            % overdraw h with solid lines
+% free(h);            % release h
+
+clf;edraw(g,m);
+%% A random tree
+random_tree(g,25);
+distxy(g);
+p = bipartition(g);
+m = bipmatch(g,p);
+clf;edraw(g,m);
+%% A random bipartite graph
+random_bipartite(g,8,10,.4);
+p = bipartition(g);
+m = bipmatch(g,p);
+clf;edraw(g,m);
+%% Release storage
+free(g)
+##### SOURCE END #####
+-->
+   </body>
+</html>

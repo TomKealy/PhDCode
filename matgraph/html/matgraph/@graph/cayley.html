@@ -1,0 +1,195 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of cayley</title>
+  <meta name="keywords" content="cayley">
+  <meta name="description" content="cayley(g,perms) -- create a Cayley graph (undirected)">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">matgraph</a> &gt; <a href="index.html">@graph</a> &gt; cayley.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for matgraph/@graph&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>cayley
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>cayley(g,perms) -- create a Cayley graph (undirected)</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function cayley(g,perms,verbose) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> cayley(g,perms) -- create a Cayley graph (undirected)
+ g is the graph to be written
+ perms is a cell array of permutations that are the generators of a group.
+ The vertices of g are the elements of the generated group. There is an
+ edge from u to v in g provided there is a generator x so that u=v*x or 
+ v = u*x.
+
+ cayley(g,perms,verbose) with verbose = true displays progress as this
+ function works. [Default is verbose = false.]</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="add.html" class="code" title="function add(g,i,j)">add</a>	add --- add edge(s) to the graph</li><li><a href="clear_labels.html" class="code" title="function clear_labels(g)">clear_labels</a>	clear_labels(g) --- delete all labels in g</li><li><a href="display.html" class="code" title="function display(g)">display</a>	display(g) --- display basic information about a graph object</li><li><a href="edges.html" class="code" title="function elist = edges(g)">edges</a>	edges(g) --- list the edges in g as a 2-column matrix</li><li><a href="label.html" class="code" title="function label(g,v,name)">label</a>	Assign labels to vertices of g</li><li><a href="nv.html" class="code" title="function n = nv(g)">nv</a>	nv(g) --- number of vertices in g</li><li><a href="resize.html" class="code" title="function resize(g, n)">resize</a>	resize(g,n) --- change the number of vertices in g to n</li><li><a href="size.html" class="code" title="function [sz,tz] = size(g)">size</a>	size(g) --- returns [nv,ne] for the graph</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+<h2><a name="_subfunctions"></a>SUBFUNCTIONS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="#_sub1" class="code">function group = gen_group(perms,verbose)</a></li></ul>
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function cayley(g,perms,verbose)</a>
+0002 <span class="comment">% cayley(g,perms) -- create a Cayley graph (undirected)</span>
+0003 <span class="comment">% g is the graph to be written</span>
+0004 <span class="comment">% perms is a cell array of permutations that are the generators of a group.</span>
+0005 <span class="comment">% The vertices of g are the elements of the generated group. There is an</span>
+0006 <span class="comment">% edge from u to v in g provided there is a generator x so that u=v*x or</span>
+0007 <span class="comment">% v = u*x.</span>
+0008 <span class="comment">%</span>
+0009 <span class="comment">% cayley(g,perms,verbose) with verbose = true displays progress as this</span>
+0010 <span class="comment">% function works. [Default is verbose = false.]</span>
+0011 
+0012 <span class="keyword">if</span> nargin&lt;3
+0013     verbose = false;
+0014 <span class="keyword">end</span>
+0015 
+0016 <span class="keyword">if</span> ~isa(perms,<span class="string">'cell'</span>)
+0017     error(<span class="string">'2nd argument must be a cell array of permutations'</span>);
+0018 <span class="keyword">end</span>
+0019 
+0020 perms = perms(:);    <span class="comment">% make it 1-dimensional</span>
+0021 np = length(perms);  <span class="comment">% number of perms</span>
+0022 
+0023 <span class="comment">% if there are no perms in the list, then the group is {1} and the graph is</span>
+0024 <span class="comment">% a single vertex</span>
+0025 <span class="keyword">if</span> np == 0
+0026     <a href="resize.html" class="code" title="function resize(g, n)">resize</a>(g,1);
+0027     <span class="keyword">return</span>
+0028 <span class="keyword">end</span>
+0029 
+0030 <span class="keyword">if</span> verbose
+0031     disp(<span class="string">'Generating the group elements from these:'</span>)
+0032 <span class="keyword">end</span>
+0033 
+0034 group = <a href="#_sub1" class="code" title="subfunction group = gen_group(perms,verbose)">gen_group</a>(perms,verbose);
+0035 
+0036 <span class="keyword">if</span> verbose
+0037     disp(<span class="string">'Generating edge list'</span>)
+0038 <span class="keyword">end</span>
+0039 
+0040 <a href="edges.html" class="code" title="function elist = edges(g)">edges</a> = [];
+0041 
+0042 ng = <a href="size.html" class="code" title="function [sz,tz] = size(g)">size</a>(group,1);  <span class="comment">% size of the group</span>
+0043 
+0044 <span class="keyword">for</span> i=1:ng
+0045     u = group(i,:);
+0046     pu = permutation(u);
+0047     <span class="keyword">for</span> k=1:np
+0048         pv = pu * perms{k};
+0049         v = array(pv);
+0050         j = find_row(v,group);
+0051         <a href="edges.html" class="code" title="function elist = edges(g)">edges</a> = [<a href="edges.html" class="code" title="function elist = edges(g)">edges</a>; [i,j]];
+0052     <span class="keyword">end</span>
+0053 <span class="keyword">end</span>
+0054 
+0055 <a href="edges.html" class="code" title="function elist = edges(g)">edges</a> = unique(sortrows(<a href="edges.html" class="code" title="function elist = edges(g)">edges</a>),<span class="string">'rows'</span>);
+0056 
+0057 m = <a href="size.html" class="code" title="function [sz,tz] = size(g)">size</a>(<a href="edges.html" class="code" title="function elist = edges(g)">edges</a>,1);
+0058 <span class="keyword">if</span> verbose
+0059     disp([int2str(m),<span class="string">' edges created'</span>]);
+0060 <span class="keyword">end</span>
+0061 
+0062 <a href="resize.html" class="code" title="function resize(g, n)">resize</a>(g,0)
+0063 <a href="add.html" class="code" title="function add(g,i,j)">add</a>(g,<a href="edges.html" class="code" title="function elist = edges(g)">edges</a>);
+0064 
+0065 <span class="comment">% label the nodes</span>
+0066 <a href="clear_labels.html" class="code" title="function clear_labels(g)">clear_labels</a>(g);
+0067 <span class="keyword">for</span> u = 1:<a href="nv.html" class="code" title="function n = nv(g)">nv</a>(g)
+0068     str = <a href="display.html" class="code" title="function display(g)">display</a>(permutation(group(u,:)));
+0069     <a href="label.html" class="code" title="function label(g,v,name)">label</a>(g,u,str);
+0070 <span class="keyword">end</span>
+0071 
+0072 
+0073 <span class="comment">%%</span>
+0074 <a name="_sub1" href="#_subfunctions" class="code">function group = gen_group(perms,verbose)</a>
+0075 <span class="comment">% create the full list of elements of a group based on a matrix of</span>
+0076 <span class="comment">% generators.</span>
+0077 
+0078 
+0079 np = length(perms);
+0080 psize = 0;
+0081 
+0082 <span class="keyword">for</span> i=1:np
+0083     pis = length(perms{i});
+0084     <span class="keyword">if</span> pis &gt; psize
+0085         psize = pis;
+0086     <span class="keyword">end</span>
+0087 <span class="keyword">end</span>
+0088 
+0089 
+0090 gen_matrix = zeros(np, psize);
+0091 <span class="keyword">for</span> i=1:np
+0092     p = perms{i} * permutation(psize);
+0093     perms{i} = p;
+0094     row = array(p);
+0095     gen_matrix(i,:) = row;
+0096     <span class="keyword">if</span> verbose
+0097         <a href="display.html" class="code" title="function display(g)">display</a>(perms{i})
+0098     <span class="keyword">end</span>
+0099 <span class="keyword">end</span>
+0100 
+0101 <span class="comment">% initially, the group is the identity and all the generators</span>
+0102 group = [1:psize; gen_matrix];
+0103 group = sortrows(group);
+0104 last = group;
+0105 
+0106 <span class="keyword">while</span> ~isempty(last)
+0107     ng = <a href="size.html" class="code" title="function [sz,tz] = size(g)">size</a>(group,1);
+0108     <span class="keyword">if</span> verbose
+0109         disp([<span class="string">'Expanding. Group size = '</span>, int2str(ng)]);
+0110     <span class="keyword">end</span>
+0111     new_rows = [];
+0112     <span class="keyword">for</span> k=1:<a href="size.html" class="code" title="function [sz,tz] = size(g)">size</a>(last,1)
+0113         p = permutation(last(k,:));
+0114         <span class="keyword">for</span> j=1:np
+0115             q = p * perms{j};
+0116             row = array(q);
+0117             idx = find_row(row,group);
+0118             <span class="keyword">if</span> idx == 0
+0119                 new_rows = [new_rows;row];
+0120             <span class="keyword">end</span>
+0121         <span class="keyword">end</span>
+0122     <span class="keyword">end</span>
+0123     <span class="keyword">if</span> <a href="size.html" class="code" title="function [sz,tz] = size(g)">size</a>(new_rows,1) == 0
+0124         <span class="keyword">return</span>
+0125     <span class="keyword">end</span>
+0126         
+0127     new_rows = unique(sortrows(new_rows),<span class="string">'rows'</span>);
+0128     last = [];
+0129     <span class="keyword">for</span> k=1:<a href="size.html" class="code" title="function [sz,tz] = size(g)">size</a>(new_rows,1)
+0130         r = new_rows(k,:);
+0131         <span class="keyword">if</span> find_row(r,group) == 0
+0132             last = [last;r];
+0133         <span class="keyword">end</span>
+0134     <span class="keyword">end</span>
+0135     group = [group; last];
+0136     group = unique(sortrows(group),<span class="string">'rows'</span>);
+0137     
+0138 <span class="keyword">end</span>
+0139</pre></div>
+<hr><address>Generated on Fri 30-Apr-2010 07:51:16 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

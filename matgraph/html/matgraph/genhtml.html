@@ -1,0 +1,72 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of genhtml</title>
+  <meta name="keywords" content="genhtml">
+  <meta name="description" content="generate matgraph html documentation using m2html">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">matgraph</a> &gt; genhtml.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for matgraph&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>genhtml
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>generate matgraph html documentation using m2html</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>function genhtml </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> generate matgraph html documentation using m2html</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function genhtml</a>
+0002 <span class="comment">% generate matgraph html documentation using m2html</span>
+0003 tic
+0004 addpath(<span class="string">'/Users/ers/Common/Programming/matlab/m2html/'</span>)
+0005 save_dir = pwd;
+0006 cd ~/Common/Programming/
+0007 
+0008 file_list = cell(1,4);
+0009 file_list{1} = <span class="string">'matgraph'</span>;
+0010 file_list{2} = <span class="string">'matgraph/@graph'</span>;
+0011 file_list{3} = <span class="string">'matgraph/@partition'</span>;
+0012 file_list{4} = <span class="string">'matgraph/@permutation'</span>;
+0013 
+0014 m2html(<span class="string">'mfiles'</span>,file_list, <span class="keyword">...</span>
+0015     <span class="string">'htmldir'</span>,<span class="string">'matgraph/html'</span>, <span class="keyword">...</span>
+0016     <span class="string">'recursive'</span>,<span class="string">'off'</span> <span class="keyword">...</span>
+0017     )
+0018 
+0019 cd matgraph
+0020 rmpath(<span class="string">'/Users/ers/Common/Programming/matlab/m2html/'</span>)
+0021 et = toc;
+0022 mins = floor(et/60);
+0023 secs = round(et - 60*mins);
+0024 
+0025 disp([<span class="string">'Elapsed time: '</span>, int2str(mins), <span class="string">''''</span>, int2str(secs),<span class="string">'&quot;'</span>])
+0026 cd(save_dir)</pre></div>
+<hr><address>Generated on Fri 30-Apr-2010 07:51:16 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

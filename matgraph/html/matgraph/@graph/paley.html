@@ -1,0 +1,76 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of paley</title>
+  <meta name="keywords" content="paley">
+  <meta name="description" content="paley(g,n) --- create a Paley graph with n vertices">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">matgraph</a> &gt; <a href="index.html">@graph</a> &gt; paley.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for matgraph/@graph&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>paley
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>paley(g,n) --- create a Paley graph with n vertices</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function paley(g,n) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> paley(g,n) --- create a Paley graph with n vertices
+ In this graph, there is an edge from i to j iff i-j is a square in Z_n.
+ Hence, if -1 is not a square in Z_n, an error is generated.</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="add.html" class="code" title="function add(g,i,j)">add</a>	add --- add edge(s) to the graph</li><li><a href="resize.html" class="code" title="function resize(g, n)">resize</a>	resize(g,n) --- change the number of vertices in g to n</li><li><a href="rmxy.html" class="code" title="function rmxy(g)">rmxy</a>	rmxy(g) --- erase g's embedding</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function paley(g,n)</a>
+0002 <span class="comment">% paley(g,n) --- create a Paley graph with n vertices</span>
+0003 <span class="comment">% In this graph, there is an edge from i to j iff i-j is a square in Z_n.</span>
+0004 <span class="comment">% Hence, if -1 is not a square in Z_n, an error is generated.</span>
+0005 
+0006 <span class="keyword">if</span> (n &lt;= 1) 
+0007     error(<span class="string">'n must be at least 2'</span>);
+0008 <span class="keyword">end</span>
+0009 
+0010 squares = unique(mod((1:n-1).^2,n));
+0011 
+0012 <span class="comment">% check if -1 is a square</span>
+0013 <span class="keyword">if</span> ~ismember(n-1,squares)
+0014     error(<span class="string">'-1 is not a square in Z_n'</span>);
+0015 <span class="keyword">end</span>
+0016 <a href="resize.html" class="code" title="function resize(g, n)">resize</a>(g,0);
+0017 <a href="resize.html" class="code" title="function resize(g, n)">resize</a>(g,n);
+0018 <a href="rmxy.html" class="code" title="function rmxy(g)">rmxy</a>(g);
+0019 <span class="keyword">for</span> v = 1:n
+0020     nlist = mod(v+squares,n);
+0021     idx = find(nlist == 0);
+0022     <span class="keyword">if</span> length(idx)&gt;0
+0023         nlist(idx) = n;
+0024     <span class="keyword">end</span>
+0025     <span class="keyword">for</span> w = nlist
+0026         <a href="add.html" class="code" title="function add(g,i,j)">add</a>(g,v,w)
+0027     <span class="keyword">end</span>
+0028 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Fri 30-Apr-2010 07:51:16 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

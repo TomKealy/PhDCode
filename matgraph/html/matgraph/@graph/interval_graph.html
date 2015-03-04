@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of interval_graph</title>
+  <meta name="keywords" content="interval_graph">
+  <meta name="description" content="interval_graph(g,ilist) --- create an interval graph">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">matgraph</a> &gt; <a href="index.html">@graph</a> &gt; interval_graph.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for matgraph/@graph&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>interval_graph
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>interval_graph(g,ilist) --- create an interval graph</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function interval_graph(g,ilist) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> interval_graph(g,ilist) --- create an interval graph
+ ilist is an n-by-2 list of intervals.</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="add.html" class="code" title="function add(g,i,j)">add</a>	add --- add edge(s) to the graph</li><li><a href="clear_edges.html" class="code" title="function clear_edges(g)">clear_edges</a>	clear_edges(g) --- delete all edges of g</li><li><a href="renumber.html" class="code" title="function renumber(g,perm)">renumber</a>	renumber the vertices of a graph</li><li><a href="resize.html" class="code" title="function resize(g, n)">resize</a>	resize(g,n) --- change the number of vertices in g to n</li><li><a href="rmxy.html" class="code" title="function rmxy(g)">rmxy</a>	rmxy(g) --- erase g's embedding</li><li><a href="size.html" class="code" title="function [sz,tz] = size(g)">size</a>	size(g) --- returns [nv,ne] for the graph</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+<h2><a name="_subfunctions"></a>SUBFUNCTIONS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="#_sub1" class="code">function yn = meets(a,b)</a></li></ul>
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function interval_graph(g,ilist)</a>
+0002 <span class="comment">% interval_graph(g,ilist) --- create an interval graph</span>
+0003 <span class="comment">% ilist is an n-by-2 list of intervals.</span>
+0004 
+0005 [n,x] = <a href="size.html" class="code" title="function [sz,tz] = size(g)">size</a>(ilist);
+0006 
+0007 <span class="keyword">for</span> i=1:n
+0008     ilist(i,:) = sort(ilist(i,:));
+0009 <span class="keyword">end</span>
+0010 
+0011 [ilist,idx] = sortrows(ilist);
+0012 
+0013 <a href="resize.html" class="code" title="function resize(g, n)">resize</a>(g,n);
+0014 <a href="clear_edges.html" class="code" title="function clear_edges(g)">clear_edges</a>(g);
+0015 <a href="rmxy.html" class="code" title="function rmxy(g)">rmxy</a>(g);
+0016 
+0017 <span class="keyword">for</span> i=1:n-1
+0018     a = ilist(i,:);
+0019     <span class="keyword">for</span> j=i+1:n
+0020         b = ilist(j,:);
+0021         <span class="keyword">if</span> (<a href="#_sub1" class="code" title="subfunction yn = meets(a,b)">meets</a>(a,b))
+0022             <a href="add.html" class="code" title="function add(g,i,j)">add</a>(g,i,j);
+0023         <span class="keyword">end</span>
+0024         <span class="keyword">if</span> a(2) &lt; b(1)
+0025             <span class="keyword">break</span>
+0026         <span class="keyword">end</span>
+0027     <span class="keyword">end</span>
+0028 <span class="keyword">end</span>
+0029 
+0030 <a href="renumber.html" class="code" title="function renumber(g,perm)">renumber</a>(g,idx);
+0031 
+0032 
+0033 <a name="_sub1" href="#_subfunctions" class="code">function yn = meets(a,b)</a>
+0034 
+0035 <span class="keyword">if</span> (a(2) &lt; b(1)) || (b(2) &lt; a(1))
+0036     yn = 0;
+0037 <span class="keyword">else</span>
+0038     yn = 1;
+0039 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Fri 30-Apr-2010 07:51:16 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

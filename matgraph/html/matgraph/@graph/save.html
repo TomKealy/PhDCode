@@ -1,0 +1,126 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of save</title>
+  <meta name="keywords" content="save">
+  <meta name="description" content="save(g,filename) --- save a graph to disk">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">matgraph</a> &gt; <a href="index.html">@graph</a> &gt; save.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for matgraph/@graph&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>save
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>save(g,filename) --- save a graph to disk</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function save(g,filename) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> save(g,filename) --- save a graph to disk
+ The graph g is saved to a file named in the argument filename.</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="edges.html" class="code" title="function elist = edges(g)">edges</a>	edges(g) --- list the edges in g as a 2-column matrix</li><li><a href="get_label.html" class="code" title="function out = get_label(g,v)">get_label</a>	get_label(g) or get_label(g,v) --- get vertex label(s)</li><li><a href="getxy.html" class="code" title="function z = getxy(g)">getxy</a>	getxy(g) --- give g's embedding (or [] if g doesn't have one)</li><li><a href="hasxy.html" class="code" title="function yn = hasxy(g)">hasxy</a>	hasxy(g) --- determine if an embedding has been created for g</li><li><a href="is_labeled.html" class="code" title="function yn = is_labeled(g)">is_labeled</a>	is_labeled(g) --- determine if there are labels on vertices.</li><li><a href="issparse.html" class="code" title="function yn = issparse(g)">issparse</a>	issparse(g) --- check if g's adjacency matrix is sparse</li><li><a href="ne.html" class="code" title="function m = ne(g,h)">ne</a>	ne(g) --- number of edges in g or ne(g,h) --- check for inequality</li><li><a href="nv.html" class="code" title="function n = nv(g)">nv</a>	nv(g) --- number of vertices in g</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+<h2><a name="_subfunctions"></a>SUBFUNCTIONS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="#_sub1" class="code">function write_range(fid, array, first, last, name)</a></li></ul>
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function save(g,filename)</a>
+0002 <span class="comment">% save(g,filename) --- save a graph to disk</span>
+0003 <span class="comment">% The graph g is saved to a file named in the argument filename.</span>
+0004 
+0005 
+0006 fid = fopen(filename,<span class="string">'w'</span>);
+0007 
+0008 <span class="keyword">if</span> (fid == -1)
+0009     error([<span class="string">'Cannot open &quot;'</span>, filename, <span class="string">'&quot; for output'</span>]);
+0010 <span class="keyword">end</span>
+0011 
+0012 n = <a href="nv.html" class="code" title="function n = nv(g)">nv</a>(g);
+0013 m = <a href="ne.html" class="code" title="function m = ne(g,h)">ne</a>(g);
+0014 
+0015 fprintf(fid,<span class="string">'%%saved graph data\n'</span>);
+0016 fprintf(fid,<span class="string">'sp = %d;\n'</span>, <a href="issparse.html" class="code" title="function yn = issparse(g)">issparse</a>(g));
+0017 fprintf(fid,<span class="string">'nverts = %g;\n'</span>,n);
+0018 fprintf(fid,<span class="string">'nedges = %g;\n'</span>,m);
+0019 
+0020 fprintf(fid,<span class="string">'a = zeros(%d,1);\n'</span>, m);
+0021 fprintf(fid,<span class="string">'b = zeros(%d,1);\n'</span>, m);
+0022 
+0023 elist = <a href="edges.html" class="code" title="function elist = edges(g)">edges</a>(g);
+0024 a = elist(:,1);
+0025 b = elist(:,2);
+0026 
+0027 step = 20;
+0028 <span class="keyword">for</span> k=1:step:m
+0029     last = min([k+step,m]);
+0030     <a href="#_sub1" class="code" title="subfunction write_range(fid, array, first, last, name)">write_range</a>(fid,a,k,last,<span class="string">'a'</span>);
+0031     <a href="#_sub1" class="code" title="subfunction write_range(fid, array, first, last, name)">write_range</a>(fid,b,k,last,<span class="string">'b'</span>);
+0032 <span class="keyword">end</span>
+0033 
+0034 fprintf(fid,<span class="string">'elist = [a,b];\n'</span>);
+0035 
+0036 <span class="keyword">if</span> <a href="hasxy.html" class="code" title="function yn = hasxy(g)">hasxy</a>(g)
+0037     xy = <a href="getxy.html" class="code" title="function z = getxy(g)">getxy</a>(g);
+0038     x = xy(:,1);
+0039     y = xy(:,2);
+0040     fprintf(fid,<span class="string">'x = zeros(%d,1);\n'</span>, n);
+0041     fprintf(fid,<span class="string">'y = zeros(%d,1);\n'</span>, n);
+0042     
+0043     step = 10;
+0044     
+0045     <span class="keyword">for</span> k=1:step:n
+0046         last = min([k+step,n]);
+0047         <a href="#_sub1" class="code" title="subfunction write_range(fid, array, first, last, name)">write_range</a>(fid,x,k,last,<span class="string">'x'</span>);
+0048         <a href="#_sub1" class="code" title="subfunction write_range(fid, array, first, last, name)">write_range</a>(fid,y,k,last,<span class="string">'y'</span>);
+0049     <span class="keyword">end</span>
+0050     
+0051     fprintf(fid,<span class="string">'xy = [x,y];\n'</span>);
+0052 <span class="keyword">else</span>
+0053     fprintf(fid,<span class="string">'xy = [];\n'</span>);
+0054 <span class="keyword">end</span>
+0055 
+0056 <span class="keyword">if</span> <a href="is_labeled.html" class="code" title="function yn = is_labeled(g)">is_labeled</a>(g)
+0057     fprintf(fid,<span class="string">'labs = {'</span>);
+0058     <span class="keyword">for</span> v=1:n
+0059         fprintf(fid,[<span class="string">''''</span>, <a href="get_label.html" class="code" title="function out = get_label(g,v)">get_label</a>(g,v), <span class="string">''''</span>]);
+0060         <span class="keyword">if</span> (v&lt;n)
+0061             fprintf(fid,<span class="string">';'</span>);
+0062         <span class="keyword">else</span>
+0063             fprintf(fid,<span class="string">'};\n'</span>);
+0064         <span class="keyword">end</span>
+0065     <span class="keyword">end</span>
+0066 <span class="keyword">else</span>
+0067     fprintf(fid,<span class="string">'labs={};\n'</span>);
+0068 <span class="keyword">end</span>
+0069 fclose(fid);
+0070 
+0071 
+0072 
+0073 <a name="_sub1" href="#_subfunctions" class="code">function write_range(fid, array, first, last, name)</a>
+0074 
+0075 fprintf(fid,<span class="string">'%s(%d:%d) = ['</span>, name, first, last);
+0076 fprintf(fid,<span class="string">'%g;'</span>,array(first:(last-1)));
+0077 fprintf(fid,<span class="string">'%g];\n'</span>, array(last));</pre></div>
+<hr><address>Generated on Fri 30-Apr-2010 07:51:16 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

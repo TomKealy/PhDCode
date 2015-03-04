@@ -1,0 +1,111 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of springxy</title>
+  <meta name="keywords" content="springxy">
+  <meta name="description" content="springxy(g) --- find a spring embedding of g">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">matgraph</a> &gt; <a href="index.html">@graph</a> &gt; springxy.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for matgraph/@graph&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>springxy
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>springxy(g) --- find a spring embedding of g</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function e=springxy(g) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> springxy(g) --- find a spring embedding of g
+ 
+ This routine is very slow. distxy(g) does a good job and is faster.
+ 
+ REQUIRE THE OPTIMIZATION TOOLBOX</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="embed.html" class="code" title="function embed(g,xy)">embed</a>	embed --- create an embedding for a graph</li><li><a href="getxy.html" class="code" title="function z = getxy(g)">getxy</a>	getxy(g) --- give g's embedding (or [] if g doesn't have one)</li><li><a href="has.html" class="code" title="function yn = has(g,u,v)">has</a>	has --- check if the graph has a particular vertex or edge</li><li><a href="hasxy.html" class="code" title="function yn = hasxy(g)">hasxy</a>	hasxy(g) --- determine if an embedding has been created for g</li><li><a href="isconnected.html" class="code" title="function yn = isconnected(g)">isconnected</a>	isconnected(g) --- test if g is a connected graph</li><li><a href="nv.html" class="code" title="function n = nv(g)">nv</a>	nv(g) --- number of vertices in g</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+<h2><a name="_subfunctions"></a>SUBFUNCTIONS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="#_sub1" class="code">function e = spring_energy(xy,g)</a></li><li><a href="#_sub2" class="code">function evec = spring_energy_vec(xy)</a></li></ul>
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function e=springxy(g)</a>
+0002 <span class="comment">% springxy(g) --- find a spring embedding of g</span>
+0003 <span class="comment">%</span>
+0004 <span class="comment">% This routine is very slow. distxy(g) does a good job and is faster.</span>
+0005 <span class="comment">%</span>
+0006 <span class="comment">% REQUIRE THE OPTIMIZATION TOOLBOX</span>
+0007 
+0008 tic;
+0009 n = <a href="nv.html" class="code" title="function n = nv(g)">nv</a>(g);
+0010 con = <a href="isconnected.html" class="code" title="function yn = isconnected(g)">isconnected</a>(g);
+0011 
+0012 <span class="keyword">if</span> (<a href="hasxy.html" class="code" title="function yn = hasxy(g)">hasxy</a>(g))
+0013     xy0 = <a href="getxy.html" class="code" title="function z = getxy(g)">getxy</a>(g);
+0014 <span class="keyword">else</span>
+0015     xy0 = 5*randn(n,2);
+0016 <span class="keyword">end</span>
+0017 
+0018 <span class="comment">% opts = optimset('TolX',0.1, 'MaxIter', 50*n,'Display', 'off');</span>
+0019 opts = optimset(<span class="string">'MaxIter'</span>, 10*n,<span class="string">'Display'</span>, <span class="string">'final'</span>);
+0020 
+0021 <span class="comment">%[xy,e]= fminsearch(@spring_energy, xy0, opts ,g);</span>
+0022 <span class="comment">%[xy,e]= fminunc(@spring_energy, xy0, opts ,g);</span>
+0023 
+0024 [xy,e] = lsqnonlin(@<a href="#_sub2" class="code" title="subfunction evec = spring_energy_vec(xy)">spring_energy_vec</a>, xy0, [], [], opts);
+0025 <span class="comment">%[xy,e]= fminunc(@spring_energy, xy0, opts ,g);</span>
+0026 
+0027 <a href="embed.html" class="code" title="function embed(g,xy)">embed</a>(g,xy);
+0028 toc;
+0029 
+0030 
+0031 <a name="_sub1" href="#_subfunctions" class="code">function e = spring_energy(xy,g)</a>
+0032 
+0033 vec = <a href="#_sub2" class="code" title="subfunction evec = spring_energy_vec(xy)">spring_energy_vec</a>(xy);
+0034 e = sum(vec.^2);
+0035 
+0036 <span class="keyword">end</span>
+0037 
+0038 <a name="_sub2" href="#_subfunctions" class="code">function evec = spring_energy_vec(xy)</a>
+0039 <span class="comment">%n = nv(g);</span>
+0040 evec = zeros(n,n);
+0041 
+0042 <span class="keyword">for</span> u=1:n-1
+0043     <span class="keyword">for</span> v=u+1:n
+0044         d = norm(xy(u,:)-xy(v,:));
+0045         <span class="keyword">if</span> <a href="has.html" class="code" title="function yn = has(g,u,v)">has</a>(g,u,v)
+0046             evec(u,v) = d;
+0047         <span class="keyword">end</span>
+0048         <span class="keyword">if</span> ~con
+0049             d = min(d,n/2);
+0050         <span class="keyword">end</span>
+0051         evec(v,u) = 1/sqrt(d);
+0052     <span class="keyword">end</span>
+0053 <span class="keyword">end</span>
+0054 
+0055 
+0056 <span class="keyword">end</span>
+0057 
+0058 
+0059 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Fri 30-Apr-2010 07:51:16 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

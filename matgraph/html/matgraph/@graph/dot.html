@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of dot</title>
+  <meta name="keywords" content="dot">
+  <meta name="description" content="dot(g,filename) --- save graph for use by graphviz.">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">matgraph</a> &gt; <a href="index.html">@graph</a> &gt; dot.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for matgraph/@graph&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>dot
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>dot(g,filename) --- save graph for use by graphviz.</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function dot(g,filename) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> dot(g,filename) --- save graph for use by graphviz.
+ filename is the name of the file to save and should end with &quot;.dot&quot;
+ writes the graph to disk in a form that can be read into the graphviz
+ tools such as dot, neato, etc. 
+ If the graph is labeled, we use the vertex labels instead of the vertex
+ numbers. In this case, it is vital that the labels be distinct.</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="clear_labels.html" class="code" title="function clear_labels(g)">clear_labels</a>	clear_labels(g) --- delete all labels in g</li><li><a href="edges.html" class="code" title="function elist = edges(g)">edges</a>	edges(g) --- list the edges in g as a 2-column matrix</li><li><a href="get_label.html" class="code" title="function out = get_label(g,v)">get_label</a>	get_label(g) or get_label(g,v) --- get vertex label(s)</li><li><a href="is_labeled.html" class="code" title="function yn = is_labeled(g)">is_labeled</a>	is_labeled(g) --- determine if there are labels on vertices.</li><li><a href="label.html" class="code" title="function label(g,v,name)">label</a>	Assign labels to vertices of g</li><li><a href="ne.html" class="code" title="function m = ne(g,h)">ne</a>	ne(g) --- number of edges in g or ne(g,h) --- check for inequality</li><li><a href="nv.html" class="code" title="function n = nv(g)">nv</a>	nv(g) --- number of vertices in g</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="shiftgraph.html" class="code" title="function shiftgraph(g,k,t)">shiftgraph</a>	shiftgraph(g,k,t) -- create a shiftgraph g based on t-tuples of k symbols</li></ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function dot(g,filename)</a>
+0002 <span class="comment">% dot(g,filename) --- save graph for use by graphviz.</span>
+0003 <span class="comment">% filename is the name of the file to save and should end with &quot;.dot&quot;</span>
+0004 <span class="comment">% writes the graph to disk in a form that can be read into the graphviz</span>
+0005 <span class="comment">% tools such as dot, neato, etc.</span>
+0006 <span class="comment">% If the graph is labeled, we use the vertex labels instead of the vertex</span>
+0007 <span class="comment">% numbers. In this case, it is vital that the labels be distinct.</span>
+0008 
+0009 graph_name = [<span class="string">'Graph_'</span>, int2str(g.idx)];
+0010 
+0011 <span class="keyword">if</span> nargin==1
+0012     filename = [graph_name,<span class="string">'.dot'</span>];
+0013 <span class="keyword">end</span>
+0014 
+0015 fid = fopen(filename,<span class="string">'w'</span>);
+0016 <span class="keyword">if</span> (fid&lt;0)
+0017     error([<span class="string">'Cannot open '</span>, filename, <span class="string">' for writing'</span>]);
+0018 <span class="keyword">end</span>
+0019 
+0020 label_state = <a href="is_labeled.html" class="code" title="function yn = is_labeled(g)">is_labeled</a>(g);
+0021 <span class="keyword">if</span> (~label_state)
+0022     <a href="label.html" class="code" title="function label(g,v,name)">label</a>(g)
+0023 <span class="keyword">end</span>
+0024 
+0025 fprintf(fid,[<span class="string">'strict graph '</span>, graph_name, <span class="string">'{ \n'</span>]);
+0026 
+0027 n = <a href="nv.html" class="code" title="function n = nv(g)">nv</a>(g);
+0028 
+0029 <span class="keyword">for</span> v=1:n
+0030     fprintf(fid,<span class="string">'&quot;%s&quot;;\n'</span>, <a href="get_label.html" class="code" title="function out = get_label(g,v)">get_label</a>(g,v));
+0031 <span class="keyword">end</span>
+0032 
+0033 elist = <a href="edges.html" class="code" title="function elist = edges(g)">edges</a>(g);
+0034 m = <a href="ne.html" class="code" title="function m = ne(g,h)">ne</a>(g);
+0035 
+0036 <span class="keyword">for</span> k=1:m
+0037     a = <a href="get_label.html" class="code" title="function out = get_label(g,v)">get_label</a>(g,elist(k,1));
+0038     b = <a href="get_label.html" class="code" title="function out = get_label(g,v)">get_label</a>(g,elist(k,2));
+0039     fprintf(fid, <span class="string">'&quot;%s&quot; -- &quot;%s&quot;; \n'</span>, a, b);
+0040 <span class="keyword">end</span>
+0041 
+0042 fprintf(fid,<span class="string">'}\n'</span>);
+0043 
+0044 
+0045 <span class="keyword">if</span> (~label_state)
+0046     <a href="clear_labels.html" class="code" title="function clear_labels(g)">clear_labels</a>(g);
+0047 <span class="keyword">end</span>
+0048 
+0049 disp([<span class="string">'Wrote &quot;'</span>, filename,<span class="string">'&quot;'</span>]);
+0050 fclose(fid);</pre></div>
+<hr><address>Generated on Fri 30-Apr-2010 07:51:16 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

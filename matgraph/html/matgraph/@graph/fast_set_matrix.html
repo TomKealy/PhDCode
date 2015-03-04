@@ -1,0 +1,55 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of fast_set_matrix</title>
+  <meta name="keywords" content="fast_set_matrix">
+  <meta name="description" content="fast_set_matrix(g,A) --- overwrite the adjacency matrix of g with A">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">matgraph</a> &gt; <a href="index.html">@graph</a> &gt; fast_set_matrix.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for matgraph/@graph&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>fast_set_matrix
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>fast_set_matrix(g,A) --- overwrite the adjacency matrix of g with A</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function fast_set_matrix(g,A) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> fast_set_matrix(g,A) --- overwrite the adjacency matrix of g with A
+ WARNING: No checks are done on the matrix!!! See set_matrix for a safer
+ method. See also check_matrix.</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="complement.html" class="code" title="function complement(g,h)">complement</a>	graph complement</li><li><a href="complete.html" class="code" title="function complete(g,a,b)">complete</a>	complete: build complete and complete multipartite graphs</li><li><a href="mycielski.html" class="code" title="function mycielski(g,h)">mycielski</a>	mycielski(g,n) --- create n'th order Mycielski graph (n > 0)</li><li><a href="random.html" class="code" title="function random(g,arg1,arg2)">random</a>	random --- overwrite g with a random graph</li><li><a href="random_bipartite.html" class="code" title="function random_bipartite(g,n,m,p)">random_bipartite</a>	random_bipartite(g,n,m,p) --- create a random bipartite graph</li><li><a href="set_matrix.html" class="code" title="function set_matrix(g,A)">set_matrix</a>	set_matrix(g,A) --- set g to be the graph specificed in the matrix A.</li></ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function fast_set_matrix(g,A)</a>
+0002 <span class="comment">% fast_set_matrix(g,A) --- overwrite the adjacency matrix of g with A</span>
+0003 <span class="comment">% WARNING: No checks are done on the matrix!!! See set_matrix for a safer</span>
+0004 <span class="comment">% method. See also check_matrix.</span>
+0005 
+0006 <span class="keyword">global</span> GRAPH_MAGIC
+0007 GRAPH_MAGIC.graphs{g.idx}.array = logical(A);</pre></div>
+<hr><address>Generated on Fri 30-Apr-2010 07:51:16 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

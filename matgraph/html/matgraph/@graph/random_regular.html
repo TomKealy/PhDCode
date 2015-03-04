@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of random_regular</title>
+  <meta name="keywords" content="random_regular">
+  <meta name="description" content="random_regular(g,n,k) --- create a random regular graph">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">matgraph</a> &gt; <a href="index.html">@graph</a> &gt; random_regular.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for matgraph/@graph&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>random_regular
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>random_regular(g,n,k) --- create a random regular graph</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function random_regular(g,n,k) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> random_regular(g,n,k) --- create a random regular graph
+ g is the graph to be overwritten
+ n is the number of vertices
+ k is the degree
+
+ Note: This is a proof-of-concept version; no claims that this
+ implementation is efficient!</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="add.html" class="code" title="function add(g,i,j)">add</a>	add --- add edge(s) to the graph</li><li><a href="clear_edges.html" class="code" title="function clear_edges(g)">clear_edges</a>	clear_edges(g) --- delete all edges of g</li><li><a href="clear_labels.html" class="code" title="function clear_labels(g)">clear_labels</a>	clear_labels(g) --- delete all labels in g</li><li><a href="copy.html" class="code" title="function copy(g,h)">copy</a>	copy(g,h) --- overwrite g with a copy of h</li><li><a href="free.html" class="code" title="function free(g)">free</a>	free(g) --- free the graph from the system</li><li><a href="graph.html" class="code" title="function g = graph(n)">graph</a>	graph: constructor for the graph class</li><li><a href="ne.html" class="code" title="function m = ne(g,h)">ne</a>	ne(g) --- number of edges in g or ne(g,h) --- check for inequality</li><li><a href="rmxy.html" class="code" title="function rmxy(g)">rmxy</a>	rmxy(g) --- erase g's embedding</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function random_regular(g,n,k)</a>
+0002 <span class="comment">% random_regular(g,n,k) --- create a random regular graph</span>
+0003 <span class="comment">% g is the graph to be overwritten</span>
+0004 <span class="comment">% n is the number of vertices</span>
+0005 <span class="comment">% k is the degree</span>
+0006 <span class="comment">%</span>
+0007 <span class="comment">% Note: This is a proof-of-concept version; no claims that this</span>
+0008 <span class="comment">% implementation is efficient!</span>
+0009 
+0010 <span class="keyword">if</span> mod(n*k,2)==1
+0011     error(<span class="string">'We number have n*k even or no regular graph is possible'</span>);
+0012 <span class="keyword">end</span>
+0013 
+0014 <span class="keyword">if</span> (k&gt;n-1)
+0015     error(<span class="string">'Degree too large'</span>);
+0016 <span class="keyword">end</span>
+0017 
+0018 <span class="keyword">if</span> (k&lt;0)
+0019     error(<span class="string">'Degree must be nonnegative'</span>)
+0020 <span class="keyword">end</span>
+0021 
+0022 h = <a href="graph.html" class="code" title="function g = graph(n)">graph</a>(n);  <span class="comment">% scratch graph</span>
+0023 
+0024 <span class="keyword">while</span>(true)
+0025     <a href="clear_edges.html" class="code" title="function clear_edges(g)">clear_edges</a>(h);
+0026     p = randperm(n*k);
+0027     elist = reshape(p,n*k/2,2);
+0028     elist = mod(elist,n)+1;
+0029     <span class="keyword">if</span> any(elist(:,1)==elist(:,2))  <span class="comment">% reject if there's a loop</span>
+0030         <span class="keyword">continue</span>
+0031     <span class="keyword">end</span>
+0032     <a href="add.html" class="code" title="function add(g,i,j)">add</a>(h,elist);
+0033     <span class="keyword">if</span> <a href="ne.html" class="code" title="function m = ne(g,h)">ne</a>(h)== n*k/2
+0034         <span class="keyword">break</span>
+0035     <span class="keyword">end</span>
+0036 <span class="keyword">end</span>
+0037 
+0038 <a href="copy.html" class="code" title="function copy(g,h)">copy</a>(g,h);
+0039 <a href="rmxy.html" class="code" title="function rmxy(g)">rmxy</a>(g);
+0040 <a href="clear_labels.html" class="code" title="function clear_labels(g)">clear_labels</a>(g);
+0041 
+0042 <a href="free.html" class="code" title="function free(g)">free</a>(h);</pre></div>
+<hr><address>Generated on Fri 30-Apr-2010 07:51:16 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

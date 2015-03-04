@@ -1,0 +1,112 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of bipartition</title>
+  <meta name="keywords" content="bipartition">
+  <meta name="description" content="part = bipartition(g) --- find bipartition of a bipartite graph">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">matgraph</a> &gt; <a href="index.html">@graph</a> &gt; bipartition.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for matgraph/@graph&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>bipartition
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>part = bipartition(g) --- find bipartition of a bipartite graph</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function p = bipartition(g) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> part = bipartition(g) --- find bipartition of a bipartite graph
+ If the graph is bipartite, this function finds a bipartition X,Y of the
+ vertex set; these are returned in a partition object.
+ If the graph is not bipartite, an empty partition is returned.</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="components.html" class="code" title="function p = components(g)">components</a>	components(g) --- find the components of the graph g</li><li><a href="matrix.html" class="code" title="function A = matrix(g)">matrix</a>	matrix(g) --- return (a copy of) the adjacency matrix of g</li><li><a href="ne.html" class="code" title="function m = ne(g,h)">ne</a>	ne(g) --- number of edges in g or ne(g,h) --- check for inequality</li><li><a href="nv.html" class="code" title="function n = nv(g)">nv</a>	nv(g) --- number of vertices in g</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function p = bipartition(g)</a>
+0002 <span class="comment">% part = bipartition(g) --- find bipartition of a bipartite graph</span>
+0003 <span class="comment">% If the graph is bipartite, this function finds a bipartition X,Y of the</span>
+0004 <span class="comment">% vertex set; these are returned in a partition object.</span>
+0005 <span class="comment">% If the graph is not bipartite, an empty partition is returned.</span>
+0006 
+0007 n = <a href="nv.html" class="code" title="function n = nv(g)">nv</a>(g);
+0008 
+0009 <span class="keyword">if</span> n &lt; 2
+0010     p = partition(n);
+0011     <span class="keyword">return</span>
+0012 <span class="keyword">end</span>
+0013 
+0014 <span class="keyword">if</span> <a href="ne.html" class="code" title="function m = ne(g,h)">ne</a>(g) == 0
+0015     p1 = 1:2:n;
+0016     p2 = 2:2:n;
+0017     p = partition({p1,p2});
+0018     <span class="keyword">return</span>
+0019 <span class="keyword">end</span>
+0020 
+0021 c = <a href="components.html" class="code" title="function p = components(g)">components</a>(g);
+0022 x = zeros(n,1);
+0023 y = x;
+0024 
+0025 nc = np(c);
+0026 c = parts(c);  <span class="comment">% convert to cell array</span>
+0027 
+0028 <span class="comment">% set up the X-seed vector</span>
+0029 <span class="keyword">for</span> k=1:nc
+0030     j = min(c{k});
+0031     x(j) = 1;
+0032 <span class="keyword">end</span>
+0033 
+0034 A = <a href="matrix.html" class="code" title="function A = matrix(g)">matrix</a>(g);
+0035 
+0036 last_sum = 0;
+0037 <span class="keyword">while</span> sum(x) &gt; last_sum
+0038     last_sum  = sum(x) ;
+0039     xx = A*(A*x)+x;
+0040     x = double(xx&gt;0);
+0041 <span class="keyword">end</span>
+0042 
+0043 
+0044 yy = A*x;
+0045 y = double(yy&gt;0);
+0046 
+0047 <span class="comment">% kludge to deal with isolated vertices</span>
+0048 <span class="comment">%idx = find((x==0)&amp;(y==0));</span>
+0049 <span class="comment">%if ~isempty(idx)</span>
+0050 <span class="comment">%    x(idx) = 1;</span>
+0051 <span class="comment">%end</span>
+0052 
+0053 
+0054 
+0055 
+0056 <span class="keyword">if</span> sum(x) + sum(y) ~= n
+0057     p = partition(0);
+0058 <span class="keyword">else</span>
+0059     part = cell(1,2);
+0060     part{1} = find(x)';
+0061     part{2} = find(y)';
+0062     p = partition(part);
+0063 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Fri 30-Apr-2010 07:51:16 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

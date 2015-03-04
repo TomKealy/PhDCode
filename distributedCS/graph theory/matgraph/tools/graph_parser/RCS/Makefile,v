@@ -1,0 +1,87 @@
+head	1.4;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.4
+date	2006.09.30.22.31.17;	author ers;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2006.09.30.20.50.16;	author ers;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2006.09.30.20.50.06;	author ers;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2006.09.30.20.31.08;	author ers;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.4
+log
+@*** empty log message ***
+@
+text
+@OBJS = main.o LineParser.o
+CXXFLAGS = -ansi -O
+
+graph_parser: $(OBJS)
+	g++ $(OBJS) -o graph_parser
+
+.phony: clean
+clean:
+	rm -f $(OBJS) parsed_graph.m
+
+.phony: very-clean
+very-clean:
+	rm -f $(OBJS) parsed_graph.m graph_parser@
+
+
+1.3
+log
+@*** empty log message ***
+@
+text
+@d9 1
+a9 1
+	rm -r $(OBJS) parsed_graph.m
+d13 1
+a13 1
+	rm -r $(OBJS) parsed_graph.m graph_parser@
+
+
+1.2
+log
+@*** empty log message ***
+@
+text
+@d2 1
+a2 1
+CXXFLAGS = -ansi -g
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d1 1
+a1 1
+OBJS = main.o LinePasers.o
+d9 5
+a13 1
+	rm -r $(OBJS)@

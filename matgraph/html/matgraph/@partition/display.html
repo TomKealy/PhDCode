@@ -1,0 +1,76 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of display</title>
+  <meta name="keywords" content="display">
+  <meta name="description" content="display(p) --- used to display paritions to the console">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">matgraph</a> &gt; <a href="index.html">@partition</a> &gt; display.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for matgraph/@partition&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>display
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>display(p) --- used to display paritions to the console</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function display(p) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> display(p) --- used to display paritions to the console</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="size.html" class="code" title="function s = size(p)">size</a>	size(p) --- returns [nv,np]: number of vertices, parts.</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+<h2><a name="_subfunctions"></a>SUBFUNCTIONS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="#_sub1" class="code">function s = disp_part(part)</a></li></ul>
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function display(p)</a>
+0002 <span class="comment">% display(p) --- used to display paritions to the console</span>
+0003 
+0004 [m,n] = <a href="size.html" class="code" title="function s = size(p)">size</a>(p.array);
+0005 
+0006 outstr = <span class="string">'{ '</span>;
+0007 
+0008 <span class="keyword">for</span> k=m:-1:1
+0009     part = find(p.array(k,:));
+0010     outstr = [outstr,<a href="#_sub1" class="code" title="subfunction s = disp_part(part)">disp_part</a>(part),<span class="string">' '</span>];
+0011 <span class="keyword">end</span>
+0012 outstr = [outstr,<span class="string">'}'</span>];
+0013 disp(outstr);
+0014 
+0015 <span class="keyword">end</span>
+0016 
+0017 
+0018 
+0019 <a name="_sub1" href="#_subfunctions" class="code">function s = disp_part(part)</a>
+0020 s = <span class="string">'{'</span>;
+0021 <span class="keyword">for</span> k=1:length(part)
+0022     s = [s,int2str(part(k))];
+0023     <span class="keyword">if</span> (k&lt;length(part))
+0024         s = [s,<span class="string">','</span>];
+0025     <span class="keyword">end</span>
+0026 <span class="keyword">end</span>
+0027 s = [s,<span class="string">'}'</span>];
+0028 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Fri 30-Apr-2010 07:51:16 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

@@ -1,0 +1,42 @@
+head	1.1;
+access;
+symbols;
+locks
+	ers:1.1; strict;
+comment	@# @;
+
+
+1.1
+date	2006.10.01.08.54.44;	author ers;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@.phony: all dvi pdf  ps view clean
+
+BASE = by-example
+
+all: pdf
+
+pdf: $(BASE).pdf
+
+
+$(BASE).pdf: $(BASE).tex
+	pdflatex $(BASE)
+	pdflatex $(BASE)
+
+view: $(BASE).pdf
+	open $(BASE).pdf
+
+
+clean:
+	rm -f $(BASE).log $(BASE).aux $(BASE).dvi $(BASE).out@

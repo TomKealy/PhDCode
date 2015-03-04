@@ -1,0 +1,375 @@
+<html xmlns:mwsh="http://www.mathworks.com/namespace/mcode/v1/syntaxhighlight.dtd">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <!--
+This HTML is auto-generated from an M-file.
+To make changes, update the M-file and republish this document.
+      -->
+      <title>Checking graph isormorphism in Matgraph</title>
+      <meta name="generator" content="MATLAB 7.2">
+      <meta name="date" content="2008-03-02">
+      <meta name="m-file" content="isomorphism"><style>
+
+body {
+  background-color: white;
+  margin:10px;
+}
+
+h1 {
+  color: #990000; 
+  font-size: x-large;
+}
+
+h2 {
+  color: #990000;
+  font-size: medium;
+}
+
+/* Make the text shrink to fit narrow windows, but not stretch too far in 
+wide windows.  On Gecko-based browsers, the shrink-to-fit doesn't work. */ 
+p,h1,h2,div.content div {
+  /* for MATLAB's browser */
+  width: 600px;
+  /* for Mozilla, but the "width" tag overrides it anyway */
+  max-width: 600px;
+  /* for IE */
+  width:expression(document.body.clientWidth > 620 ? "600px": "auto" );
+}
+
+pre.codeinput {
+  background: #EEEEEE;
+  padding: 10px;
+}
+@media print {
+  pre.codeinput {word-wrap:break-word; width:100%;}
+} 
+
+span.keyword {color: #0000FF}
+span.comment {color: #228B22}
+span.string {color: #A020F0}
+span.untermstring {color: #B20000}
+span.syscmd {color: #B28C00}
+
+pre.codeoutput {
+  color: #666666;
+  padding: 10px;
+}
+
+pre.error {
+  color: red;
+}
+
+p.footer {
+  text-align: right;
+  font-size: xx-small;
+  font-weight: lighter;
+  font-style: italic;
+  color: gray;
+}
+
+  </style></head>
+   <body>
+      <div class="content">
+         <h1>Checking graph isormorphism in Matgraph</h1>
+         <introduction>
+            <p>We show how to determine if two graphs are isomorphic and, if so, how to find the permutation that transforms one into the
+               other.
+            </p>
+         </introduction>
+         <h2>Contents</h2>
+         <div>
+            <ul>
+               <li><a href="#1">Cycle graph</a></li>
+               <li><a href="#2">Large, vertex regular graph</a></li>
+               <li><a href="#3">Standard random graph</a></li>
+               <li><a href="#4">Random regular graph</a></li>
+               <li><a href="#5">Random tree</a></li>
+               <li><a href="#6">Two ways to make a grid</a></li>
+               <li><a href="#7">Mobius and non-Mobius ladders are not isomorphic</a></li>
+               <li><a href="#8">Release storage</a></li>
+            </ul>
+         </div>
+         <h2>Cycle graph<a name="1"></a></h2>
+         <p>Create two copies of a cycle on 10 vertices, but randomly renumber the second.</p><pre class="codeinput">g = graph;
+h = graph;
+cycle(g,10);
+cycle(h,10);
+renumber(h,random(permutation(nv(h))));
+figure(1); clf; ndraw(g);
+figure(2); clf; ndraw(h);
+
+[yn,p] = iso(g,h)
+
+renumber(g,p)
+<span class="keyword">if</span> g==h
+	disp(<span class="string">'Graphs are the same'</span>)
+<span class="keyword">else</span>
+	disp(<span class="string">'Graphs are different'</span>)
+<span class="keyword">end</span>
+</pre><pre class="codeoutput">yn =
+     1
+(1)(2,9,4,3,7,5)(6)(8,10)
+Graphs are the same
+</pre><img vspace="5" hspace="5" src="isomorphism_01.png"> <img vspace="5" hspace="5" src="isomorphism_02.png"> <h2>Large, vertex regular graph<a name="2"></a></h2>
+         <p>The bucky graph is a vertex transitive graph with 60 vertices. We make two copies (one that is randomly renumbered) and check
+            they are the same.
+         </p><pre class="codeinput">bucky(g);
+bucky(h);
+renumber(h,random(permutation(nv(h))));
+
+[yn,p] = iso(g,h)
+
+renumber(g,p)
+<span class="keyword">if</span> g==h
+	disp(<span class="string">'Graphs are the same'</span>)
+<span class="keyword">else</span>
+	disp(<span class="string">'Graphs are different'</span>)
+<span class="keyword">end</span>
+</pre><pre class="codeoutput">yn =
+     1
+(1)(2,28,6,55,16,24,27,45,8,21,13,43,54,19,12,35,49,56,4,32,52,57,47,51,60,15,3,30,11,41,10,33,59,58,53,40,37,44)(5,34,39,42,9,46,38,18)(7,14,25,36,23,20,29)(17,31)(22,48)(26)(50)
+Graphs are the same
+</pre><h2>Standard random graph<a name="3"></a></h2>
+         <p>We generate a standard Erdos-Renyi random graph and a randomly renumbered copy, and then verify they are isomorphic.</p><pre class="codeinput">random(g,100,0.5)
+copy(h,g)
+renumber(h,random(permutation(nv(h))));
+
+[yn,p] = iso(g,h);
+
+renumber(g,p)
+<span class="keyword">if</span> g==h
+	disp(<span class="string">'Graphs are the same'</span>)
+<span class="keyword">else</span>
+	disp(<span class="string">'Graphs are different'</span>)
+<span class="keyword">end</span>
+</pre><pre class="codeoutput">Graphs are the same
+</pre><h2>Random regular graph<a name="4"></a></h2>
+         <p>We generate a random 3-regular graph and a randomly renumbered copy, and then verify they are isomorphic.</p><pre class="codeinput">random_regular(g,100,3);
+copy(h,g);
+renumber(h,random(permutation(nv(h))));
+
+[yn,p] = iso(g,h);
+
+renumber(g,p)
+<span class="keyword">if</span> g==h
+	disp(<span class="string">'Graphs are the same'</span>)
+<span class="keyword">else</span>
+	disp(<span class="string">'Graphs are different'</span>)
+<span class="keyword">end</span>
+</pre><pre class="codeoutput">Graphs are the same
+</pre><h2>Random tree<a name="5"></a></h2>
+         <p>We generate a random tree and a randomly renumbered copy, and then verify they are isomorphic.</p><pre class="codeinput">random_tree(g,100);
+copy(h,g);
+renumber(h,random(permutation(nv(h))));
+
+[yn,p] = iso(g,h);
+
+renumber(g,p)
+<span class="keyword">if</span> g==h
+	disp(<span class="string">'Graphs are the same'</span>)
+<span class="keyword">else</span>
+	disp(<span class="string">'Graphs are different'</span>)
+<span class="keyword">end</span>
+</pre><pre class="codeoutput">Graphs are the same
+</pre><h2>Two ways to make a grid<a name="6"></a></h2>
+         <p>We generate a grid graph in two different ways. The graphs are not equal, but they are isomorphic.</p><pre class="codeinput">grid(g,6,3);
+grid(h,3,6);
+<span class="keyword">if</span> g==h
+	disp(<span class="string">'Graphs are the same'</span>)
+<span class="keyword">else</span>
+	disp(<span class="string">'Graphs are different'</span>)
+<span class="keyword">end</span>
+
+[yn,p] = iso(g,h)
+
+renumber(g,p)
+<span class="keyword">if</span> g==h
+	disp(<span class="string">'Graphs are the same'</span>)
+<span class="keyword">else</span>
+	disp(<span class="string">'Graphs are different'</span>)
+<span class="keyword">end</span>
+</pre><pre class="codeoutput">Graphs are different
+yn =
+     1
+(1)(2,4,10,11,14,6,16,12,17,15,9,8,5,13,3,7)(18)
+Graphs are the same
+</pre><h2>Mobius and non-Mobius ladders are not isomorphic<a name="7"></a></h2>
+         <p>The Mobius ladder on 20 vertices and the Cartesian product of a 10-cycle and an edge are both 3-regular graphs on 20 vertices.
+            But they are not isomorphic.
+         </p><pre class="codeinput">mobius(g,20);
+c10 = graph; cycle(c10,10);
+k2 = graph; add(k2,1,2);
+cartesian(h,c10,k2);
+
+figure(1); clf; draw(g);
+distxy(h);
+figure(2); clf; draw(h);
+
+[yn,p] = iso(g,h)
+
+<span class="keyword">if</span> yn
+	disp(<span class="string">'Graphs are isomorphic'</span>)
+<span class="keyword">else</span>
+	disp(<span class="string">'Graphs are not isomorphic'</span>)
+<span class="keyword">end</span>
+</pre><pre class="codeoutput">Optimization terminated: relative function value
+ changing by less than OPTIONS.TolFun.
+Embedding score = 20.7351
+Elapsed time is 2.634896 seconds.
+yn =
+     0
+()
+Graphs are not isomorphic
+</pre><img vspace="5" hspace="5" src="isomorphism_03.png"> <img vspace="5" hspace="5" src="isomorphism_04.png"> <h2>Release storage<a name="8"></a></h2><pre class="codeinput">free(g); free(h); free(c10); free(k2);
+</pre><p class="footer"><br>
+            Published with MATLAB&reg; 7.2<br></p>
+      </div>
+      <!--
+##### SOURCE BEGIN #####
+%% Checking graph isormorphism in Matgraph
+% We show how to determine if two graphs are isomorphic and, if so, how to
+% find the permutation that transforms one into the other.
+
+%% Cycle graph
+% Create two copies of a cycle on 10 vertices, but randomly renumber the
+% second. 
+
+g = graph;
+h = graph;
+cycle(g,10);
+cycle(h,10);
+renumber(h,random(permutation(nv(h))));
+figure(1); clf; ndraw(g);
+figure(2); clf; ndraw(h);
+
+[yn,p] = iso(g,h)
+
+renumber(g,p)
+if g==h
+	disp('Graphs are the same')
+else
+	disp('Graphs are different')
+end
+
+%% Large, vertex regular graph
+% The bucky graph is a vertex transitive graph with 60 vertices. We make
+% two copies (one that is randomly renumbered) and check they are the same.
+
+bucky(g);
+bucky(h);
+renumber(h,random(permutation(nv(h))));
+
+[yn,p] = iso(g,h)
+
+renumber(g,p)
+if g==h
+	disp('Graphs are the same')
+else
+	disp('Graphs are different')
+end
+
+%% Standard random graph
+% We generate a standard Erdos-Renyi random graph and a randomly renumbered
+% copy, and then verify they are isomorphic.
+
+random(g,100,0.5)
+copy(h,g)
+renumber(h,random(permutation(nv(h))));
+
+[yn,p] = iso(g,h);
+
+renumber(g,p)
+if g==h
+	disp('Graphs are the same')
+else
+	disp('Graphs are different')
+end
+
+
+%% Random regular graph
+% We generate a random 3-regular graph and a randomly renumbered
+% copy, and then verify they are isomorphic.
+
+random_regular(g,100,3);
+copy(h,g);
+renumber(h,random(permutation(nv(h))));
+
+[yn,p] = iso(g,h);
+
+renumber(g,p)
+if g==h
+	disp('Graphs are the same')
+else
+	disp('Graphs are different')
+end
+
+%% Random tree
+% We generate a random tree and a randomly renumbered
+% copy, and then verify they are isomorphic.
+
+random_tree(g,100);
+copy(h,g);
+renumber(h,random(permutation(nv(h))));
+
+[yn,p] = iso(g,h);
+
+renumber(g,p)
+if g==h
+	disp('Graphs are the same')
+else
+	disp('Graphs are different')
+end
+
+%% Two ways to make a grid
+% We generate a grid graph in two different ways. The graphs are not equal,
+% but they are isomorphic.
+
+grid(g,6,3);
+grid(h,3,6);
+if g==h
+	disp('Graphs are the same')
+else
+	disp('Graphs are different')
+end
+
+[yn,p] = iso(g,h)
+
+renumber(g,p)
+if g==h
+	disp('Graphs are the same')
+else
+	disp('Graphs are different')
+end
+
+%% Mobius and non-Mobius ladders are not isomorphic
+% The Mobius ladder on 20 vertices and the Cartesian product of a 10-cycle
+% and an edge are both 3-regular graphs on 20 vertices. But they are not
+% isomorphic.
+
+mobius(g,20);
+c10 = graph; cycle(c10,10);
+k2 = graph; add(k2,1,2);
+cartesian(h,c10,k2);
+
+figure(1); clf; draw(g);
+distxy(h);
+figure(2); clf; draw(h);
+
+[yn,p] = iso(g,h)
+
+if yn
+	disp('Graphs are isomorphic')
+else
+	disp('Graphs are not isomorphic')
+end
+
+
+
+%% Release storage
+
+free(g); free(h); free(c10); free(k2);
+##### SOURCE END #####
+-->
+   </body>
+</html>

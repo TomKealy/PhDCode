@@ -1,0 +1,67 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of hasxy</title>
+  <meta name="keywords" content="hasxy">
+  <meta name="description" content="hasxy(g) --- determine if an embedding has been created for g">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">matgraph</a> &gt; <a href="index.html">@graph</a> &gt; hasxy.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for matgraph/@graph&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>hasxy
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>hasxy(g) --- determine if an embedding has been created for g</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function yn = hasxy(g) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> hasxy(g) --- determine if an embedding has been created for g</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="nv.html" class="code" title="function n = nv(g)">nv</a>	nv(g) --- number of vertices in g</li><li><a href="size.html" class="code" title="function [sz,tz] = size(g)">size</a>	size(g) --- returns [nv,ne] for the graph</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="bfstree.html" class="code" title="function bfstree(t,g,v)">bfstree</a>	bfstree(t,g,v) --- create a breadth-first spanning tree of g</li><li><a href="cartesian.html" class="code" title="function cartesian(g,h1,h2)">cartesian</a>	cartesian(g,h1,h2) --- overwrite g with the product of h1 and h2</li><li><a href="cdraw.html" class="code" title="function cdraw(g,coloring,line_style,color_matrix)">cdraw</a>	cdraw(g,coloring) -- draw g with a given vertex coloring</li><li><a href="delete.html" class="code" title="function delete(g,i,j)">delete</a>	delete --- delete vertices or edges from a graph</li><li><a href="dfstree.html" class="code" title="function dfstree(t,g,v)">dfstree</a>	dfstree(t,g,v) --- create a depth-first spanning tree of g</li><li><a href="disjoint_union.html" class="code" title="function disjoint_union(g,h,k)">disjoint_union</a>	disjoint_union(g,h,k) --- overwrite g with the disjoint union of the</li><li><a href="distxy.html" class="code" title="function e = distxy(g, D)">distxy</a>	distxy(g) -- give g a distance based embedding</li><li><a href="draw.html" class="code" title="function draw(g,line_style)">draw</a>	draw(g) --- draw g in a figure window</li><li><a href="getxy.html" class="code" title="function z = getxy(g)">getxy</a>	getxy(g) --- give g's embedding (or [] if g doesn't have one)</li><li><a href="graffle.html" class="code" title="function graffle(g, filename, width, rad)">graffle</a>	graffle(g, filename, width, rad) --- write graph in OmniGraffle format</li><li><a href="induce.html" class="code" title="function induce(g,arg1,arg2)">induce</a>	induce --- create induced subgraphs</li><li><a href="join.html" class="code" title="function join(g,h1,h2)">join</a>	join(g,h1,h2) --- overwrite g with the join of h1 and h2</li><li><a href="line_graph.html" class="code" title="function line_graph(g,h)">line_graph</a>	line_graph(g,h) --- set g to be the line graph of h</li><li><a href="path.html" class="code" title="function path(g,n)">path</a>	path(g,n) --- make g a path on n vertices</li><li><a href="renumber.html" class="code" title="function renumber(g,perm)">renumber</a>	renumber the vertices of a graph</li><li><a href="resize.html" class="code" title="function resize(g, n)">resize</a>	resize(g,n) --- change the number of vertices in g to n</li><li><a href="rmxy.html" class="code" title="function rmxy(g)">rmxy</a>	rmxy(g) --- erase g's embedding</li><li><a href="save.html" class="code" title="function save(g,filename)">save</a>	save(g,filename) --- save a graph to disk</li><li><a href="scale.html" class="code" title="function scale(g,s)">scale</a>	scale(g,s) --- rescale the embedding of g by s</li><li><a href="sgf.html" class="code" title="function A = sgf(g,M)">sgf</a>	sgf --- simple graph format: a 2-column matrix representation</li><li><a href="springxy.html" class="code" title="function e=springxy(g)">springxy</a>	springxy(g) --- find a spring embedding of g</li></ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function yn = hasxy(g)</a>
+0002 <span class="comment">% hasxy(g) --- determine if an embedding has been created for g</span>
+0003 
+0004 <span class="keyword">global</span> GRAPH_MAGIC;
+0005 
+0006 n = <a href="nv.html" class="code" title="function n = nv(g)">nv</a>(g);
+0007 
+0008 <span class="keyword">if</span> isfield(GRAPH_MAGIC.graphs{g.idx},<span class="string">'xy'</span>)
+0009     <span class="comment">% the field exsts. now is is the right size?</span>
+0010     [nr,nc] = <a href="size.html" class="code" title="function [sz,tz] = size(g)">size</a>(GRAPH_MAGIC.graphs{g.idx}.xy);
+0011     <span class="keyword">if</span> (nr == n) &amp;&amp; (nc == 2)
+0012         yn = 1;
+0013         <span class="keyword">return</span>
+0014     <span class="keyword">else</span>
+0015         yn = 0;
+0016         GRAPH_MAGIC.graphs{g.idx} = <span class="keyword">...</span>
+0017             rmfield(GRAPH_MAGIC.graphs{g.idx},<span class="string">'xy'</span>);
+0018         <span class="keyword">return</span>
+0019     <span class="keyword">end</span>
+0020 <span class="keyword">end</span>
+0021 yn = 0;</pre></div>
+<hr><address>Generated on Fri 30-Apr-2010 07:51:16 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

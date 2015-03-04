@@ -1,0 +1,121 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of distxy</title>
+  <meta name="keywords" content="distxy">
+  <meta name="description" content="distxy(g) -- give g a distance based embedding">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">matgraph</a> &gt; <a href="index.html">@graph</a> &gt; distxy.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for matgraph/@graph&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>distxy
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>distxy(g) -- give g a distance based embedding</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function e = distxy(g, D) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> distxy(g) -- give g a distance based embedding
+ we attempt to embed g in the plane so that the graph-theoretic distance
+ between vertices matches the eucliden distance.
+ 
+ This may also be called distxy(g,D) where D is a distance matrix. (By
+ default D is the standard shortest-path distance, but could be replaced
+ by, say, resistance(g).
+ 
+ REQUIRES THE OPTIMIZATION TOOLBOX</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="dist.html" class="code" title="function d = dist(g,v,w)">dist</a>	dist(g,v,w) and dist(g,v) --- find distance(s) between vertices</li><li><a href="embed.html" class="code" title="function embed(g,xy)">embed</a>	embed --- create an embedding for a graph</li><li><a href="getxy.html" class="code" title="function z = getxy(g)">getxy</a>	getxy(g) --- give g's embedding (or [] if g doesn't have one)</li><li><a href="hasxy.html" class="code" title="function yn = hasxy(g)">hasxy</a>	hasxy(g) --- determine if an embedding has been created for g</li><li><a href="nv.html" class="code" title="function n = nv(g)">nv</a>	nv(g) --- number of vertices in g</li><li><a href="size.html" class="code" title="function [sz,tz] = size(g)">size</a>	size(g) --- returns [nv,ne] for the graph</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+<h2><a name="_subfunctions"></a>SUBFUNCTIONS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="#_sub1" class="code">function dd = dist_discrep(xy)</a></li><li><a href="#_sub2" class="code">function D = dist_pair(xy)</a></li></ul>
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function e = distxy(g, D) </a>
+0002 <span class="comment">% distxy(g) -- give g a distance based embedding</span>
+0003 <span class="comment">% we attempt to embed g in the plane so that the graph-theoretic distance</span>
+0004 <span class="comment">% between vertices matches the eucliden distance.</span>
+0005 <span class="comment">%</span>
+0006 <span class="comment">% This may also be called distxy(g,D) where D is a distance matrix. (By</span>
+0007 <span class="comment">% default D is the standard shortest-path distance, but could be replaced</span>
+0008 <span class="comment">% by, say, resistance(g).</span>
+0009 <span class="comment">%</span>
+0010 <span class="comment">% REQUIRES THE OPTIMIZATION TOOLBOX</span>
+0011 
+0012 tic;
+0013 n = <a href="nv.html" class="code" title="function n = nv(g)">nv</a>(g);
+0014 
+0015 <span class="keyword">if</span> nargin ==1
+0016     d = <a href="dist.html" class="code" title="function d = dist(g,v,w)">dist</a>(g);
+0017 <span class="keyword">else</span>
+0018     d = D;
+0019 <span class="keyword">end</span>
+0020 
+0021 [i,j] = find(d==inf);
+0022 ni = length(i);
+0023 <span class="keyword">for</span> k=1:ni
+0024     d(i(k),j(k)) = n/2;
+0025 <span class="keyword">end</span>
+0026 
+0027 
+0028 <span class="keyword">if</span> (<a href="hasxy.html" class="code" title="function yn = hasxy(g)">hasxy</a>(g))
+0029     xy0 = <a href="getxy.html" class="code" title="function z = getxy(g)">getxy</a>(g);
+0030 <span class="keyword">else</span>
+0031     xy0 = 5*randn(n,2);
+0032 <span class="keyword">end</span>
+0033 
+0034 opts = optimset(<span class="string">'MaxIter'</span>, 5*n,<span class="string">'Display'</span>, <span class="string">'final'</span>);
+0035 
+0036 [xy,e] = lsqnonlin(@<a href="#_sub1" class="code" title="subfunction dd = dist_discrep(xy)">dist_discrep</a>, xy0, [], [], opts);
+0037 disp([<span class="string">'Embedding score = '</span>, num2str(e)])
+0038 <a href="embed.html" class="code" title="function embed(g,xy)">embed</a>(g,xy);
+0039 toc
+0040 
+0041 <a name="_sub1" href="#_subfunctions" class="code">function dd = dist_discrep(xy)</a>
+0042 
+0043 <span class="comment">%divisor = d + eye(n);</span>
+0044 dxy = <a href="#_sub2" class="code" title="subfunction D = dist_pair(xy)">dist_pair</a>(xy);
+0045 divisor = real((d+eye(n)));
+0046 <span class="comment">% divisor = exp(d/4)-0.8;</span>
+0047 dd = d - dxy;
+0048 dd = dd./divisor;
+0049 dd = dd(:);
+0050 
+0051 <span class="keyword">end</span>
+0052     
+0053     
+0054 <span class="comment">%--------------------------------------------------------</span>
+0055 <a name="_sub2" href="#_subfunctions" class="code">function D = dist_pair(xy)</a>
+0056 <span class="comment">% find Euclidean distances between vertices in xy embedding</span>
+0057 n = <a href="size.html" class="code" title="function [sz,tz] = size(g)">size</a>(xy,1); <span class="comment">% get # of rows</span>
+0058 c = sum(xy.*xy,2); <span class="comment">% norm^2 of rows</span>
+0059 Y = c * ones(1,n);
+0060 D = Y + Y' - 2*xy*xy';
+0061 D = real(sqrt(D));
+0062 
+0063 <span class="keyword">end</span> <span class="comment">% end of dist_pair</span>
+0064 
+0065 <span class="keyword">end</span> <span class="comment">% end of distxy</span></pre></div>
+<hr><address>Generated on Fri 30-Apr-2010 07:51:16 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

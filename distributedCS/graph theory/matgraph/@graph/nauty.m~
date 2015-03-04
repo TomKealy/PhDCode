@@ -1,0 +1,40 @@
+function nauty(g, filename)
+% nauty(g,filename) -- save a graph in nauty format
+% g is the graph, filename is a string containing the filename.
+% It is recommended that the file name end ".dre"
+%
+% nauty is a program for computing automorphisms of graphs. It can be
+% downloaded from http://cs.anu.edu.au/~bdm/nauty/
+%
+% Inside the dreadnaut program, type <filename to load the graph saved by
+% this function.
+
+
+fid = fopen(filename,'w');
+
+if (fid == -1)
+    error(['Cannot open "', filename, '" for output']);
+end
+
+n = nv(g);
+m = ne(g);
+
+fprintf(fid,'$ 0\n');     % sets nauty to start number vertices from 1
+fprintf(fid,'n=%d\n', n); % write the number of vertices
+fprintf(fid,'g\n');       % begin the graph
+
+for v=1:n
+	Nv = neighbors(g,v)
+	if length(Nv)==0
+		continue
+	end
+	fprintf(fid,'%d: ', v);
+	fprintf(fid,'
+
+
+fprintf(fid,'.\n');       % end writing the graph
+
+fprintf(fid,'%%saved graph data\n');
+fprintf(fid,'sp = %d;\n', issparse(g));
+fprintf(fid,'nverts = %g;\n',n);
+fprintf(fid,'nedges = %g;\n',m);

@@ -1,0 +1,70 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of mtimes</title>
+  <meta name="keywords" content="mtimes">
+  <meta name="description" content="p*q is the composition of p and q">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">matgraph</a> &gt; <a href="index.html">@permutation</a> &gt; mtimes.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for matgraph/@permutation&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>mtimes
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>p*q is the composition of p and q</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function r = mtimes(p,q) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> p*q is the composition of p and q</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="length.html" class="code" title="function s = length(p)">length</a>	length(p) gives the size of the permutation</li><li><a href="permutation.html" class="code" title="function p = permutation(n)">permutation</a>	constructor for the permutation class</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function r = mtimes(p,q)</a>
+0002 <span class="comment">% p*q is the composition of p and q</span>
+0003 np = <a href="length.html" class="code" title="function s = length(p)">length</a>(p);
+0004 nq = <a href="length.html" class="code" title="function s = length(p)">length</a>(q);
+0005 
+0006 <span class="keyword">if</span> np &lt; nq
+0007     p.array = [p.array, np+1:nq];
+0008     np = nq;
+0009 <span class="keyword">end</span>
+0010 
+0011 <span class="keyword">if</span> np &gt; nq
+0012     q.array = [q.array, nq+1:np];
+0013     <span class="comment">% nq = np;</span>
+0014 <span class="keyword">end</span>
+0015 
+0016 n = np;
+0017 
+0018 a = zeros(1,n);
+0019 
+0020 <span class="keyword">for</span> k=1:n
+0021     a(k) = p.array(q.array(k));
+0022 <span class="keyword">end</span>
+0023 
+0024 r = <a href="permutation.html" class="code" title="function p = permutation(n)">permutation</a>(a);</pre></div>
+<hr><address>Generated on Fri 30-Apr-2010 07:51:16 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

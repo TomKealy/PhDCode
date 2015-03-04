@@ -1,0 +1,65 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of has</title>
+  <meta name="keywords" content="has">
+  <meta name="description" content="has --- check if the graph has a particular vertex or edge">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">matgraph</a> &gt; <a href="index.html">@graph</a> &gt; has.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for matgraph/@graph&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>has
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>has --- check if the graph has a particular vertex or edge</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function yn = has(g,u,v) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> has --- check if the graph has a particular vertex or edge
+ has(g,u) --- check if g contains the vertex u
+ has(g,u,v) --- check if g contains the edge uv</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="nv.html" class="code" title="function n = nv(g)">nv</a>	nv(g) --- number of vertices in g</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="bridges.html" class="code" title="function blist = bridges(g,algo)">bridges</a>	bridges(g,algo) --- find all cut edges in g</li><li><a href="cartesian.html" class="code" title="function cartesian(g,h1,h2)">cartesian</a>	cartesian(g,h1,h2) --- overwrite g with the product of h1 and h2</li><li><a href="hamiltonian_cycle.html" class="code" title="function [hlist, exists] = hamiltonian_cycle(g,h)">hamiltonian_cycle</a>	hamiltonian_cycle(g) --- find a Hamiltonian cycle in g (if one exists)</li><li><a href="springxy.html" class="code" title="function e=springxy(g)">springxy</a>	springxy(g) --- find a spring embedding of g</li></ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function yn = has(g,u,v)</a>
+0002 <span class="comment">% has --- check if the graph has a particular vertex or edge</span>
+0003 <span class="comment">% has(g,u) --- check if g contains the vertex u</span>
+0004 <span class="comment">% has(g,u,v) --- check if g contains the edge uv</span>
+0005 
+0006 <span class="keyword">global</span> GRAPH_MAGIC;
+0007 n = <a href="nv.html" class="code" title="function n = nv(g)">nv</a>(g);
+0008 
+0009 <span class="keyword">if</span> (nargin==2)
+0010     yn = (u&gt;0) &amp; (u&lt;=n);
+0011 <span class="keyword">else</span>
+0012     <span class="keyword">if</span> (u&lt;0) || (u&gt;n) || (v&lt;0) || (v&gt;n) || (u==v)
+0013         yn = 0;
+0014     <span class="keyword">else</span>
+0015         yn = GRAPH_MAGIC.graphs{g.idx}.array(u,v);
+0016     <span class="keyword">end</span>
+0017 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Fri 30-Apr-2010 07:51:16 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

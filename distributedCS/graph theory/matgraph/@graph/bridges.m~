@@ -1,0 +1,71 @@
+function blist = bridges(g,algo)
+% bridges(g,also) --- find all cut edges in g
+% algo specifies the algorithm. Current choices are these:
+%
+% 'path'    Deletes each edge from the graph and checks if there is a path
+%           between its endpoints. A few tricks are employed so we don't
+%           have to check every edge.
+%
+% 'matrix'  Uses a basis for the null space of the signed incidenced
+%           matrix. 
+%
+% Main idea for the path code due to Mel Janowitz
+
+DEFAULT_ALGORITHM = 'matrix';
+
+if nargin < 2
+	algo = DEFAULT_ALGORITHM;
+end
+
+swithc lower(
+
+
+
+
+
+
+
+bgraph = graph;     % hold the cut edges
+notbridges = graph; % hold the non cut edges
+gsave = graph;      % save a copy of g since our code modifies g
+copy(gsave,g);
+
+elist = edges(g);  % list of edges
+m = ne(g);         % number of edges
+
+for k=1:m
+	% xy is the edge we're considering
+	x = elist(k,1);
+	y = elist(k,2);
+	
+	% if xy is in a cycle, we skip the rest of this iteration
+	if (has(notbridges,x,y))
+		continue
+	end
+	
+	% find an xy-path in G-e
+	delete(g,x,y);
+	P = find_path(g,x,y);
+	
+	
+	% if no such path, we have a cut edge
+	if isempty(P)
+		add(bgraph,x,y)
+	else
+		% otherwise, note that xy and all edges on P cannot be cut edges
+		add(g,x,y);
+		add(notbridges,x,y)
+		for j=1:length(P)-1
+			add(notbridges,P(j),P(j+1))
+		end
+	end
+end
+
+blist = edges(bgraph);
+
+% restore g
+copy(g, gsave)
+% release temporary storage
+free(bgraph)
+free(notbridges)
+free(gsave)

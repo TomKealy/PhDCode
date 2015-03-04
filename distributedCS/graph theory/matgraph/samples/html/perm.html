@@ -1,0 +1,235 @@
+<html xmlns:mwsh="http://www.mathworks.com/namespace/mcode/v1/syntaxhighlight.dtd">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <!--
+This HTML is auto-generated from an M-file.
+To make changes, update the M-file and republish this document.
+      -->
+      <title>Permutations in Matgraph</title>
+      <meta name="generator" content="MATLAB 7.2">
+      <meta name="date" content="2007-03-12">
+      <meta name="m-file" content="perm"><style>
+
+body {
+  background-color: white;
+  margin:10px;
+}
+
+h1 {
+  color: #990000; 
+  font-size: x-large;
+}
+
+h2 {
+  color: #990000;
+  font-size: medium;
+}
+
+/* Make the text shrink to fit narrow windows, but not stretch too far in 
+wide windows.  On Gecko-based browsers, the shrink-to-fit doesn't work. */ 
+p,h1,h2,div.content div {
+  /* for MATLAB's browser */
+  width: 600px;
+  /* for Mozilla, but the "width" tag overrides it anyway */
+  max-width: 600px;
+  /* for IE */
+  width:expression(document.body.clientWidth > 620 ? "600px": "auto" );
+}
+
+pre.codeinput {
+  background: #EEEEEE;
+  padding: 10px;
+}
+@media print {
+  pre.codeinput {word-wrap:break-word; width:100%;}
+} 
+
+span.keyword {color: #0000FF}
+span.comment {color: #228B22}
+span.string {color: #A020F0}
+span.untermstring {color: #B20000}
+span.syscmd {color: #B28C00}
+
+pre.codeoutput {
+  color: #666666;
+  padding: 10px;
+}
+
+pre.error {
+  color: red;
+}
+
+p.footer {
+  text-align: right;
+  font-size: xx-small;
+  font-weight: lighter;
+  font-style: italic;
+  color: gray;
+}
+
+  </style></head>
+   <body>
+      <div class="content">
+         <h1>Permutations in Matgraph</h1>
+         <introduction>
+            <p>The Matgraph package includes a permutation data type. Here we illustrate some of the features of that type.</p>
+         </introduction>
+         <h2>Contents</h2>
+         <div>
+            <ul>
+               <li><a href="#1">Defining permutations</a></li>
+               <li><a href="#2">Random permutations</a></li>
+               <li><a href="#3">Applying a permutation to an element</a></li>
+               <li><a href="#4">Composition</a></li>
+               <li><a href="#5">Inverses</a></li>
+               <li><a href="#6">Powers</a></li>
+               <li><a href="#7">Conversion to an array</a></li>
+               <li><a href="#8">Conversion into a list of cycles</a></li>
+               <li><a href="#9">Conversion into a permutation matrix</a></li>
+               <li><a href="#10">See also</a></li>
+            </ul>
+         </div>
+         <h2>Defining permutations<a name="1"></a></h2>
+         <p>Permutations are created using the <tt>permutation</tt> function. The argument can either be a positive integer (in which case we create the identity permutation or a permuted version
+            of <tt>1:n</tt>.
+         </p><pre class="codeinput">p = permutation(6)
+q = permutation([1 5 2 4 6 3])
+</pre><pre class="codeoutput">(1)(2)(3)(4)(5)(6)
+(1)(2,5,6,3)(4)
+</pre><h2>Random permutations<a name="2"></a></h2>
+         <p>Applying the function <tt>random</tt> to a permutation scrambles its elements.
+         </p><pre class="codeinput">p = random(permutation(6))
+</pre><pre class="codeoutput">(1,6)(2,3,5,4)
+</pre><h2>Applying a permutation to an element<a name="3"></a></h2>
+         <p>If <tt>p</tt> is a permutation and <tt>k</tt> is an integer, then <tt>p(k)</tt> is the result of applying <tt>p</tt> to <tt>k</tt>.
+         </p><pre class="codeinput">disp(q(2))  <span class="comment">% This should give 5 since q = (1)(2,5,6,3)(4)</span>
+</pre><pre class="codeoutput">     5
+</pre><h2>Composition<a name="4"></a></h2>
+         <p>Composition of permutations is given by the <tt>*</tt> operator.
+         </p><pre class="codeinput">p = permutation([2 3 4 6 1 5])
+q
+p*q
+q*p
+</pre><pre class="codeoutput">(1,2,3,4,6,5)
+(1)(2,5,6,3)(4)
+(1,2)(3)(4,6)(5)
+(1,5)(2)(3,4)(6)
+</pre><h2>Inverses<a name="5"></a></h2>
+         <p>The inverse of a permutation can be calculated using <tt>inv</tt>.
+         </p><pre class="codeinput">inv(p)
+p * inv(p)
+</pre><pre class="codeoutput">(1,5,6,4,3,2)
+(1)(2)(3)(4)(5)(6)
+</pre><h2>Powers<a name="6"></a></h2>
+         <p>If <tt>p</tt> is a permutation and <tt>k</tt> is an integer, then <tt>p^k</tt> gives the <tt>k</tt>-fold composition of <tt>p</tt> with itself. <tt>k</tt> may be negative, giving a power of the inverse of <tt>p</tt>. So <tt>p^-1</tt> is the same as <tt>inv(p)</tt>.
+         </p><pre class="codeinput">p^3
+p*p*p
+p^-1
+inv(p)
+</pre><pre class="codeoutput">(1,4)(2,6)(3,5)
+(1,4)(2,6)(3,5)
+(1,5,6,4,3,2)
+(1,5,6,4,3,2)
+</pre><h2>Conversion to an array<a name="7"></a></h2>
+         <p>The <tt>array</tt> method converts a permutation back into an array.
+         </p><pre class="codeinput">disp(array(p));
+</pre><pre class="codeoutput">     2     3     4     6     1     5
+</pre><h2>Conversion into a list of cycles<a name="8"></a></h2>
+         <p>The <tt>cycles</tt> method creates a MATLAB cell array containing the cycles of the permutation.
+         </p><pre class="codeinput">r = random(permutation(17))
+cyc = cycles(r);
+<span class="keyword">for</span> k=1:length(cyc)
+	disp([<span class="string">'Cycle #'</span>, int2str(k), <span class="string">' is '</span>, int2str(cyc{k})]);
+<span class="keyword">end</span>
+</pre><pre class="codeoutput">(1,10,11,6,13,2,17,12,5,7)(3,8,9,4,14,16)(15)
+Cycle #1 is 1  10  11   6  13   2  17  12   5   7
+Cycle #2 is 3   8   9   4  14  16
+Cycle #3 is 15
+</pre><h2>Conversion into a permutation matrix<a name="9"></a></h2>
+         <p>The <tt>matrix</tt> function converts a permutation into a permutation matrix.
+         </p><pre class="codeinput">q
+matrix(q)
+</pre><pre class="codeoutput">(1)(2,5,6,3)(4)
+ans =
+     1     0     0     0     0     0
+     0     0     1     0     0     0
+     0     0     0     0     0     1
+     0     0     0     1     0     0
+     0     1     0     0     0     0
+     0     0     0     0     1     0
+</pre><h2>See also<a name="10"></a></h2>
+         <p>Here is a list of all the <tt>permutation</tt> methods.
+         </p><pre class="codeinput">methods <span class="string">permutation</span>
+</pre><pre class="codeoutput">
+
+Methods for class permutation:
+
+
+array        inv          mtimes       sign         
+cycles       length       ne           size         
+display      matrix       permutation  subsref      
+eq           mpower       random       
+
+</pre><p class="footer"><br>
+            Published with MATLAB&reg; 7.2<br></p>
+      </div>
+      <!--
+##### SOURCE BEGIN #####
+%% Permutations in Matgraph
+% The Matgraph package includes a permutation data type. Here we illustrate
+% some of the features of that type.
+%% Defining permutations
+% Permutations are created using the |permutation| function. The argument
+% can either be a positive integer (in which case we create the identity
+% permutation or a permuted version of |1:n|. 
+p = permutation(6)
+q = permutation([1 5 2 4 6 3])
+%% Random permutations
+% Applying the function |random| to a permutation scrambles its elements.
+p = random(permutation(6))
+%% Applying a permutation to an element
+% If |p| is a permutation and |k| is an integer, then |p(k)| is the result
+% of applying |p| to |k|.
+disp(q(2))  % This should give 5 since q = (1)(2,5,6,3)(4)
+%% Composition
+% Composition of permutations is given by the |*| operator.
+p = permutation([2 3 4 6 1 5])
+q
+p*q
+q*p
+%% Inverses
+% The inverse of a permutation can be calculated using |inv|. 
+inv(p)
+p * inv(p)
+%% Powers
+% If |p| is a permutation and |k| is an integer, then |p^k| gives the
+% |k|-fold composition of |p| with itself. |k| may be negative, giving a
+% power of the inverse of |p|. So |p^-1| is the same as |inv(p)|.
+p^3
+p*p*p
+p^-1
+inv(p)
+%% Conversion to an array
+% The |array| method converts a permutation back into an array. 
+disp(array(p));
+%% Conversion into a list of cycles
+% The |cycles| method creates a MATLAB cell array containing the cycles of
+% the permutation.
+r = random(permutation(17))
+cyc = cycles(r);
+for k=1:length(cyc)
+	disp(['Cycle #', int2str(k), ' is ', int2str(cyc{k})]);
+end
+%% Conversion into a permutation matrix
+% The |matrix| function converts a permutation into a permutation matrix.
+q
+matrix(q)
+%% See also
+% Here is a list of all the |permutation| methods.
+methods permutation
+
+##### SOURCE END #####
+-->
+   </body>
+</html>

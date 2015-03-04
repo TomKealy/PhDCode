@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of mycielski</title>
+  <meta name="keywords" content="mycielski">
+  <meta name="description" content="mycielski(g,n) --- create n'th order Mycielski graph (n > 0)">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">matgraph</a> &gt; <a href="index.html">@graph</a> &gt; mycielski.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for matgraph/@graph&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>mycielski
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>mycielski(g,n) --- create n'th order Mycielski graph (n > 0)</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function mycielski(g,h) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> mycielski(g,n) --- create n'th order Mycielski graph (n &gt; 0)
+ mycielski(g,h) --- apply Mycielski step to h to give g
+ e.g., mycielski(g,3) overwrites G with the Grotztsch graph
+ Thanks: Kim Tucker</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="complete.html" class="code" title="function complete(g,a,b)">complete</a>	complete: build complete and complete multipartite graphs</li><li><a href="fast_set_matrix.html" class="code" title="function fast_set_matrix(g,A)">fast_set_matrix</a>	fast_set_matrix(g,A) --- overwrite the adjacency matrix of g with A</li><li><a href="matrix.html" class="code" title="function A = matrix(g)">matrix</a>	matrix(g) --- return (a copy of) the adjacency matrix of g</li><li><a href="mycielski.html" class="code" title="function mycielski(g,h)">mycielski</a>	mycielski(g,n) --- create n'th order Mycielski graph (n > 0)</li><li><a href="rmxy.html" class="code" title="function rmxy(g)">rmxy</a>	rmxy(g) --- erase g's embedding</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="mycielski.html" class="code" title="function mycielski(g,h)">mycielski</a>	mycielski(g,n) --- create n'th order Mycielski graph (n > 0)</li></ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function mycielski(g,h)</a>
+0002 <span class="comment">% mycielski(g,n) --- create n'th order Mycielski graph (n &gt; 0)</span>
+0003 <span class="comment">% mycielski(g,h) --- apply Mycielski step to h to give g</span>
+0004 <span class="comment">% e.g., mycielski(g,3) overwrites G with the Grotztsch graph</span>
+0005 <span class="comment">% Thanks: Kim Tucker</span>
+0006 
+0007 
+0008 <span class="comment">% if 2nd argument is a graph, apply construction one time</span>
+0009 
+0010 <span class="keyword">if</span> (isa(h,<span class="string">'graph'</span>))
+0011     B = <a href="matrix.html" class="code" title="function A = matrix(g)">matrix</a>(h);
+0012     n = length(B);
+0013 
+0014     A = [ B, B,  zeros(n,1);
+0015           B,   zeros(n),  ones(n,1);
+0016           zeros(1,n), ones(1,n), 0 ];
+0017     <a href="fast_set_matrix.html" class="code" title="function fast_set_matrix(g,A)">fast_set_matrix</a>(g,A);
+0018     <a href="rmxy.html" class="code" title="function rmxy(g)">rmxy</a>(g);
+0019     <span class="keyword">return</span>
+0020 <span class="keyword">end</span>
+0021 
+0022 
+0023 <span class="comment">% otherwise, 2nd argument is an integer</span>
+0024 
+0025 h = floor(h);
+0026 
+0027 <span class="keyword">if</span> (h&lt;=0)
+0028     <a href="complete.html" class="code" title="function complete(g,a,b)">complete</a>(g,1);
+0029     <span class="keyword">return</span>
+0030 <span class="keyword">end</span>
+0031 
+0032 <span class="keyword">if</span> (h == 1)
+0033     <a href="complete.html" class="code" title="function complete(g,a,b)">complete</a>(g,2);
+0034     <span class="keyword">return</span>
+0035 <span class="keyword">end</span>
+0036 
+0037 <a href="mycielski.html" class="code" title="function mycielski(g,h)">mycielski</a>(g,h-1);
+0038 <a href="mycielski.html" class="code" title="function mycielski(g,h)">mycielski</a>(g,g);</pre></div>
+<hr><address>Generated on Fri 30-Apr-2010 07:51:16 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of draw_labels</title>
+  <meta name="keywords" content="draw_labels">
+  <meta name="description" content="draw_labels(g) --- add labels to a drawing of g">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">matgraph</a> &gt; <a href="index.html">@graph</a> &gt; draw_labels.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for matgraph/@graph&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>draw_labels
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>draw_labels(g) --- add labels to a drawing of g</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function draw_labels(g,offset) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> draw_labels(g) --- add labels to a drawing of g
+ assuming g has already been drawn in a figure window (with draw or cdraw)
+ add labels to the drawing. 
+ Note: draw(g); add_labels(g) is tantamount to ldraw(g)
+ If the drawing already has vertex numbers, this might make a mess.
+
+ An optional second argument gives an offset of the label away from the
+ vertex: draw_labels(g, [dx, dy]) moves the label dx to the right and dy
+ up. Suggested offset: [0.1, -0.1]</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="get_label.html" class="code" title="function out = get_label(g,v)">get_label</a>	get_label(g) or get_label(g,v) --- get vertex label(s)</li><li><a href="getxy.html" class="code" title="function z = getxy(g)">getxy</a>	getxy(g) --- give g's embedding (or [] if g doesn't have one)</li><li><a href="is_labeled.html" class="code" title="function yn = is_labeled(g)">is_labeled</a>	is_labeled(g) --- determine if there are labels on vertices.</li><li><a href="label.html" class="code" title="function label(g,v,name)">label</a>	Assign labels to vertices of g</li><li><a href="nv.html" class="code" title="function n = nv(g)">nv</a>	nv(g) --- number of vertices in g</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="ldraw.html" class="code" title="function ldraw(g,line_style)">ldraw</a>	ldraw(g,line_style) --- draw a graph with vertices marked with their labels</li></ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function draw_labels(g,offset)</a>
+0002 <span class="comment">% draw_labels(g) --- add labels to a drawing of g</span>
+0003 <span class="comment">% assuming g has already been drawn in a figure window (with draw or cdraw)</span>
+0004 <span class="comment">% add labels to the drawing.</span>
+0005 <span class="comment">% Note: draw(g); add_labels(g) is tantamount to ldraw(g)</span>
+0006 <span class="comment">% If the drawing already has vertex numbers, this might make a mess.</span>
+0007 <span class="comment">%</span>
+0008 <span class="comment">% An optional second argument gives an offset of the label away from the</span>
+0009 <span class="comment">% vertex: draw_labels(g, [dx, dy]) moves the label dx to the right and dy</span>
+0010 <span class="comment">% up. Suggested offset: [0.1, -0.1]</span>
+0011 
+0012 <span class="keyword">if</span> (~<a href="is_labeled.html" class="code" title="function yn = is_labeled(g)">is_labeled</a>(g))
+0013     <a href="label.html" class="code" title="function label(g,v,name)">label</a>(g)
+0014 <span class="keyword">end</span>
+0015 
+0016 <span class="keyword">if</span> nargin == 1
+0017     offset = [0 0];
+0018 <span class="keyword">end</span>
+0019 
+0020 xy = <a href="getxy.html" class="code" title="function z = getxy(g)">getxy</a>(g);
+0021 n = <a href="nv.html" class="code" title="function n = nv(g)">nv</a>(g);
+0022 
+0023 <span class="keyword">for</span> v=1:n
+0024     x = xy(v,1) + offset(1);
+0025     y = xy(v,2) + offset(2);
+0026     text(x,y,<a href="get_label.html" class="code" title="function out = get_label(g,v)">get_label</a>(g,v)); 
+0027 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Fri 30-Apr-2010 07:51:16 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

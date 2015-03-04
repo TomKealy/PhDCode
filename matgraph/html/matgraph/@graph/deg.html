@@ -1,0 +1,61 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of deg</title>
+  <meta name="keywords" content="deg">
+  <meta name="description" content="deg: degree of a vertex or degree sequence">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">matgraph</a> &gt; <a href="index.html">@graph</a> &gt; deg.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for matgraph/@graph&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>deg
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>deg: degree of a vertex or degree sequence</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function d = deg(g,v) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> deg: degree of a vertex or degree sequence
+ deg(g) --- degree sequence of g
+ deg(g,v) --- degree of v in g</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="full.html" class="code" title="function full(g)">full</a>	full(g) --- convert internal storage for g to full</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="color.html" class="code" title="function p = color(g,algo,max_time)">color</a>	color(g,algo) --- color the graph g by a given algorithm</li><li><a href="euler_trail.html" class="code" title="function [elist, exists] = euler_trail(g)">euler_trail</a>	euler_trail(g) --- find an euler trail in g (if one exists)</li><li><a href="iso.html" class="code" title="function [yn,p] = iso(g,h,options)">iso</a>	[yn,p] = iso(g,h,options) --- is g isomorphic to h?</li><li><a href="laplacian.html" class="code" title="function m = laplacian(g,s)">laplacian</a>	laplacian(g) --- get the Laplacian matrix of g</li><li><a href="nsptrees.html" class="code" title="function nt = nsptrees(g)">nsptrees</a>	nsptrees(g) --- number of spanning trees of g.</li><li><a href="prufer.html" class="code" title="function output = prufer(g, code)">prufer</a>	prufer --- convert a tree to/from its Prufer code</li><li><a href="selective.html" class="code" title="function selective(g,n,n0,d)">selective</a>	selective(g,n,n0,d) --- selective attachment random graph</li><li><a href="thresh.html" class="code" title="function y = thresh(g,x)">thresh</a>	create a threshold graph, or test if g is a threshold graph</li><li><a href="trim.html" class="code" title="function trim(g,d)">trim</a>	trim(g,d) --- iteratively remove vertices of degree at most d</li><li><a href="vertex_degree_sequence.html" class="code" title="function ds = vertex_degree_sequence(g,v)">vertex_degree_sequence</a>	find the degrees of the neighbors of a vertex</li></ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function d = deg(g,v) </a>
+0002 <span class="comment">% deg: degree of a vertex or degree sequence</span>
+0003 <span class="comment">% deg(g) --- degree sequence of g</span>
+0004 <span class="comment">% deg(g,v) --- degree of v in g</span>
+0005 
+0006 <span class="keyword">global</span> GRAPH_MAGIC
+0007 
+0008 
+0009 <span class="keyword">if</span> (nargin==1)
+0010     d = <a href="full.html" class="code" title="function full(g)">full</a>(sum(GRAPH_MAGIC.graphs{g.idx}.array));
+0011 <span class="keyword">else</span>
+0012     d = <a href="full.html" class="code" title="function full(g)">full</a>(sum(GRAPH_MAGIC.graphs{g.idx}.array(v,:)));
+0013 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Fri 30-Apr-2010 07:51:16 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of euler_trail</title>
+  <meta name="keywords" content="euler_trail">
+  <meta name="description" content="euler_trail(g) --- find an euler trail in g (if one exists)">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">matgraph</a> &gt; <a href="index.html">@graph</a> &gt; euler_trail.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for matgraph/@graph&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>euler_trail
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>euler_trail(g) --- find an euler trail in g (if one exists)</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function [elist, exists] = euler_trail(g) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> euler_trail(g) --- find an euler trail in g (if one exists)
+ This can be called with two output arguments: 
+    [elist, exists] = euler_trail(g)
+ the 2nd output argument is set to 0 if no trail exists.
+ Bug fix by Brian Towne.</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="add.html" class="code" title="function add(g,i,j)">add</a>	add --- add edge(s) to the graph</li><li><a href="components.html" class="code" title="function p = components(g)">components</a>	components(g) --- find the components of the graph g</li><li><a href="copy.html" class="code" title="function copy(g,h)">copy</a>	copy(g,h) --- overwrite g with a copy of h</li><li><a href="deg.html" class="code" title="function d = deg(g,v)">deg</a>	deg: degree of a vertex or degree sequence</li><li><a href="delete.html" class="code" title="function delete(g,i,j)">delete</a>	delete --- delete vertices or edges from a graph</li><li><a href="free.html" class="code" title="function free(g)">free</a>	free(g) --- free the graph from the system</li><li><a href="graph.html" class="code" title="function g = graph(n)">graph</a>	graph: constructor for the graph class</li><li><a href="has_path.html" class="code" title="function yn = has_path(g,u,v)">has_path</a>	has_path(g,u,v) --- determine if there is a path from u to v in g</li><li><a href="ne.html" class="code" title="function m = ne(g,h)">ne</a>	ne(g) --- number of edges in g or ne(g,h) --- check for inequality</li><li><a href="neighbors.html" class="code" title="function nlist = neighbors(g,v)">neighbors</a>	neighbors(g,v) --- neighbors of v as a list.</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function [elist, exists] = euler_trail(g)</a>
+0002 <span class="comment">% euler_trail(g) --- find an euler trail in g (if one exists)</span>
+0003 <span class="comment">% This can be called with two output arguments:</span>
+0004 <span class="comment">%    [elist, exists] = euler_trail(g)</span>
+0005 <span class="comment">% the 2nd output argument is set to 0 if no trail exists.</span>
+0006 <span class="comment">% Bug fix by Brian Towne.</span>
+0007 
+0008 <span class="comment">% n = nv(g);</span>
+0009 d = <a href="deg.html" class="code" title="function d = deg(g,v)">deg</a>(g);
+0010 d = mod(d,2);
+0011 <span class="keyword">if</span> sum(d) &gt; 2
+0012     elist = []; <span class="comment">% no trail possible, too many odd vertices</span>
+0013     exists = 0;
+0014     <span class="keyword">return</span>
+0015 <span class="keyword">end</span>
+0016 
+0017 <span class="comment">% if there are no edges in the graph, return an empty list, too</span>
+0018 
+0019 <span class="keyword">if</span> <a href="ne.html" class="code" title="function m = ne(g,h)">ne</a>(g) == 0
+0020     elist = [];
+0021     exists = 1;
+0022     <span class="keyword">return</span>
+0023 <span class="keyword">end</span>
+0024 
+0025 <span class="comment">% we have to make sure there is exactly one nontrivial component</span>
+0026 
+0027 c = <a href="components.html" class="code" title="function p = components(g)">components</a>(g);
+0028 nc = np(c);
+0029 c = parts(c); <span class="comment">% convert to cell array</span>
+0030 counts = zeros(nc,1);
+0031 <span class="keyword">for</span> k=1:nc
+0032     counts(k) = length(c{k});
+0033 <span class="keyword">end</span>
+0034 
+0035 big = find(counts &gt; 1);
+0036 <span class="keyword">if</span> (length(big) &gt; 1)
+0037     elist = [];
+0038     exists = 0;
+0039     <span class="keyword">return</span>
+0040 <span class="keyword">end</span>
+0041 
+0042 
+0043 <span class="comment">% if there are two odd vertices, we have to start on one of those.</span>
+0044 <span class="comment">% otherwise, we start at the first vertex in the big component.</span>
+0045 
+0046 <span class="keyword">if</span> sum(d)==2
+0047     odds = find(d);
+0048     start = odds(1);
+0049 <span class="keyword">else</span>
+0050     start = c{big};
+0051     start = start(1);
+0052 <span class="keyword">end</span>
+0053 
+0054 
+0055 <span class="comment">% we make an &quot;erasable&quot; copy of g</span>
+0056 h = <a href="graph.html" class="code" title="function g = graph(n)">graph</a>;
+0057 <a href="copy.html" class="code" title="function copy(g,h)">copy</a>(h,g);
+0058 
+0059 <span class="comment">% and now we start the tour</span>
+0060 
+0061 m = <a href="ne.html" class="code" title="function m = ne(g,h)">ne</a>(g);
+0062 elist = zeros(m,2);
+0063 step = 0;
+0064 v = start;
+0065 
+0066 <span class="keyword">while</span> <a href="ne.html" class="code" title="function m = ne(g,h)">ne</a>(h)
+0067     step = step+1;
+0068     next = <a href="neighbors.html" class="code" title="function nlist = neighbors(g,v)">neighbors</a>(h,v);
+0069     <span class="comment">% if v has even degree (or only one neighbor) any neighbor will do</span>
+0070     <span class="keyword">if</span> (mod(length(next),2) == 0) || (length(next) == 1)
+0071         w = next(1);
+0072     <span class="keyword">else</span>
+0073         <span class="keyword">for</span> w=next
+0074             <span class="comment">% make sure vw is not a cut edge</span>
+0075             <a href="delete.html" class="code" title="function delete(g,i,j)">delete</a>(h,v,w);
+0076             <span class="keyword">if</span> (<a href="has_path.html" class="code" title="function yn = has_path(g,u,v)">has_path</a>(h,v,w))
+0077                 <span class="keyword">break</span>
+0078             <span class="keyword">else</span>
+0079                 <a href="add.html" class="code" title="function add(g,i,j)">add</a>(h,v,w) <span class="comment">% restore the edge</span>
+0080             <span class="keyword">end</span>
+0081         <span class="keyword">end</span>
+0082     <span class="keyword">end</span>
+0083     <a href="delete.html" class="code" title="function delete(g,i,j)">delete</a>(h,v,w);
+0084     elist(step,:) = [v,w];
+0085     v = w;
+0086 <span class="keyword">end</span>
+0087 <a href="free.html" class="code" title="function free(g)">free</a>(h)
+0088 exists = 1;</pre></div>
+<hr><address>Generated on Fri 30-Apr-2010 07:51:16 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

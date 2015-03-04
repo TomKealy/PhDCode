@@ -1,0 +1,8 @@
+clear all;
+
+A = imread('lena.jpg');
+
+dctlena = dct(A);
+
+B = binopdf
+

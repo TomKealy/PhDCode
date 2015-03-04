@@ -1,0 +1,122 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of thresh</title>
+  <meta name="keywords" content="thresh">
+  <meta name="description" content="create a threshold graph, or test if g is a threshold graph">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">matgraph</a> &gt; <a href="index.html">@graph</a> &gt; thresh.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for matgraph/@graph&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>thresh
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>create a threshold graph, or test if g is a threshold graph</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function y = thresh(g,x) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> create a threshold graph, or test if g is a threshold graph
+
+ thresh(g,x) -- create a threshold graph
+ g is the graph to be created
+ x is a vector of values in [0,1]
+ we have an edge between i and j in g iff x(i) + x(j) &gt;= 1
+ 
+ thresh(g) -- determine if g is a threshold graph; return true if it is.</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="deg.html" class="code" title="function d = deg(g,v)">deg</a>	deg: degree of a vertex or degree sequence</li><li><a href="set_matrix.html" class="code" title="function set_matrix(g,A)">set_matrix</a>	set_matrix(g,A) --- set g to be the graph specificed in the matrix A.</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+<h2><a name="_subfunctions"></a>SUBFUNCTIONS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="#_sub1" class="code">function y = dscheck(ds)</a></li></ul>
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function y = thresh(g,x)</a>
+0002 <span class="comment">% create a threshold graph, or test if g is a threshold graph</span>
+0003 <span class="comment">%</span>
+0004 <span class="comment">% thresh(g,x) -- create a threshold graph</span>
+0005 <span class="comment">% g is the graph to be created</span>
+0006 <span class="comment">% x is a vector of values in [0,1]</span>
+0007 <span class="comment">% we have an edge between i and j in g iff x(i) + x(j) &gt;= 1</span>
+0008 <span class="comment">%</span>
+0009 <span class="comment">% thresh(g) -- determine if g is a threshold graph; return true if it is.</span>
+0010 
+0011 
+0012 <span class="comment">% one argument case: check if the graph is a threshold graph</span>
+0013 <span class="keyword">if</span> nargin==1
+0014     ds = sort(<a href="deg.html" class="code" title="function d = deg(g,v)">deg</a>(g));
+0015     y = <a href="#_sub1" class="code" title="subfunction y = dscheck(ds)">dscheck</a>(ds);
+0016     <span class="keyword">return</span>
+0017 <span class="keyword">end</span>
+0018 
+0019 
+0020 
+0021 <span class="comment">% make sure x is a row-vector</span>
+0022 x = x(:)';
+0023 
+0024 n = length(x);
+0025 
+0026 <span class="comment">% Here is a MATLAB trick. We want a matrix whose ij entry is x(i)+x(j).</span>
+0027 <span class="comment">% To do this, we exponentiate x, multiple x'*x, and then logarithm.</span>
+0028 
+0029 ex = exp(x);
+0030 M = log(ex'*ex);
+0031 
+0032 A = M &gt;= 1;
+0033 <span class="keyword">for</span> k=1:n
+0034     A(k,k) = 0;
+0035 <span class="keyword">end</span>
+0036 
+0037 <a href="set_matrix.html" class="code" title="function set_matrix(g,A)">set_matrix</a>(g,A);
+0038 
+0039 
+0040 <a name="_sub1" href="#_subfunctions" class="code">function y = dscheck(ds)</a>
+0041 <span class="comment">% check a degree sequence to see if it comes from a threshold graph</span>
+0042 <span class="comment">% we assume ds is given to us sorted</span>
+0043 <span class="keyword">if</span> isempty(ds)
+0044     y = true;
+0045     <span class="keyword">return</span>
+0046 <span class="keyword">end</span>
+0047 
+0048 <span class="keyword">if</span> length(ds) == 1
+0049     y = (ds == 0);
+0050     <span class="keyword">return</span>
+0051 <span class="keyword">end</span>
+0052 
+0053 <span class="keyword">if</span> ds(1) == 0
+0054     y = <a href="#_sub1" class="code" title="subfunction y = dscheck(ds)">dscheck</a>(ds(2:end));
+0055     <span class="keyword">return</span>
+0056 <span class="keyword">end</span>
+0057 
+0058 n = length(ds);
+0059 <span class="keyword">if</span> (ds(n) == n-1)
+0060     ds = ds(1:n-1)-1;
+0061     y = <a href="#_sub1" class="code" title="subfunction y = dscheck(ds)">dscheck</a>(ds);
+0062     <span class="keyword">return</span>
+0063 <span class="keyword">end</span>
+0064 y = false;
+0065     
+0066 
+0067</pre></div>
+<hr><address>Generated on Fri 30-Apr-2010 07:51:16 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

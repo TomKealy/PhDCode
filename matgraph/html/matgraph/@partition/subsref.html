@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of subsref</title>
+  <meta name="keywords" content="subsref">
+  <meta name="description" content="subsref --- implements the notation p(v) and p(v,w)">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">matgraph</a> &gt; <a href="index.html">@partition</a> &gt; subsref.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for matgraph/@partition&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>subsref
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>subsref --- implements the notation p(v) and p(v,w)</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function vec = subsref(p,S) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> subsref --- implements the notation p(v) and p(v,w)
+ p(v) returns the part containing v
+ p(v,w) returns 1 if v and w are in the same part and 0 otherwise</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="size.html" class="code" title="function s = size(p)">size</a>	size(p) --- returns [nv,np]: number of vertices, parts.</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function vec = subsref(p,S)</a>
+0002 <span class="comment">% subsref --- implements the notation p(v) and p(v,w)</span>
+0003 <span class="comment">% p(v) returns the part containing v</span>
+0004 <span class="comment">% p(v,w) returns 1 if v and w are in the same part and 0 otherwise</span>
+0005 
+0006 
+0007 args = S.subs;
+0008 [m,n] = <a href="size.html" class="code" title="function s = size(p)">size</a>(p.array);
+0009 
+0010 <span class="comment">% single subscript case</span>
+0011 
+0012 <span class="keyword">if</span> length(args)==1
+0013     v = args(1);
+0014     v = v{1};
+0015     <span class="keyword">if</span> (v&lt;1) || (v&gt;n)
+0016         vec = [];
+0017     <span class="keyword">else</span>
+0018         r = find(p.array(:,v));
+0019         vec = find(p.array(r,:));
+0020     <span class="keyword">end</span>
+0021     <span class="keyword">return</span>
+0022 <span class="keyword">end</span>
+0023 
+0024 <span class="comment">% two subscript case</span>
+0025 
+0026 v = args(1);
+0027 v = v{1};
+0028 w = args(2);
+0029 w = w{1};
+0030 
+0031 <span class="keyword">if</span> (v&lt;1) || (v&gt;n) || (w&lt;1) || (w&gt;n) 
+0032     vec = false;
+0033     <span class="keyword">return</span>
+0034 <span class="keyword">end</span>
+0035 
+0036 r1 = find(p.array(:,v));
+0037 r2 = find(p.array(:,w));
+0038 vec = r1==r2;</pre></div>
+<hr><address>Generated on Fri 30-Apr-2010 07:51:16 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

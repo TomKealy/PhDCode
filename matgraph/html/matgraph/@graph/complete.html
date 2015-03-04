@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of complete</title>
+  <meta name="keywords" content="complete">
+  <meta name="description" content="complete: build complete and complete multipartite graphs">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">matgraph</a> &gt; <a href="index.html">@graph</a> &gt; complete.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for matgraph/@graph&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>complete
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>complete: build complete and complete multipartite graphs</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function complete(g,a,b) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> complete: build complete and complete multipartite graphs
+ complete(g) --- convert g to a complete graph on same vertex set
+ complete(g,a) --- convert g to a complete graph on a vertices
+ complete(g,a,b) --- convert g to K(a,b)
+ complete(g,list) --- convert g to a multipartite graph</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="fast_set_matrix.html" class="code" title="function fast_set_matrix(g,A)">fast_set_matrix</a>	fast_set_matrix(g,A) --- overwrite the adjacency matrix of g with A</li><li><a href="nv.html" class="code" title="function n = nv(g)">nv</a>	nv(g) --- number of vertices in g</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="cube.html" class="code" title="function cube(g,k)">cube</a>	cube(g,k) --- create a k-cube (default k = 3)</li><li><a href="mycielski.html" class="code" title="function mycielski(g,h)">mycielski</a>	mycielski(g,n) --- create n'th order Mycielski graph (n > 0)</li></ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function complete(g,a,b)</a>
+0002 <span class="comment">% complete: build complete and complete multipartite graphs</span>
+0003 <span class="comment">% complete(g) --- convert g to a complete graph on same vertex set</span>
+0004 <span class="comment">% complete(g,a) --- convert g to a complete graph on a vertices</span>
+0005 <span class="comment">% complete(g,a,b) --- convert g to K(a,b)</span>
+0006 <span class="comment">% complete(g,list) --- convert g to a multipartite graph</span>
+0007 
+0008 <span class="keyword">global</span> GRAPH_MAGIC
+0009 
+0010 <span class="comment">% convert existing graph to complete</span>
+0011 
+0012 <span class="keyword">if</span> nargin==1
+0013     n = <a href="nv.html" class="code" title="function n = nv(g)">nv</a>(g);
+0014     <a href="fast_set_matrix.html" class="code" title="function fast_set_matrix(g,A)">fast_set_matrix</a>(g,(ones(n) - eye(n)));
+0015     <span class="keyword">return</span>
+0016 <span class="keyword">end</span>
+0017 
+0018 <span class="comment">% overwrite with K_a</span>
+0019 
+0020 <span class="keyword">if</span> (nargin==2) &amp;&amp; (length(a)==1)
+0021     <a href="fast_set_matrix.html" class="code" title="function fast_set_matrix(g,A)">fast_set_matrix</a>(g,ones(a)-eye(a));
+0022     <span class="keyword">return</span>
+0023 <span class="keyword">end</span>
+0024 
+0025 <span class="comment">% overwrite with K(a,b)</span>
+0026 
+0027 <span class="keyword">if</span> (nargin==3)
+0028     A = zeros(a,a);
+0029     B = zeros(b,b);
+0030     Z = ones(a,b);
+0031     <a href="fast_set_matrix.html" class="code" title="function fast_set_matrix(g,A)">fast_set_matrix</a>(g,[A,Z;Z',B]);
+0032     <span class="keyword">return</span>
+0033 <span class="keyword">end</span>
+0034 
+0035 <span class="comment">% last case: complete multipartite graph (a is a list)</span>
+0036 
+0037 n = sum(a);
+0038 
+0039 GRAPH_MAGIC.graphs{g.idx}.array = true(n);
+0040 a = a(:)';
+0041 aa = [0,cumsum(a)];
+0042 <span class="keyword">for</span> k=1:length(a)
+0043     GRAPH_MAGIC.graphs{g.idx}.array(aa(k)+1:aa(k+1),aa(k)+1:aa(k+1))=0;
+0044 <span class="keyword">end</span>
+0045 
+0046</pre></div>
+<hr><address>Generated on Fri 30-Apr-2010 07:51:16 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

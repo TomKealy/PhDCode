@@ -1,0 +1,1032 @@
+\documentclass{amsart}
+\usepackage[margin=0.75in]{geometry}
+\usepackage{hyperref}
+\usepackage{pslatex}
+\usepackage{superdate}
+\usepackage{graphicx}
+\usepackage{multicol}
+
+\title[Matgraph]{MATGRAPH: A MATLAB Toolbox for Graph Theory}
+\author[Ed Scheinerman]{Edward R. Scheinerman}
+\address{Department of Applied Mathematics and Statistics\\
+  The Johns Hopkins University\\
+  Baltimore, Maryland 21218-2682 USA}
+\email{ers@jhu.edu}
+
+\newcommand\matlab{MATLAB}
+\newcommand\matgraph{\textsc{Matgraph}}
+\newcommand\ER{Erd\H{o}s-R\'enyi}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\ZZ}{\mathbb{Z}}
+\newcommand{\oitem}{\item[$\circ$]}
+
+\date{\superdate}
+
+\begin{document}
+
+\maketitle
+
+\begin{multicols}{2}[\section*{Overview}]
+
+\matgraph\ is a toolbox for working with simple\footnote{Simple graphs
+  are undirected graphs without loops or multiple edges.} graphs in
+\matlab. The goal is to make interactive graph theory exploration
+simple and efficient. 
+
+In order to use this toolbox, you need a copy of \matlab, available
+from The MathWorks. A few of the \matgraph\ functions require the
+additional Optimization Toolbox, also available from The MathWorks.
+
+This document gives an overview of the \matgraph\ toolbox. More
+information can be found in the accompanying web pages (see
+\S\ref{sect:documentation}). 
+
+
+In addition to providing a \verb|graph| class, \matgraph\ also
+defines helper classes for working with permutations
+(see~\S\ref{sect:perms}) and partitions
+(see~\S\ref{sect:partition}).
+
+\end{multicols}
+\hrule
+\begin{multicols}{2}[\section{Getting \matgraph}]
+\label{sect:getting}
+
+\subsection{Download and install}
+
+\matgraph\ is available for free from my web site. Go to
+\begin{verbatim}
+http://www.ams.jhu.edu/~ers/matgraph
+\end{verbatim}
+and select the link in the sentence
+``You can download Matgraph by \underline{clicking here}.''
+
+This should cause the file \verb|matgraph-X.X.tgz| to be downloaded to
+your computer. (The \verb|X.X| is the version number.) This is a
+compressed archive. To unpack on a UNIX system, give the command
+\begin{verbatim}
+tar xfz matgraph-X.X.tgz
+\end{verbatim}
+(where \verb|X.X| is replaced by the correct version number). On other
+computers, double clicking on the file's icon should serve the same
+purpose.
+
+This should create a directory named \verb|matgraph|. You may move
+this directory to any convenient location on your hard drive.  
+
+
+
+
+\subsection{License}
+
+This software is copyrighted by Edward R.~Scheinerman and released
+free of charge under the GNU General Purpose Licenses. A copy of this
+license can be found at
+\begin{verbatim}
+http://www.gnu.org/licenses/gpl.html
+\end{verbatim}
+
+I would like to make this tool as useful to as many people as
+possible. I invite you to send me improvements for the current
+\verb|.m| files as well as new \verb|.m| files for added
+functionality.
+
+
+
+\end{multicols}
+\hrule
+\begin{multicols}{2}[\section{Using \matgraph}]
+\label{sect:using}
+
+
+\subsection{Basic principles}
+\label{subsect:basic-principles}
+We assume the reader is familiar with \matlab. Before we discuss how
+to use \matgraph, it is crucial that the following basic principles be
+understood.
+\begin{itemize}
+\item All graphs handled by \matgraph\ are simple and undirected. That
+  is, these graphs do not have loops or multiple edges. Each pair of
+  distinct vertices either is not adjacent or else is joined by a
+  single edge.
+
+\item The vertex set of all graphs in \matgraph\ is always of the form
+  $\{1,2,\ldots,n\}$ where $n\ge0$ is the number of vertices in the
+  graph. 
+
+  An important consequence of this is that when a vertex is deleted
+  from a graph, all vertices with higher value are renumbered. 
+  
+\item All graphs in \matgraph\ are specially defined \verb|graph|
+  objects. They do not behave in the same manner as, say, matrices in
+  \matlab. For the sake of efficiency, \matgraph\ functions are
+  capable of modifying their arguments.
+  
+  Most \matlab\ functions use \emph{call by value} semantics. That is,
+  a \emph{copy} of the argument is sent to the function. For example,
+  suppose we have a function named \verb|func| defined in a file
+  \verb|func.m|. In \matlab, issuing the command \verb|func(A)| does
+  not affect the value held in the ordinary variable \verb|A|.
+  
+  \matgraph, however, is designed differently. Function arguments of
+  type \verb|graph| use \emph{call by reference} semantics. This means
+  that a command such as \verb|add(g,2,4)| can modify the graph
+  \verb|g| (in this case, by adding an edge joining vertices \verb|2|
+  and \verb|4|).
+  
+  Not all \matgraph\ functions modify their arguments, but they all
+  use call by reference for \verb|graph| arguments. For functions that are
+  capable of modifying graphs, the graph that is modified is always the
+  \emph{first} argument to the function. For example, \matgraph\
+  provides a \verb|line_graph| function. The command
+\begin{verbatim}
+line_graph(g,h)
+\end{verbatim}
+  overwrites \verb|g| with the line graph of \verb|h|. The graph
+  \verb|h| is not affected. For more detail, see \S\ref{subsection:declare}.
+
+\item As a consequence of how graphs are stored in \verb|matgraph|,
+  the only time a \verb|graph| variable should appear on the left hand
+  side of an assignment statement is when the variable is initialized
+  like this:
+\begin{verbatim}
+g = graph
+\end{verbatim}
+  At no other time should a \verb|graph| variable appear to the left
+  of an equal sign.
+
+\end{itemize}
+
+
+
+
+\subsection{Starting \matgraph}
+\label{subsect:getting-started}
+
+Launch \matlab\ and be sure that the \matgraph\ directory is visible
+on \matlab's path. This can be done with \matlab's \verb|addpath|
+function. For example:
+\begin{verbatim}
+addpath('/home/betty/programming/matgraph/')
+\end{verbatim}
+assuming Betty placed the \verb|matgraph| directory inside a folder
+named \verb|programming| on her computer. 
+
+The next step is to initialize the \matgraph\ system. This is done
+by giving the following command:
+\begin{verbatim}
+graph_init
+\end{verbatim}
+This sets up hidden data structures (see
+\S\ref{sect:under-the-hood}) used by \matgraph. 
+\matlab\ responds:
+\begin{verbatim}
+Graph system initialized. Number of slots = 500.
+\end{verbatim}
+\matgraph\ is now ready to work with graphs. By default, the system
+can handle 500 different graphs. This should be adequate for most
+purposes. However, if you need an array of, say, 1000 graphs, then
+this is not sufficient. Alternatively, \matgraph\ may be initialized
+with an explicit argument specifying the number of ``slots'' (place
+holders for graphs) like this:
+\begin{verbatim}
+graph_init(20000)
+\end{verbatim}
+
+If you ever wish to delete all of the hidden data structures
+(and thereby erasing all graphs held therein), use the function
+\verb|graph_destroy|. 
+
+
+See also\footnote{See \S\ref{sect:documentation} for a description of
+  the web-based information on all \matgraph\ functions. When we
+  direct the reader to see a particular function, we typically mean to
+  view that function's documentation with a web browser or by using
+  \matlab's \texttt{help} command.}  the
+\verb|free_all|, \verb|num_available|, and \verb|max_available|
+functions.
+
+
+
+
+\subsection{Declaring \texttt{graph} objects and memory management}
+\label{subsection:declare}
+
+
+
+Before working with graphs, it is necessary to declare variable(s) to
+be of type \emph{graph}. This runs against \matlab's philosophy that
+variables do not need to be declared, but is necessary for the sake of
+efficiency. 
+
+To declare a variable, say \verb|g|, to be of type \emph{graph}, we 
+give the following command:
+\begin{verbatim}
+g = graph;
+\end{verbatim}
+It is helpful to read this as ``let $g$ be a graph.'' 
+\textbf{This is the only circumstance in which a graph object may
+  appear to the left of an equal sign.}
+
+Behind the scenes, one of the ``slots'' allocated for graphs (by
+\verb|graph_init|) is set aside for the graph \verb|g|.
+
+Every time a \verb|graph| variable is declared, one these slots is
+taken to hold the data for the graph. If a \verb|graph| variable is no
+longer needed, then its slot can be released like this:
+\begin{verbatim}
+free(g)
+\end{verbatim}
+If, inadvertently, a \verb|graph| variable is cleared from \matlab's
+workspace, there is no convenient way to free the slot it occupied. 
+
+Freeing a graph's slot is not generally necessary when working at
+\matlab's command prompt. Graphs can be modified repeatedly and one
+need not declare more graph variables than the number of graphs one is
+currently considering. 
+
+However, releasing the slot held by a graph is \emph{vital} in
+\verb|.m| files. It is often useful for a function to declare a
+\verb|graph| variable temporarily. {\bfseries Every graph that is
+  created using the \texttt{g=graph} constructor must be released by
+  a matching call to \texttt{free(g)}.} Otherwise, each time the
+function is invoked, another slot in \matgraph's hidden data structure
+is consumed until no slots remain available.
+
+To make a copy of a graph, we must \emph{not} use the statement
+\verb|h=g|. Rather, use \verb|copy(h,g)|. 
+
+
+
+
+\subsection{Basic graph operations}
+
+The statement \verb|g=graph| creates a new graph with no vertices or
+edges. It is now possible to add and to delete vertices and edges
+using the \verb|resize|, \verb|add|, and \verb|delete| functions.  For
+each of these, the graph to be modified is the first argument (see the
+discussion of basic principles in \S\ref{subsect:basic-principles}).
+
+\begin{itemize}
+\item \verb|resize(g,n)| changes the number of vertices in \verb|g| to
+  the value held in \verb|n|. If \verb|n| is greater than the number
+  of vertices in \verb|g|, then additional, isolated vertices are
+  added. On the other hand, if \verb|n| is less than the number of
+  vertices in \verb|g|, then the highest numbered vertices are deleted
+  leaving a graph with \verb|n| vertices. For example, if \verb|g| has
+  $10$ vertices and we invoke the command \verb|resize(g,7)|, then
+  vertices $8$, $9$, and $10$ are deleted (and all edges incident on
+  these vertices are also deleted). 
+
+\item \verb|add(g,u,v)| adds an edge between \verb|u| and \verb|v| to
+  the graph. If either of these values is nonpositive, or if they are
+  equal, nothing happens. If either \verb|u| or \verb|v| is greater
+  than the number of vertices currently in \verb|g|, the graph is
+  expanded to have $\max\{$\verb|u|,\verb|v|$\}$ vertices. 
+  
+  Another way to use \verb|add| is like this: \verb|add(g,elist)|
+  where \verb|elist| is a $k\times 2$ array of positive integers. Each
+  row of \verb|elist| is considered an edge, and all of these edges
+  are added to the graph. If any end point of any edge is larger than
+  the number of vertices currently in the graph, the graph is resized
+  to accommodate.
+
+  The automatic resizing has the potential side effect of adding
+  isolated vertices. For example, if \verb|g| has 5 vertices, and we
+  then give the command \verb|add(g,3,7)| the graph is resized to have
+  $7$ vertices. Vertex $6$ is added as an isolated vertex.
+  
+  Remember: The vertex set of all graphs in \matgraph\ are always of
+  the form $\{1,2,\ldots,n\}$ where $n\ge0$.
+
+
+\item \verb|delete| is used to delete vertices or edges from a
+  graph. 
+
+  \begin{itemize}
+  \item \verb|delete(g,v)| deletes the vertex \verb|v| from the graph.
+    (If \verb|v| is not a vertex of the graph, there is no effect.)
+    
+    All vertices with number greater than \verb|v| have their values
+    decreased by $1$. For example, suppose \verb|g| is a path graph
+    with edges $1\sim2\sim3\sim4\sim5$.  When we give the command
+    \verb|delete(g,3)| vertex $3$ is deleted from the graph, and
+    vertices $4$ and $5$ get renamed $3$ and $4$, respectively.  Thus,
+    after \verb|delete(g,3)| the vertex set of \verb|g| is
+    $\{1,2,3,4\}$ and the only edges are $1\sim2$ and $3\sim4$.
+    
+  \item \verb|delete(g,vlist)| deletes an entire set of vertices. In
+    this form, \verb|vlist| is a $k\times 1$ array of positive
+    integers. All vertices in \verb|vlist| are deleted from the graph,
+    and then vertices are renamed so the vertex set remains of the
+    form $\{1,2,\ldots,n\}$.
+    
+    For example, if \verb|g| is a cycle on 5 vertices with edges
+    $1\sim2\sim3\sim4\sim5\sim1$, then \verb|delete(g,[2;3])| deletes
+    vertices $2$ and $3$ from the graph (leaving edges $4\sim 5 \sim
+    1$) and then renumbers vertices 4 and 5 with the new names 2 and
+    3, so the final result is the path $2\sim3\sim1$.
+    
+  \item \verb|delete(g,u,v)| deletes the edge between \verb|u| and
+    \verb|v| from the graph. If this edge is not present in the graph,
+    nothing happens.
+    
+  \item \verb|delete(g,elist)| deletes a list of edges from the graph.
+    The variable \verb|elist| must be a $k\times 2$ array of positive
+    integers. 
+  \end{itemize}
+  
+  Point to notice: \verb|delete(g,[3;4])| deletes vertices 3 and 4
+  from the graph (second argument is a column vector) whereas
+  \verb|delete(g,[3,4])| deletes the edge $3\sim4$ from the graph
+  (second argument is a $k\times 2$ array where $k$ happens to equal
+  $1$).
+
+  See also the \verb|clear_edges| function that deletes all edges from
+  a graph.
+
+\end{itemize}
+
+
+See also \verb|set_matrix| (described in
+\S\ref{subsect:graph-matrix}). See also \verb|contract|. 
+
+
+\subsection{Standard graphs}
+
+\matgraph\ provides several functions for forming standard
+graphs. One of the more versatile is the \verb|complete| function for
+creating complete graphs, complete bipartite graphs, and complete
+multipartite graphs:
+\begin{itemize}
+\item \verb|complete(g)| adds all possible edges to \verb|g| without
+  changing its vertex set.
+
+\item \verb|complete(g,n)| sets \verb|g| to be the complete graph
+  $K_n$. 
+
+\item \verb|complete(g,n,m)| sets \verb|g| to be the complete
+  bipartite graph $K_{n,m}$.
+
+\item \verb|complete(g,list)| sets \verb|g| to be the complete
+  multipartite graph $K(a_1,a_2,\ldots,a_t)$ where the indices are the
+  entries in \verb|list|. 
+\end{itemize}
+
+Other general graph builders include \verb|path|, \verb|cycle|,
+\verb|grid|, \verb|wheel|, \verb|cube|, \verb|circulant|, and
+\verb|paley|. 
+Specific graphs can be formed using these: \verb|bucky|,
+\verb|dodecahedron|, \verb|icosahedron|, \verb|octahedron|, and
+\verb|petersen|.
+Various random graphs can be built using these functions:
+\verb|random|,
+\verb|sprandom|,
+\verb|random_bipartite|, and \verb|random_regular|.
+
+
+\subsection{Graph operations}
+
+\matgraph\ provides a variety of operations to form new graphs from
+old. For example, \verb|line_graph(h,g)| sets \verb|h| to be the line
+graph\footnote{The line graph of $G$ is a graph $L(G)$ whose vertex
+  set is $E(G)$. Two vertices $e_1$ and $e_2$ of $L(G)$ are adjacent
+  in $L(G)$ provided, when considered as edges of $G$, they are
+  incident with a common vertex.}  of \verb|g|.  Other operations
+include \verb|cartesian|, \verb|complement|, \verb|mycielski|,
+\verb|induce|, \verb|intersect|, \verb|union|, and \verb|trim|.
+
+Breadth-first and depth-first spanning trees can be found using
+\verb|bfstree| and \verb|dfstree|. See also \verb|nsptrees|. 
+
+\subsection{Graph inspectors}
+\label{subsect:inspectors}
+
+The functions \verb|nv(g)| and \verb|ne(g)| give the number of
+vertices and edges of \verb|g|. These two values are returned by
+\verb|size(g)| in a $1\times2$ array. 
+
+There are two ways to see if an edge is present in a graph \verb|g|.
+The command \verb|has(g,u,v)| returns $1$ (for true) if the edge
+between \verb|u| and \verb|v| is present in \verb|g|, and $0$
+otherwise. Alternatively, the same result is produced by
+\verb|g(u,v)|.
+
+The neighborhood of a vertex is returned by the command
+\verb|neighbors(g,v)|; the result is a list (one-dimensional array) of
+the vertices adjacent to \verb|v|. The same result is returned by
+\verb|g(v)|. 
+
+The degree of a vertex is given by \verb|deg(g,v)|. With only a single
+argument, \verb|deg(g)| returns the degree sequence of the graph.
+
+\verb|find_path(g,u,v)| finds a shortest path from \verb|u| to
+\verb|v| (returned as a list of vertices on the path); if no such path
+exists, an empty array is returned. 
+
+\verb|isconnected(g)| returns $1$ (true) if \verb|g| is connected and
+$0$ (false) otherwise. 
+
+The components of a graph can be found using
+\verb|components(g)|. This returns a partition object (see
+\S\ref{sect:partition}) each of whose blocks is the vertex set of a
+component of \verb|g|.
+
+The distance between vertices can be found with
+\verb|dist(g,u,v)|. The form \verb|dist(g,u)| returns an array giving
+the distances from \verb|u| to all the vertices in the graph. Calling
+\verb|dist(g)| returns a square matrix giving the distances between
+all pairs of vertices. See \verb|diam|.
+
+
+
+\subsection{Graph--matrix conversions}
+\label{subsect:graph-matrix}
+
+The adjacency matrix of a graph is returned by \verb|matrix(g)|. This
+returns a square \emph{logical} matrix. To use this matrix
+arithmetically, convert it to class \verb|double|; for example, the
+following command returns the eigenvalues of (the adjacency matrix
+of) a graph:
+\begin{verbatim}
+eig(double(matrix(g)))
+\end{verbatim}
+
+Conversely, given a square, symmetric, zero-one, zero-diagonal matrix
+\verb|A|, we can set \verb|g| to have this matrix as its adjacency
+matrix like this: \verb|set_matrix(g,A)|. 
+
+See also \verb|spy|, \verb|laplacian|, and \verb|incidence_matrix|. 
+
+
+\subsection{Graph invariants and partitions}
+\label{subsect:invariants}
+
+In addition to basic information functions described in
+\S\ref{subsect:inspectors}, \matgraph\ can calculate other invariants
+and features of graphs of interest to graph theorists. These include
+\verb|alpha| (independence number), \verb|omega| (clique number), and
+\verb|dom| (domination number). (All three of these use the integer
+programming facilities in \matlab's Optimization Toolbox.)
+See also \verb|diam|. 
+
+The \verb|bipartition| function determines whether a graph is
+bipartite;  if it is, it returns the bipartition as a \verb|partition|
+object (see \S\ref{sect:partition}). Otherwise (the graph is not
+bipartite) \verb|bipartition| returns an empty partition.
+
+A graph coloring algorithm is available in the \verb|color| function.
+This returns a partition of the vertex set of a graph into independent
+sets by a greedy coloring algorithm (step through the vertices in
+decreasing degree order and give the first available color to each
+vertex in turn). Alas, this generally does not find a coloring with
+$\chi(G)$ colors. 
+
+The chromatic polynomial of a graph can be found for small
+graphs. For example:
+\begin{verbatim}
+>> g = graph;
+>> cycle(g,5)
+>> chromatic_poly(g)
+ans =
+     1    -5    10   -10     4     0
+\end{verbatim}
+shows that the chromatic polynomial of $C_5$ is
+$$x^5-5x^4+10x^3-10x^2+4x.$$
+
+
+
+\subsection{Input-output}
+\label{subsect:io}
+
+\matgraph\ can read and write graphs in files on the user's hard
+disk. 
+
+Suppose the user wishes to build a graph using some other software
+(such as a C program written by the user) and then read that graph
+into \matgraph. To do this, the data should be saved in a file as a
+list of edges. Each line of the file should contain exactly two
+integers separated by white space. These integers should range from
+$1$ to the number of vertices in the graph.
+Let's say that this data is saved in a file named \verb|mygraph|. 
+
+The \matlab\ command \verb|load mygraph| reads the file \verb|mygraph|
+and saves the contents of that file in a variable that is also named
+\verb|mygraph|. (\matlab's current working directory must be the same
+as the directory that contains the file \verb|mygraph|.)
+
+The variable \verb|mygraph| is an $m\times 2$ array of edges. This can
+be converted into a graph like this:
+\begin{verbatim}
+g = graph(mygraph)
+\end{verbatim}
+or if the graph \verb|g| already exists, like this:
+\begin{verbatim}
+resize(g,0)
+add(g,mygraph)
+\end{verbatim}
+(The \verb|resize(g,0)| clears all data from \verb|g|.)
+
+\matgraph\ also provides its own \verb|save| and \verb|load| commands.
+\begin{itemize}
+\item \verb|save(g,filename)| saves the graph \verb|g| to the user's
+  hard drive in a file named in \verb|filename|. (For example,
+  \verb|save(g,'mygraph')|.)  This saves all the information about the
+  graph and not just a list of edges.
+  
+\item \verb|load(g,filename)| reads the graph data in the file named
+  in \verb|filename| and sets \verb|g| to be that graph. The file
+  named in \verb|filename| must be one created by \matgraph's
+  \verb|save| command and \emph{not} just a list of edges. 
+\end{itemize}
+
+
+\matgraph\ provides a function named \verb|sgf| which stands for
+\textbf simple \textbf graph \textbf format. This function converts
+graphs to and from a 2-column matrix whose rows have the following
+meanings:
+\begin{itemize}
+\item The first row is $[n~m]$ where $n$ is the number of vertices and
+  $m$ is the number of edges in the graph.
+
+\item The next $m$ rows give the edges of the graph; each row is of
+  the form $[u~v]$ where $1 \le u\not=v \le n$.
+
+\item Optionally, an additional $n$ rows give the locations of the
+  vertices. Row number $m+1+i$ is $[x_i~y_i]$ and specifies the
+  coordinates of vertex $i$. 
+\end{itemize}
+Matrices of this form are easy to read or to write on disk, and this
+format is easy for other programs to produce. 
+
+
+In addition, it is possible to create \verb|.m| files for saving
+graphs to be used by other programs. For example, \matgraph's
+\verb|dot| command writes graphs to disk in a format that can be
+processed by GraphViz's \verb|dot| program. See also \verb|graffle|
+and \verb|nauty|. 
+
+
+\subsection{Handling large graphs}
+\label{subsect:large}
+
+Behind the scenes, graphs in \matgraph\ are saved as square matrices.
+A graph with, say, ten thousand vertices would occupy an array with
+100~million entries. \matlab\ provides the ability to handle matrices
+large matrices with few nonzero entries efficiently. This ability is
+embedded into \matgraph.
+
+Small graphs are best handled using full storage. By default, a
+graph created by \verb|g = graph| uses full storage. It is easy,
+however, to convert a graph to use sparse storage.
+
+\begin{itemize}
+\item \verb|sparse(g)| converts a graph's storage method to be
+  sparse. This is useful for extremely large graphs with relatively
+  few edges (i.e., small average degree).
+
+\item \verb|full(g)| converts a graph's storage to full mode. This is
+  the preferred method for small graphs and graphs with many edges.
+\end{itemize}
+
+One can check the type of storage in use with the \verb|issparse| and
+\verb|isfull| functions.
+
+\smallbreak
+
+The graph constructor \verb|g = graph| takes an optional argument; one
+can write \verb|g = graph(n)| where \verb|n| is a nonnegative
+integer. This creates a new graph with \verb|n| vertices. If \verb|n|
+is small, full storage is used for \verb|g|. If \verb|n| is large,
+sparse storage is automatically provided. How large is ``large''? See
+\verb|set_large|. 
+
+
+\subsection{Labels}
+
+Naming vertices as consecutive integers from $1$ to $n$ can be
+inconvenient. \matgraph\ provides a means to assign text labels to
+vertices. The command \verb|label| can be used to assign such labels
+to vertices: \verb|label(g,v,string)| assigns the characters in
+\verb|string| to be a label for vertex \verb|v|. If a vertex of a
+graph is deleted, all higher numbered vertices are renumbered, but
+their labels are retained. The command \verb|get_label| is used to
+learn the label of an individual vertex or to return a list of all
+labels on all vertices  in a graph. See also \verb|clear_labels|.
+
+
+
+\subsection{Visualization}
+
+It is often useful to be able to see pictures of graphs. \matgraph\
+provides a basic means to do this. 
+
+One may associate an embedding with a graph; this is a mapping from
+the vertex set to points in the plane.
+
+The command \verb|draw| draws a picture of the graph in the plane by
+placing each vertex at its $x,y$-coordinates and joining adjacent
+vertices by line segments. See also \verb|ndraw| and \verb|ldraw|.
+Note that \verb|draw| simply draws the graph in the current figure
+window without erasing the contents of that figure; to see only the
+graph, first give the \matlab\ command \verb|clf|. See also the
+functions \verb|ndraw| and \verb|cdraw|. 
+
+When \verb|draw| is invoked for graphs without embeddings, a default,
+circular embedding is automatically constructed. Some graph building
+operations attach an embedding to the graphs they form; for example,
+\verb|petersen(g)| sets \verb|g| to be the Petersen graph with
+vertices located at classic coordinates. 
+
+It is possible to set a graph's embedding to coordinates of your
+choosing with the \verb|embed| command. If \verb|g| has $n$ vertices
+and \verb|xy| is an $n\times2$ matrix of real numbers, then
+\verb|embed(g,xy)| sets the coordinates of the vertices to the
+corresponding rows of \verb|xy|. The command \verb|randxy(g)| sets the
+coordinates of the vertices to random locations. 
+
+To learn the current embedding of a graph, use \verb|getxy(g)|. To
+erase a graph's embedding, use \verb|rmxy(g)|. See also \verb|hasxy|.
+
+The best \matgraph\ method to generate an embedding is
+\verb|distxy|. This function uses \matlab's Optimization Toolbox. It
+works reasonably well on small graphs. It attempts to place vertices
+in the plane so that the Euclidean distance matches their
+graph-theoretic distance, but the penalty is lessened the further
+apart the nodes.
+
+
+We also provide \verb|mdsxy| which creates an embedding based on
+multidimensional scaling. It's fast, but produces mediocre results.
+
+
+
+Readers are warmly encouraged to submit other embedding algorithms
+for incorporation into \matgraph. 
+
+\end{multicols}
+\hrule
+\begin{multicols}{2}[\section{Documentation}]
+\label{sect:documentation}
+
+This introduction to \matgraph\ does not list every function available
+to the user. However, all functions (in \verb|.m| files) are
+documented in the accompanying web pages.  These web pages are housed
+in the \verb|html| subdirectory of the main \verb|matgraph| folder.
+Double clicking on the file \verb|index.html| opens the main
+documentation page in a web browser. From here, all the \verb|.m|
+files can be found including descriptions, cross references, and
+source code.  This includes the supporting classes \verb|partition|
+and \verb|permutation|.
+
+
+In addition, the user may get help on any \matgraph\ command with
+\matlab's usual \verb|help| command. Some command names are
+overloaded. For example, the name \verb|delete| is both a built-in
+\matlab\ command and a \matgraph\ function. Type 
+\verb|help graph/delete| to access the \matgraph\ version. 
+
+For a list of all methods available for \verb|graph| objects, type
+\verb|methods graph|.
+
+See also \emph{Matgraph By Example} in the \verb|doc| directory.
+
+The web pages in the \verb|html| directory were generated by by the
+\verb|m2html| package created by Guillaume Flandin; this utility can
+be found on the MathWorks' web site.
+
+
+
+
+
+\end{multicols}\hrule
+\begin{multicols}{2}[\section{The Permutation Class}]
+\label{sect:perms}
+
+Included in this toolbox is a class called \verb|permutation|. These
+objects represent permutations of the integers $\{1,2,\ldots,n\}$.
+Unlike \verb|graph|s, these object behave according to the usual
+\matlab\ conventions and do not need to be specially
+declared. \verb|permutation| objects are used by \matgraph's
+\verb|renumber| command.
+
+The standard way to build a permutation $p$ is to specify its action with
+a vector of the form $[a_1,a_2,\ldots,a_n]$ where $a_i = p(i)$.  For
+example:
+\begin{verbatim}
+>> p = permutation( [2 1 3 5 6 4] )
+(1,2)(3)(4,5,6)
+\end{verbatim}
+This assigns to $p$ a permutation in which $p(1) =2$, $p(2) = 1$,
+$p(3)=3$, $p(4)=5$, $p(5)=6$, and $p(6)=4$. Note that $p$ is displayed
+on the console using the standard disjoint cycle notation.
+
+The basic operations of applying a permutation to an element and
+composition of permutations are implemented. Typing \verb|p(k)|
+returns the action of the permutation $p$ on the element $k$. If $k$
+is not in scope (outside the range $1$ to $n$), then $0$ is returned.
+Composition of permutations is denoted by multiplication, \verb|*|.
+Repeated composition can be achieved using the \verb|^| operator:
+\verb|p^3| is equivalent to \verb|p*p*p|. The power may be zero or
+negative.
+
+Equality and inequality of permutations can be checked with \verb|==|
+and \verb|~=|, respectively. 
+
+Here are the functions defined for the class \verb|permutation|. Their
+\verb|.m| files are found in the \verb|@permutation| folder.
+
+\begin{itemize}
+\item \verb|array|: convert a permutation to an array. The syntax is
+  \verb|array(p)|. This returns a $1 \times n$ array whose
+  $i^{\text{th}}$ entry if $p(i)$. For example, if
+  $p=(1,2)(3)(4,5,6)$, then \verb|array(p)| returns
+  the array $[2 ,1 ,3 ,5 ,6 ,4]$. 
+
+\item \verb|cycles|: determine  the cycle structure of a
+  permutation. The syntax is \verb|cycles(p)|. This returns a cell
+  array. Each member of the cell array contains the elements (in
+  order) of a cycle of $p$. For example, if $p=(1,2)(3)(4,5,6)$, then 
+  \verb|c=cycles(p)| sets \verb|c{1}| to $[1,2]$, \verb|c{2}| to
+  $[3]$, and \verb|c{3}| to $[4,5,6]$. 
+
+\item \verb|inv|: permutation inverse. The syntax is
+  \verb|inv(p)|. This returns the inverse permutation,  $p^{-1}$. 
+
+\item \verb|length|: number of elements permuted. The syntax is
+  \verb|length(p)|. For example, if $p=(1,2)(3)(4,5,6)$, then
+  \verb|length(p)| is $6$. 
+  
+\item \verb|matrix|: return a permutation matrix that represents the
+  permutation. The syntax is \verb|matrix(p)|. For example, if
+  $p=(1,2)(3)(4,5,6)$, then \verb|matrix(p)| gives this:
+\begin{verbatim}
+     0     1     0     0     0     0
+     1     0     0     0     0     0
+     0     0     1     0     0     0
+     0     0     0     0     0     1
+     0     0     0     1     0     0
+     0     0     0     0     1     0
+\end{verbatim}
+
+
+\item \verb|permutation|: class constructor. This can be called two
+  ways. If $n$ is a positive integer, \verb|permutation(n)| returns
+  the identity permutation on $\{1,2,\ldots,n\}$. If $x$ is an array
+  containing the elements $1$ through $n$, then \verb|permutation(x)|
+  creates the permutation specified by those elements. For example, if
+  $x$ is \verb|[2 1 3 5 6 4]|, then \verb|permutation(x)| gives the
+  permutation $(1,2)(3)(4,5,6)$.
+
+  
+\item \verb|random|: shuffle a permutation. The syntax is
+  \verb|random(p)|. This returns a permutation on the same elements as
+  $p$ but in a random order.  Typically, to generate a random
+  permutation on $n$ elements, one would type this:
+  \verb|random(permutation(n))|.
+
+\item \verb|sign|: sign (parity) of a permutation. The syntax is
+  \verb|sign(p)|. This returns $1$ is $p$ is an even permutation and
+  $-1$ is $p$ is an odd permutation.
+
+\item \verb|size|: give the number of elements and number of cycles in
+  a permutation. The syntax is \verb|size(p)|. This returns a
+  two-element array. The first element is the number of objects
+  permuted by the permutation and the second element is the number of
+  cycles in the disjoint-cycle representation of $p$. 
+  
+  \matlab\ uses this when reporting on permutation variables in the
+  workspace. The permutation $(1,2)(3)(4,5,6)$ is described as a
+  \verb|<6x3 permutation>|. The $6$ refers to the fact that this is a
+  permutation of the set $\{1,2,\ldots,6\}$ and the $3$ refers to the
+  fact that this permutation has $3$ cycles. 
+\end{itemize}
+
+\end{multicols}\hrule
+\begin{multicols}{2}[\section{The Partition Class}]
+\label{sect:partition}
+The \verb|partition| class represents partitions of sets of the form
+$\{1,2,\ldots,n\}$. A partition can be created with the command
+\verb|p=partition(n)|. This creates a partition in which all parts
+have size $1$; that is, the partition
+$\bigl\{\{1\},\{2\},\ldots,\{n\}\bigr\}$. A partition can also be
+created from a cell array. Each cell in the array should list the
+elements of a block; the integers $1$ through $n$ should appear
+exactly once in each member of the cell array. For example, if we type
+\begin{verbatim}
+c = {[1 2 4],[3 5 6],[7:10]};
+p = partition(c)
+\end{verbatim}
+Then $p$ is the partition
+$\bigl\{\{1,2,4\},\{3,5,6\},\{7,8,9,10\}\bigr\}$ and \matlab\ types
+this:
+\begin{verbatim}
+{ {1,2,4} {3,5,6} {7,8,9,10} }
+\end{verbatim}
+
+If $p$ is a partition and $k$ is an integer, the expression
+\verb|p(k)| returns the elements in the same part as $k$. For the
+partition presented above, \verb|p(2)| would return the array
+\verb|[1 2 4]|.  For integers $j$ and $k$, the expression
+\verb|p(j,k)| returns true if $j$ and $k$ are in the same part of $p$
+and false otherwise.
+
+The meet and join of two partitions is computed using \verb|p*q| and
+\verb|p+q|, respectively. Equality and inequality can be checked with
+\verb|==| and \verb|~=|.
+
+Partitions can be converted into cell arrays with the \verb|parts|
+function. 
+
+Here is a list of the various functions defined for the
+\verb|partition| class; these can be found in the \verb|@partition|
+folder.
+
+\begin{itemize}
+
+\item \verb|merge|: combine two parts. The syntax is
+  \verb|merge(p,j,k)|. This returns a new partition in which the parts
+  containing $j$ and $k$ have been merged into a single part. 
+
+
+\item \verb|np|: number of parts. The syntax is \verb|np(p)|; the
+  number of parts in the partition is returned.
+
+\item \verb|nv|: size of the ground set. The syntax is \verb|nv(p)|;
+  the number of elements in the ground set of the partition is
+  returned. 
+  
+\item \verb|partition|: constructor for this type. The simple syntax
+  is \verb|partition(n)| (where $n$ is a positive integer). This
+  builds a partition with ground set $\{1,2,\ldots,n\}$ in which there
+  are $n$ parts (all of size one).
+
+  Alternatively, if $c$ is a cell array, then \verb|partition(c)|
+  creates a partition based on the arrays in $c$. Each of \verb|c{1}|,
+  \verb|c{2}|, and so on, is a list of integers. Together, these lists
+  should contain each of the integers in $[n]$ exactly once.
+
+\item \verb|parts|: get the parts of the partition. The syntax is
+  \verb|parts(p)|. This returns a cell array. Each cell contains a
+  list (vector) of positive integers in one of the parts of $p$. 
+
+
+
+\item \verb|size|: report the number of elements in the ground set and
+  the number of parts. The syntax is \verb|size(p)|. This returns a
+  $1\times2$ array \verb|[n m]| where $n$ is the size of the ground
+  set and $m$ is the number of blocks. 
+
+  This is used by \matlab\ when it reports the variables in a
+  workspace. A partition is reported like this:
+  \verb|<10x3 partition>|. This means the partition's ground set is
+  $[10]$ and there are three parts in the partition. 
+
+
+\end{itemize}
+
+
+\end{multicols}
+\hrule
+\begin{multicols}{2}[\section{Under the Hood (Stuff You Don't Need to Know)}]
+\label{sect:under-the-hood}
+
+
+All data about graphs are held in a hidden global data structure named
+\verb|GRAPH_MAGIC|. Objects of type \verb|graph| are simply indices
+into this structure. This enable us to simulate call-by-reference
+semantics for \emph{graph} objects; that is, \matlab\ functions can
+modify \emph{graph} arguments. 
+
+It is possible to save the entire \verb|GRAPH_MAGIC| structure into
+another variable; this would allow multiple ``graph theory universes''
+to coexist. It's not clear this is needed.
+
+\subsection{The \texttt{GRAPH\_MAGIC} structure}
+
+The global data structure is named \verb|GRAPH_MAGIC|. To access this
+structure directly, use the following line in your \verb|.m| files:
+\begin{verbatim}
+global GRAPH_MAGIC
+\end{verbatim}
+
+The \verb|GRAPH_MAGIC| structure contains the following fields:
+\begin{itemize}
+\item \verb|ngraphs|: the number of ``slots'' available in this
+  structure (equal to the size of the arrays \verb|GRAPH_MAGIC.graphs|
+  and \verb|GRAPH_MAGIC.in_use|).
+
+\item \verb|graphs|: this is a cell array containing the graphs. (See
+ \S\ref{inside-GM.g}.)
+
+
+\item \verb|in_use|: an array that indicates which slots are taken. A
+  $1$ in position $i$ of this array signals that slot $i$ is taken; a
+  $0$ means the slot is available to hold a new graph.
+
+\item \verb|Q|: a structure implementing a double-ended queue. (See \S\ref{Q}.)
+
+\item \verb|large_size|: a variable holding the cutoff between
+  ``large'' and ``small'' graphs. If the graph constructor
+  \verb|graph| is fed a large argument, it creates a sparse graph. 
+\end{itemize}
+
+\subsubsection{Inside \texttt{GRAPH\_MAGIC.graphs}}
+\label{inside-GM.g}
+
+The cell array \verb|GRAPH_MAGIC.graphs|  holds the graphs. Each cell in
+this array is a structure with two fields: \verb|array| and
+\verb|xy|. The \verb|array| field holds the adjacency matrix of the
+graph (a zero-one, symmetric matrix). The \verb|xy| field holds the
+embedding for the graph; this is an $n\times 2$ array of real values
+giving the coordinates of the vertices.
+
+
+\subsubsection{The private double-ended queue}
+\label{Q}
+
+The \verb|Q| field of \verb|GRAPH_MAGIC| is a double-ended queue
+available for use by \verb|graph| algorithms (e.g.,
+\verb|bfstree|). It is a structure that contains three fields:
+\begin{itemize}
+\item \verb|array|: a one-dimensional array that holds the stack/queue
+  values.
+\item \verb|first|: an index pointing to the first (front most) element
+  of the queue.
+\item \verb|last|: an index pointing to the last (back most) element of
+  the queue.
+\end{itemize}
+
+There is a small suite of tools for working with the queue in the
+directory \verb|@graph/private|. These are visible to functions inside
+the \verb|@graph| directory, but not generally available. Here they
+are (in alphabetical order):
+
+\begin{itemize}
+\item \verb|q_capacity|: gives the maximum capacity of the queue.
+
+\item \verb|q_get|: returns a list of the elements in the queue (that
+  is, \verb|array(first:last)|).
+
+\item \verb|q_init|: called with one argument, this initializes the queue
+  with a given capacity.
+
+\item \verb|q_pop_back|: pops off (and returns) the last element of
+  the queue. This is a stack-like operation.
+
+\item \verb|q_pop_front|: pops off (and returns) the front most element in the
+  queue. This is a queue-like operation.
+
+\item \verb|q_push|: called with one argument, this adds an element to
+  the back of the queue.
+
+\item \verb|q_size|: returns the number of elements in the queue. 
+\end{itemize}
+
+
+\subsection{The \texttt{graph} type}
+
+The \emph{graph} type is simply a ``wrapper'' for an integer; that
+integer is an index into the \verb|GRAPH_MAGIC.graphs| array.  A
+\emph{graph} object contains just one field, \verb|idx|, which holds
+that integer.
+
+In many \emph{graph} functions (in the \verb|@graph| directory) we see
+the following:
+\begin{verbatim}
+GRAPH_MAGIC.graphs{g.idx}.array
+\end{verbatim}
+This is how we refer to the adjacency matrix of the graph \verb|g|.
+
+\end{multicols}
+\hrule
+\begin{multicols}{2}[\section{Future Projects}]
+
+There are many additions I would like for this project. Here are
+few:
+\begin{itemize}
+\item Planarity testing and embedding. I would like an \verb|is_planar|
+  method to test if a graph is planar and a good \verb|planar_embed|
+  method for finding a crossing-free embedding.
+
+\item The \verb|distxy| layout routine works reasonably well, but is
+  hardly fast. It also relies on the  Optimization Toolbox. I'd like a
+  better layout engine.
+
+\item A GUI for creating and editing graphs. I'd like to see this
+  invoked with a command such as \verb|gui(g)| or
+  \verb|graph_edit(g)|.
+  
+\item We need \verb|.m| files for connectivity, edge connectivity,
+  maximum matching (in general graphs), approximate
+  isomorphism, better heuristic coloring algorithms, girth, and so
+  forth.
+\end{itemize}
+
+\end{multicols}
+\end{document}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% End: 

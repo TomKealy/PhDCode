@@ -1,0 +1,62 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of match_join</title>
+  <meta name="keywords" content="match_join">
+  <meta name="description" content="match_join(g,h1,h2) --- overwrite g with a graph formed from disjoint">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">matgraph</a> &gt; <a href="index.html">@graph</a> &gt; match_join.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for matgraph/@graph&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>match_join
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>match_join(g,h1,h2) --- overwrite g with a graph formed from disjoint</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function match_join(g,h1,h2) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> match_join(g,h1,h2) --- overwrite g with a graph formed from disjoint
+ graphs g1,g2 with a matching added between them. The graphs h1 and h2
+ must have the same number of vertices.</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="matrix.html" class="code" title="function A = matrix(g)">matrix</a>	matrix(g) --- return (a copy of) the adjacency matrix of g</li><li><a href="nv.html" class="code" title="function n = nv(g)">nv</a>	nv(g) --- number of vertices in g</li><li><a href="set_matrix.html" class="code" title="function set_matrix(g,A)">set_matrix</a>	set_matrix(g,A) --- set g to be the graph specificed in the matrix A.</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function match_join(g,h1,h2)</a>
+0002 <span class="comment">% match_join(g,h1,h2) --- overwrite g with a graph formed from disjoint</span>
+0003 <span class="comment">% graphs g1,g2 with a matching added between them. The graphs h1 and h2</span>
+0004 <span class="comment">% must have the same number of vertices.</span>
+0005 
+0006 <span class="keyword">if</span> (<a href="nv.html" class="code" title="function n = nv(g)">nv</a>(h1) ~= <a href="nv.html" class="code" title="function n = nv(g)">nv</a>(h2))
+0007     error(<span class="string">'In match_join(g,h1,h2) graphs h1 and h2 must have the same number of vertices'</span>);
+0008 <span class="keyword">end</span>
+0009 
+0010 A = <a href="matrix.html" class="code" title="function A = matrix(g)">matrix</a>(h1);
+0011 B = <a href="matrix.html" class="code" title="function A = matrix(g)">matrix</a>(h2);
+0012 n = <a href="nv.html" class="code" title="function n = nv(g)">nv</a>(h1);
+0013 
+0014 <a href="set_matrix.html" class="code" title="function set_matrix(g,A)">set_matrix</a>(g, [A, eye(n); eye(n), B]);</pre></div>
+<hr><address>Generated on Fri 30-Apr-2010 07:51:16 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

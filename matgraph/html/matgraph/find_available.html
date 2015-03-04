@@ -1,0 +1,71 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of find_available</title>
+  <meta name="keywords" content="find_available">
+  <meta name="description" content="idx = find_available">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">matgraph</a> &gt; find_available.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for matgraph&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>find_available
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>idx = find_available</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>function idx = find_available </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> idx = find_available
+ Find the first available slot in the GRAPH_MAGIC machinery or 0 if no
+ slot is available. 
+ NOTE: This is used by the @graph constructor. No reason the user should
+ call this directly.</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function idx = find_available</a>
+0002 <span class="comment">% idx = find_available</span>
+0003 <span class="comment">% Find the first available slot in the GRAPH_MAGIC machinery or 0 if no</span>
+0004 <span class="comment">% slot is available.</span>
+0005 <span class="comment">% NOTE: This is used by the @graph constructor. No reason the user should</span>
+0006 <span class="comment">% call this directly.</span>
+0007 
+0008 
+0009 
+0010 <span class="keyword">global</span> GRAPH_MAGIC
+0011 
+0012 
+0013 <span class="comment">% see if all the slots are taken</span>
+0014 <span class="keyword">if</span> (sum(GRAPH_MAGIC.in_use) == GRAPH_MAGIC.ngraphs)
+0015     idx = 0;
+0016     <span class="keyword">return</span>
+0017 <span class="keyword">end</span>
+0018 
+0019 <span class="comment">% If we made it this far, there's an available slot. Now we just find one.</span>
+0020 idx = find(GRAPH_MAGIC.in_use == 0);
+0021 idx = idx(1);</pre></div>
+<hr><address>Generated on Fri 30-Apr-2010 07:51:16 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

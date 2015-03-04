@@ -1,0 +1,572 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of iso</title>
+  <meta name="keywords" content="iso">
+  <meta name="description" content="[yn,p] = iso(g,h,options) --- is g isomorphic to h?">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">matgraph</a> &gt; <a href="index.html">@graph</a> &gt; iso.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for matgraph/@graph&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>iso
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>[yn,p] = iso(g,h,options) --- is g isomorphic to h?</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function [yn,p] = iso(g,h,options) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> [yn,p] = iso(g,h,options) --- is g isomorphic to h?
+ Given graphs g and h, determine whether or not the graphs are isomorphic, 
+ and if so, return a permutation p such that renumber(g,p) makes g==h.
+ 
+ Returns yn = 1 if isomorphic and yn = 0 if not. The optional p is a
+ permutation giving the isomorphism.
+
+ The optional third argument, options, is used to set various parameters
+ guiding the search for an isomorphism. Here are the fields that can be
+ specified in options and their default values.
+
+ options.verbose --- turn off (0, default) or on (1) verbose output.
+
+ options.eig --- cospectrality tests. Set this to...
+     negative value: skip this test
+     zero: find characteristic polynomial 
+     positive: calculate eigenvalues and use this value for a threshold
+     for equality.   default value = nv * 20 * eps
+
+ options.pretest --- do basic tests such as number of vertices, edges.
+     Set to 1 for on (default) and 0 for off (but don't do that!); these
+     are generally very fast
+ 
+ options.components --- check that the number and size of components are
+     the same. 1 = check, 0 = don't check. Default is 0
+
+ options.distance --- use the distance matrix to distinguish vertex types.
+     1 = check (default), 0 = don't check. Default is 1. This can speed up
+     isomorphism testing for regular graphs.</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="components.html" class="code" title="function p = components(g)">components</a>	components(g) --- find the components of the graph g</li><li><a href="copy.html" class="code" title="function copy(g,h)">copy</a>	copy(g,h) --- overwrite g with a copy of h</li><li><a href="deg.html" class="code" title="function d = deg(g,v)">deg</a>	deg: degree of a vertex or degree sequence</li><li><a href="delete.html" class="code" title="function delete(g,i,j)">delete</a>	delete --- delete vertices or edges from a graph</li><li><a href="dist.html" class="code" title="function d = dist(g,v,w)">dist</a>	dist(g,v,w) and dist(g,v) --- find distance(s) between vertices</li><li><a href="eig.html" class="code" title="function v = eig(g)">eig</a>	eig(g) -- compute the eigenvalues of this graph</li><li><a href="free.html" class="code" title="function free(g)">free</a>	free(g) --- free the graph from the system</li><li><a href="graph.html" class="code" title="function g = graph(n)">graph</a>	graph: constructor for the graph class</li><li><a href="matrix.html" class="code" title="function A = matrix(g)">matrix</a>	matrix(g) --- return (a copy of) the adjacency matrix of g</li><li><a href="neighbors.html" class="code" title="function nlist = neighbors(g,v)">neighbors</a>	neighbors(g,v) --- neighbors of v as a list.</li><li><a href="nv.html" class="code" title="function n = nv(g)">nv</a>	nv(g) --- number of vertices in g</li><li><a href="renumber.html" class="code" title="function renumber(g,perm)">renumber</a>	renumber the vertices of a graph</li><li><a href="size.html" class="code" title="function [sz,tz] = size(g)">size</a>	size(g) --- returns [nv,ne] for the graph</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+<h2><a name="_subfunctions"></a>SUBFUNCTIONS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="#_sub1" class="code">function [new_gtypes, new_htypes] = iso_match(g,h,gtypes,htypes,options)</a></li><li><a href="#_sub2" class="code">function tlist = matrix2types(M)</a></li><li><a href="#_sub3" class="code">function newtypes = refine_types(g,types)</a></li><li><a href="#_sub4" class="code">function newtypes = ultra_refine_types(g,types)</a></li><li><a href="#_sub5" class="code">function yn = iso_pretest(g,h,options)</a></li></ul>
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function [yn,p] = iso(g,h,options)</a>
+0002 <span class="comment">% [yn,p] = iso(g,h,options) --- is g isomorphic to h?</span>
+0003 <span class="comment">% Given graphs g and h, determine whether or not the graphs are isomorphic,</span>
+0004 <span class="comment">% and if so, return a permutation p such that renumber(g,p) makes g==h.</span>
+0005 <span class="comment">%</span>
+0006 <span class="comment">% Returns yn = 1 if isomorphic and yn = 0 if not. The optional p is a</span>
+0007 <span class="comment">% permutation giving the isomorphism.</span>
+0008 <span class="comment">%</span>
+0009 <span class="comment">% The optional third argument, options, is used to set various parameters</span>
+0010 <span class="comment">% guiding the search for an isomorphism. Here are the fields that can be</span>
+0011 <span class="comment">% specified in options and their default values.</span>
+0012 <span class="comment">%</span>
+0013 <span class="comment">% options.verbose --- turn off (0, default) or on (1) verbose output.</span>
+0014 <span class="comment">%</span>
+0015 <span class="comment">% options.eig --- cospectrality tests. Set this to...</span>
+0016 <span class="comment">%     negative value: skip this test</span>
+0017 <span class="comment">%     zero: find characteristic polynomial</span>
+0018 <span class="comment">%     positive: calculate eigenvalues and use this value for a threshold</span>
+0019 <span class="comment">%     for equality.   default value = nv * 20 * eps</span>
+0020 <span class="comment">%</span>
+0021 <span class="comment">% options.pretest --- do basic tests such as number of vertices, edges.</span>
+0022 <span class="comment">%     Set to 1 for on (default) and 0 for off (but don't do that!); these</span>
+0023 <span class="comment">%     are generally very fast</span>
+0024 <span class="comment">%</span>
+0025 <span class="comment">% options.components --- check that the number and size of components are</span>
+0026 <span class="comment">%     the same. 1 = check, 0 = don't check. Default is 0</span>
+0027 <span class="comment">%</span>
+0028 <span class="comment">% options.distance --- use the distance matrix to distinguish vertex types.</span>
+0029 <span class="comment">%     1 = check (default), 0 = don't check. Default is 1. This can speed up</span>
+0030 <span class="comment">%     isomorphism testing for regular graphs.</span>
+0031 <span class="comment">%</span>
+0032 
+0033 <span class="comment">%% Check the options structure and set default values</span>
+0034 
+0035 <span class="keyword">if</span> nargin &lt; 3
+0036     options.verbose = 0;
+0037 <span class="keyword">end</span>
+0038 
+0039 <span class="keyword">if</span> ~isfield(options,<span class="string">'verbose'</span>)
+0040     options.verbose = 0;
+0041 <span class="keyword">end</span>
+0042 
+0043 <span class="keyword">if</span> ~isfield(options,<span class="string">'eig'</span>)
+0044     options.eig = <a href="nv.html" class="code" title="function n = nv(g)">nv</a>(g) * 20 *eps;
+0045 <span class="keyword">end</span>
+0046 
+0047 <span class="keyword">if</span> ~isfield(options,<span class="string">'pretest'</span>)
+0048     options.pretest = 1;
+0049 <span class="keyword">end</span>
+0050 
+0051 <span class="keyword">if</span> ~isfield(options,<span class="string">'components'</span>)
+0052     options.components = 0;
+0053 <span class="keyword">end</span>
+0054 
+0055 <span class="keyword">if</span> ~isfield(options,<span class="string">'distance'</span>)
+0056     options.distance = 1;
+0057 <span class="keyword">end</span>
+0058 
+0059 <span class="keyword">if</span> ~isfield(options,<span class="string">'debug'</span>)
+0060     options.debug = false;
+0061 <span class="keyword">end</span>
+0062 
+0063 
+0064 verb = options.verbose;
+0065 
+0066 <span class="keyword">if</span> verb
+0067     disp(<span class="string">'Searching for an isomorphism'</span>)
+0068 <span class="keyword">end</span>
+0069 
+0070 <span class="comment">% default in case the graphs are not isomorphic</span>
+0071 yn = false;
+0072 p = permutation(0);
+0073 
+0074 <span class="comment">%%</span>
+0075 <span class="comment">% We begin with a set of basic checks that can easily determine if the</span>
+0076 <span class="comment">% graphs are not isomorphic.</span>
+0077 
+0078 
+0079 <span class="comment">% check if the graphs are simply equal</span>
+0080 
+0081 <span class="keyword">if</span> verb
+0082     disp(<span class="string">'Checking if the graphs are identical'</span>)
+0083     tic
+0084 <span class="keyword">end</span>
+0085 
+0086 <span class="keyword">if</span> (g==h)
+0087     yn = true;
+0088     p = permutation(<a href="nv.html" class="code" title="function n = nv(g)">nv</a>(g));
+0089     <span class="keyword">if</span> verb
+0090         toc
+0091     <span class="keyword">end</span>
+0092     <span class="keyword">return</span>
+0093 <span class="keyword">end</span>
+0094 
+0095 
+0096 <span class="comment">% number of vertices &amp; edges</span>
+0097 <span class="keyword">if</span> options.pretest
+0098     <span class="keyword">if</span> ~<a href="#_sub5" class="code" title="subfunction yn = iso_pretest(g,h,options)">iso_pretest</a>(g,h,options)
+0099         <span class="keyword">if</span> verb
+0100             toc
+0101         <span class="keyword">end</span>
+0102         <span class="keyword">return</span>
+0103     <span class="keyword">end</span>
+0104 <span class="keyword">end</span>
+0105 
+0106 
+0107 <span class="comment">%% Create vertex distinguishing information. This is kept in n-row matrices</span>
+0108 <span class="comment">% Mg and Mh.</span>
+0109 
+0110 <span class="comment">% first set of distinguishing mark is the degree sequence of its neighbors</span>
+0111 
+0112 <span class="keyword">if</span> verb
+0113     disp(<span class="string">'Calculating vertex neighbor degree sequences'</span>)
+0114 <span class="keyword">end</span>
+0115 
+0116 n = <a href="nv.html" class="code" title="function n = nv(g)">nv</a>(g);
+0117 
+0118 Mg = <a href="deg.html" class="code" title="function d = deg(g,v)">deg</a>(g);
+0119 Mg = Mg(:);
+0120 Mh = <a href="deg.html" class="code" title="function d = deg(g,v)">deg</a>(h);
+0121 Mh = Mh(:);
+0122     
+0123 Mg = <a href="#_sub3" class="code" title="subfunction newtypes = refine_types(g,types)">refine_types</a>(g,Mg);
+0124 Mh = <a href="#_sub3" class="code" title="subfunction newtypes = refine_types(g,types)">refine_types</a>(h,Mh);
+0125 
+0126 <span class="comment">% check if they're the same</span>
+0127 
+0128 <span class="keyword">if</span> verb
+0129     toc
+0130 <span class="keyword">end</span>
+0131 
+0132 <span class="keyword">if</span> any(any( sortrows(Mg) ~= sortrows(Mh) ))
+0133     <span class="keyword">return</span>
+0134 <span class="keyword">end</span>
+0135 
+0136 <span class="comment">% the second set of distinguishing marks is from the distance matrix</span>
+0137 
+0138 <span class="keyword">if</span> options.distance
+0139     <span class="keyword">if</span> verb
+0140         disp(<span class="string">'Calculating distance matrices'</span>)
+0141     <span class="keyword">end</span>
+0142     Dg = sort(<a href="dist.html" class="code" title="function d = dist(g,v,w)">dist</a>(g),2);
+0143     Dh = sort(<a href="dist.html" class="code" title="function d = dist(g,v,w)">dist</a>(h),2);
+0144 
+0145     <span class="comment">% append to Mg and Mh</span>
+0146 
+0147     Mg = [Mg, Dg(:,2:end)];
+0148     Mh = [Mh, Dh(:,2:end)];
+0149     
+0150     <span class="keyword">if</span> verb
+0151         toc
+0152     <span class="keyword">end</span>
+0153     
+0154 <span class="keyword">end</span>
+0155 
+0156 
+0157 <span class="comment">% make sure they're the same</span>
+0158 <span class="keyword">if</span> any(any( sortrows(Mg) ~= sortrows(Mh) ))
+0159     <span class="keyword">if</span> options.verbose
+0160         disp(<span class="string">'Graphs have different distance structure'</span>)
+0161     <span class="keyword">end</span>
+0162     <span class="keyword">return</span>
+0163 <span class="keyword">end</span>
+0164 
+0165 
+0166 <span class="comment">%% Now we assign a &quot;type&quot; to each vertex of the graph based on its row in</span>
+0167 <span class="comment">% Mg (or Mh). Vertices of different types can NOT be linked by an</span>
+0168 <span class="comment">% isomorphism.</span>
+0169 
+0170 
+0171 <span class="comment">% determine type number for each vertex</span>
+0172 
+0173 <span class="keyword">if</span> verb
+0174     disp(<span class="string">'Refining'</span>)
+0175 <span class="keyword">end</span>
+0176 
+0177 gtypes = <a href="#_sub2" class="code" title="subfunction tlist = matrix2types(M)">matrix2types</a>(Mg);
+0178 htypes = <a href="#_sub2" class="code" title="subfunction tlist = matrix2types(M)">matrix2types</a>(Mh);
+0179 
+0180 gtypes = <a href="#_sub4" class="code" title="subfunction newtypes = ultra_refine_types(g,types)">ultra_refine_types</a>(g,gtypes);
+0181 htypes = <a href="#_sub4" class="code" title="subfunction newtypes = ultra_refine_types(g,types)">ultra_refine_types</a>(h,htypes);
+0182 
+0183 
+0184 ntypes = max(gtypes);
+0185 
+0186 <span class="keyword">if</span> any(sort(gtypes) ~= sort(htypes))
+0187     yn = 0;
+0188     <span class="keyword">if</span> verb 
+0189         toc
+0190     <span class="keyword">end</span>
+0191     <span class="keyword">return</span>
+0192 <span class="keyword">end</span>
+0193 
+0194 
+0195 <span class="keyword">if</span> verb
+0196     disp([<span class="string">'Number of different types of vertices = '</span>, int2str(ntypes)])
+0197     toc
+0198 <span class="keyword">end</span>
+0199 
+0200 [new_gtypes,new_htypes] = <a href="#_sub1" class="code" title="subfunction [new_gtypes, new_htypes] = iso_match(g,h,gtypes,htypes,options)">iso_match</a>(g,h,gtypes,htypes,options);
+0201 
+0202 <span class="keyword">if</span> max(new_gtypes) &lt; n || max(new_htypes) &lt; n
+0203     <span class="keyword">return</span>
+0204 <span class="keyword">end</span>
+0205 
+0206 p1 = permutation(new_gtypes);
+0207 p2 = permutation(new_htypes);
+0208 
+0209 p = inv(p2)*p1;
+0210 
+0211 gcopy = <a href="graph.html" class="code" title="function g = graph(n)">graph</a>;
+0212 <a href="copy.html" class="code" title="function copy(g,h)">copy</a>(gcopy, g);
+0213 <a href="renumber.html" class="code" title="function renumber(g,perm)">renumber</a>(gcopy,p);
+0214 <span class="keyword">if</span> gcopy==h
+0215     yn = 1;
+0216     <span class="keyword">if</span> options.verbose
+0217         disp(<span class="string">'Graphs are isomorphic'</span>);
+0218         toc
+0219     <span class="keyword">end</span>
+0220 <span class="keyword">else</span>
+0221     yn = 0;
+0222     p = permutation(0);
+0223     <span class="keyword">if</span> options.verbose
+0224         disp(<span class="string">'Graphs are NOT isomorphic'</span>);
+0225         toc
+0226     <span class="keyword">end</span>
+0227 <span class="keyword">end</span>
+0228 <a href="free.html" class="code" title="function free(g)">free</a>(gcopy);
+0229 
+0230 
+0231 <span class="comment">%% main work engine</span>
+0232 <a name="_sub1" href="#_subfunctions" class="code">function [new_gtypes, new_htypes] = iso_match(g,h,gtypes,htypes,options)</a>
+0233 
+0234 ntypes = max(gtypes); 
+0235 n = <a href="nv.html" class="code" title="function n = nv(g)">nv</a>(g);
+0236 
+0237 <span class="keyword">if</span> ntypes == n
+0238     new_gtypes = gtypes;
+0239     new_htypes = htypes;
+0240     <span class="keyword">return</span>
+0241 <span class="keyword">end</span>
+0242 
+0243 <span class="comment">% find a g-vertex of the most frequent type</span>
+0244 
+0245 type_count = zeros(1,ntypes);
+0246 
+0247 <span class="comment">% find a vertex of the most numerous type</span>
+0248 <span class="keyword">for</span> k=1:ntypes
+0249     type_count(k) = length(find(k==gtypes));
+0250 <span class="keyword">end</span>
+0251 max_idx = find(type_count == max(type_count));
+0252 max_type = max_idx(1);
+0253 
+0254 <span class="comment">% get a g-vertex of type max_type; call it v</span>
+0255     
+0256 v = find(gtypes == max_type);
+0257 v = v(1);
+0258 
+0259 new_num = ntypes + 1; <span class="comment">% create a new type for v</span>
+0260 gtypes(v) = new_num;
+0261 new_gtypes = <a href="#_sub4" class="code" title="subfunction newtypes = ultra_refine_types(g,types)">ultra_refine_types</a>(g,gtypes);
+0262 
+0263 
+0264 <span class="comment">% find all h vertices of the same type as v</span>
+0265 <span class="comment">% call that list wlist</span>
+0266 
+0267 wlist = find(htypes == max_type);
+0268 
+0269 nw = length(wlist);
+0270 <span class="keyword">for</span> i = 1:nw
+0271     <span class="comment">% check if G-v is plausible match to H-w</span>
+0272     w = wlist(i);
+0273     
+0274     <span class="keyword">if</span> options.verbose
+0275         disp([<span class="string">'Trying '</span>, int2str(v), <span class="string">' --&gt; '</span>, int2str(w)])
+0276         toc
+0277     <span class="keyword">end</span>
+0278     
+0279     <span class="keyword">if</span> options.pretest
+0280         g_v = <a href="graph.html" class="code" title="function g = graph(n)">graph</a>; <a href="copy.html" class="code" title="function copy(g,h)">copy</a>(g_v,g); <a href="delete.html" class="code" title="function delete(g,i,j)">delete</a>(g_v,v);
+0281         h_w = <a href="graph.html" class="code" title="function g = graph(n)">graph</a>; <a href="copy.html" class="code" title="function copy(g,h)">copy</a>(h_w,h); <a href="delete.html" class="code" title="function delete(g,i,j)">delete</a>(h_w,w);
+0282         <span class="keyword">if</span> (~<a href="#_sub5" class="code" title="subfunction yn = iso_pretest(g,h,options)">iso_pretest</a>(g_v,h_w,options))
+0283             <span class="keyword">if</span> options.verbose
+0284                 disp(<span class="string">'failed pretest'</span>)
+0285             <span class="keyword">end</span>
+0286             <a href="free.html" class="code" title="function free(g)">free</a>(g_v);
+0287             <a href="free.html" class="code" title="function free(g)">free</a>(h_w);
+0288             <span class="keyword">continue</span>        
+0289         <span class="keyword">end</span>
+0290         <a href="free.html" class="code" title="function free(g)">free</a>(g_v);
+0291         <a href="free.html" class="code" title="function free(g)">free</a>(h_w);
+0292     
+0293         <span class="keyword">if</span> options.verbose
+0294             disp(<span class="string">'Pretest passed'</span>)
+0295         <span class="keyword">end</span>
+0296     <span class="keyword">end</span>
+0297 
+0298     <span class="comment">% plausible match, so assign new type to w and recurse</span>
+0299     htypes_tmp = htypes;
+0300     htypes_tmp(w) = new_num;
+0301     htypes_tmp = <a href="#_sub4" class="code" title="subfunction newtypes = ultra_refine_types(g,types)">ultra_refine_types</a>(h,htypes_tmp);
+0302     
+0303     
+0304     <span class="comment">% htypes_tmp should be same as gtypes (up to sort order)</span>
+0305     <span class="keyword">if</span> any(sort(htypes_tmp) ~= sort(new_gtypes))
+0306         <span class="keyword">if</span> options.verbose
+0307             disp(<span class="string">'Attempted match failed'</span>)
+0308         <span class="keyword">end</span>
+0309         <span class="keyword">continue</span>;
+0310     <span class="keyword">end</span>
+0311     
+0312     
+0313     <span class="keyword">if</span> options.verbose
+0314         disp([<span class="string">'Number of vertex types is now '</span>, int2str(max(htypes_tmp))])
+0315         toc
+0316     <span class="keyword">end</span>
+0317     
+0318     <span class="comment">% recurse</span>
+0319     [new_gtypes, new_htypes] = <a href="#_sub1" class="code" title="subfunction [new_gtypes, new_htypes] = iso_match(g,h,gtypes,htypes,options)">iso_match</a>(g,h,new_gtypes,htypes_tmp,options);
+0320     
+0321     <span class="keyword">if</span> (max(new_gtypes) == n) &amp;&amp; (max(new_htypes)==n)
+0322         p1 = permutation(new_gtypes);
+0323         p2 = permutation(new_htypes);
+0324 
+0325         p = inv(p2)*p1;
+0326 
+0327         gcopy = <a href="graph.html" class="code" title="function g = graph(n)">graph</a>;
+0328         <a href="copy.html" class="code" title="function copy(g,h)">copy</a>(gcopy, g);
+0329         <a href="renumber.html" class="code" title="function renumber(g,perm)">renumber</a>(gcopy,p);
+0330         <span class="keyword">if</span> gcopy==h
+0331             yn = 1;
+0332         <span class="keyword">else</span>
+0333             yn = 0;
+0334         <span class="keyword">end</span>
+0335         <a href="free.html" class="code" title="function free(g)">free</a>(gcopy);
+0336         
+0337         <span class="keyword">if</span> yn
+0338             <span class="keyword">return</span>
+0339         <span class="keyword">end</span>
+0340     <span class="keyword">end</span>
+0341 <span class="keyword">end</span>
+0342 
+0343 new_gtypes = gtypes;
+0344 new_htypes = htypes;
+0345     
+0346 
+0347 <span class="comment">%% matrix2types -- convert rows of M to type numbers</span>
+0348 <span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+0349 
+0350 <a name="_sub2" href="#_subfunctions" class="code">function tlist = matrix2types(M)</a>
+0351 <span class="comment">% convert the rows of M into a column of row types</span>
+0352 
+0353 T = unique(sortrows(M),<span class="string">'rows'</span>);
+0354 
+0355 n = <a href="size.html" class="code" title="function [sz,tz] = size(g)">size</a>(M,1);
+0356 
+0357 <span class="comment">% determine type number for each row</span>
+0358 
+0359 tlist = zeros(n,1);
+0360 
+0361 <span class="keyword">for</span> v=1:n
+0362     r = M(v,:);
+0363     tlist(v) = find_row(r,T);
+0364 <span class="keyword">end</span>
+0365 
+0366 
+0367 
+0368 <span class="comment">%% refine_types</span>
+0369 <span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+0370 
+0371 <a name="_sub3" href="#_subfunctions" class="code">function newtypes = refine_types(g,types)</a>
+0372 <span class="comment">% newtypes = refine_types(g,types) -- refine types based on neighbors' types</span>
+0373 <span class="comment">% given an n-vector of vertex types, augment this by considering the types</span>
+0374 <span class="comment">% of the neighbors</span>
+0375 
+0376 
+0377 maxd = max(<a href="deg.html" class="code" title="function d = deg(g,v)">deg</a>(g));
+0378 n = <a href="nv.html" class="code" title="function n = nv(g)">nv</a>(g);
+0379 
+0380 M = zeros(n,maxd+1);
+0381 
+0382 <span class="keyword">for</span> v=1:n
+0383     Nv = <a href="neighbors.html" class="code" title="function nlist = neighbors(g,v)">neighbors</a>(g,v);
+0384     row = types(Nv);
+0385     row = sort(row);
+0386     row = row(:)';  <span class="comment">% make sure it's a row vector</span>
+0387     row = [types(v), row, zeros(1, maxd-length(row))];
+0388     M(v,:) = row;
+0389 <span class="keyword">end</span>
+0390 
+0391 
+0392 newtypes = <a href="#_sub2" class="code" title="subfunction tlist = matrix2types(M)">matrix2types</a>(M);
+0393 
+0394 <span class="comment">%% ultra_refine_types -- repeatedly apply refine_types</span>
+0395 <span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+0396 <a name="_sub4" href="#_subfunctions" class="code">function newtypes = ultra_refine_types(g,types)</a>
+0397 <span class="comment">% repeatedly apply refine_types until no change</span>
+0398 
+0399 <span class="keyword">while</span> true
+0400     newtypes = <a href="#_sub3" class="code" title="subfunction newtypes = refine_types(g,types)">refine_types</a>(g,types);
+0401     <span class="keyword">if</span> all(newtypes == types)
+0402         <span class="keyword">return</span>
+0403     <span class="keyword">end</span>
+0404     types = newtypes;
+0405 <span class="keyword">end</span>
+0406 
+0407 
+0408 
+0409 <span class="comment">%% iso_pretest</span>
+0410 <span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+0411 <a name="_sub5" href="#_subfunctions" class="code">function yn = iso_pretest(g,h,options)</a>
+0412 <span class="comment">% basic tests that can rule out isomorphism</span>
+0413 
+0414 <span class="comment">% # of vertices and edges</span>
+0415 
+0416 yn = 0;
+0417 <span class="keyword">if</span> any(<a href="size.html" class="code" title="function [sz,tz] = size(g)">size</a>(g) ~= <a href="size.html" class="code" title="function [sz,tz] = size(g)">size</a>(h))
+0418     <span class="keyword">return</span>
+0419 <span class="keyword">end</span>
+0420 
+0421 <span class="comment">% degree sequences</span>
+0422 
+0423 dg = sort(<a href="deg.html" class="code" title="function d = deg(g,v)">deg</a>(g));
+0424 dh = sort(<a href="deg.html" class="code" title="function d = deg(g,v)">deg</a>(h));
+0425 <span class="keyword">if</span> any(dg ~= dh)
+0426     <span class="keyword">if</span> options.verbose
+0427         disp(<span class="string">'Graphs have different degree sequences'</span>)
+0428     <span class="keyword">end</span>
+0429     <span class="keyword">return</span>
+0430 <span class="keyword">end</span>  
+0431 
+0432 <span class="comment">% components</span>
+0433 
+0434 <span class="keyword">if</span> options.components
+0435 
+0436 
+0437     gc = <a href="components.html" class="code" title="function p = components(g)">components</a>(g);
+0438     hc = <a href="components.html" class="code" title="function p = components(g)">components</a>(h);
+0439 
+0440     <span class="keyword">if</span> np(gc) ~= np(hc)
+0441         <span class="keyword">return</span>
+0442     <span class="keyword">end</span>
+0443 
+0444     <span class="comment">%  components must all have the same sizes</span>
+0445     gcp = parts(gc);
+0446     hcp = parts(hc);
+0447 
+0448     gx = zeros(1,np(gc));
+0449     gy = gx;
+0450 
+0451     <span class="keyword">for</span> k=1:np(gc)
+0452         gx(k) = length(gcp{k});
+0453         gy(k) = length(hcp{k});
+0454     <span class="keyword">end</span>
+0455     gx = sort(gx);
+0456     gy = sort(gy);
+0457     <span class="keyword">if</span> any(gx ~= gy)
+0458         <span class="keyword">if</span> options.verbose
+0459             disp(<span class="string">'Graphs have different component sizes'</span>)
+0460         <span class="keyword">end</span>
+0461         <span class="keyword">return</span>
+0462     <span class="keyword">end</span>
+0463 <span class="keyword">end</span> <span class="comment">% end component subtest</span>
+0464 
+0465 <span class="comment">% cospectrality tests</span>
+0466 
+0467 <span class="keyword">if</span> options.eig == 0
+0468     
+0469     A = double(<a href="matrix.html" class="code" title="function A = matrix(g)">matrix</a>(g));
+0470     B = double(<a href="matrix.html" class="code" title="function A = matrix(g)">matrix</a>(h));
+0471     pA = round(poly(A));
+0472     pB = round(poly(B));
+0473     <span class="keyword">if</span> any(pA ~= pB)
+0474         <span class="keyword">if</span> options.verbose
+0475             disp(<span class="string">'Graphs have different characteristic polynomials'</span>)
+0476         <span class="keyword">end</span>
+0477         <span class="keyword">return</span>;
+0478     <span class="keyword">end</span>
+0479 <span class="keyword">end</span>
+0480 
+0481 
+0482 <span class="keyword">if</span> options.eig &gt; 0
+0483     eA = sort(<a href="eig.html" class="code" title="function v = eig(g)">eig</a>(g));
+0484     eB = sort(<a href="eig.html" class="code" title="function v = eig(g)">eig</a>(h));
+0485     diff = norm(eA-eB);
+0486     <span class="keyword">if</span> (diff &gt; options.eig)
+0487         <span class="keyword">if</span> options.verbose
+0488             disp([<span class="string">'Graphs have different spectra (tol = '</span>, <span class="keyword">...</span><span class="comment"> </span>
+0489                 num2str(options.eig),<span class="string">')'</span>]);
+0490         <span class="keyword">end</span>
+0491         <span class="keyword">return</span>
+0492     <span class="keyword">end</span>
+0493 <span class="keyword">end</span>
+0494 
+0495 
+0496 yn = 1;</pre></div>
+<hr><address>Generated on Fri 30-Apr-2010 07:51:16 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

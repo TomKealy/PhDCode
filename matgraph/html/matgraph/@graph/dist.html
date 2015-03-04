@@ -1,0 +1,137 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of dist</title>
+  <meta name="keywords" content="dist">
+  <meta name="description" content="dist(g,v,w) and dist(g,v) --- find distance(s) between vertices">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">matgraph</a> &gt; <a href="index.html">@graph</a> &gt; dist.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for matgraph/@graph&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>dist
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>dist(g,v,w) and dist(g,v) --- find distance(s) between vertices</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function d = dist(g,v,w) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> dist(g,v,w) and dist(g,v) --- find distance(s) between vertices
+ The form dist(g,v,w) finds the distance between vertices v and w.
+ The form dist(g,v) returns a vector distance from v to all other vertices
+ in the graph.
+ The form dist(g) returns an n-by-n matrix whose ij entry is the distance
+ between vertices i and j.
+
+ The code for all pairs shortest distance was written by Michael Kleder
+ and found on the Mathwork's MATLAB Central file exchange.</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="dist.html" class="code" title="function d = dist(g,v,w)">dist</a>	dist(g,v,w) and dist(g,v) --- find distance(s) between vertices</li><li><a href="matrix.html" class="code" title="function A = matrix(g)">matrix</a>	matrix(g) --- return (a copy of) the adjacency matrix of g</li><li><a href="nv.html" class="code" title="function n = nv(g)">nv</a>	nv(g) --- number of vertices in g</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="diam.html" class="code" title="function d = diam(g)">diam</a>	diam(g) --- return the diameter of g: the length of a longest shortest</li><li><a href="dist.html" class="code" title="function d = dist(g,v,w)">dist</a>	dist(g,v,w) and dist(g,v) --- find distance(s) between vertices</li><li><a href="distxy.html" class="code" title="function e = distxy(g, D)">distxy</a>	distxy(g) -- give g a distance based embedding</li><li><a href="iso.html" class="code" title="function [yn,p] = iso(g,h,options)">iso</a>	[yn,p] = iso(g,h,options) --- is g isomorphic to h?</li><li><a href="mdsxy.html" class="code" title="function DD = mdsxy(g,D)">mdsxy</a>	mdsxy(g) -- create an embedding based on multidimensional scaling</li></ul>
+<!-- crossreference -->
+
+<h2><a name="_subfunctions"></a>SUBFUNCTIONS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="#_sub1" class="code">function d = alltoall(g)</a></li><li><a href="#_sub2" class="code">function d = onetoall(g,v)</a></li></ul>
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function d = dist(g,v,w)</a>
+0002 <span class="comment">% dist(g,v,w) and dist(g,v) --- find distance(s) between vertices</span>
+0003 <span class="comment">% The form dist(g,v,w) finds the distance between vertices v and w.</span>
+0004 <span class="comment">% The form dist(g,v) returns a vector distance from v to all other vertices</span>
+0005 <span class="comment">% in the graph.</span>
+0006 <span class="comment">% The form dist(g) returns an n-by-n matrix whose ij entry is the distance</span>
+0007 <span class="comment">% between vertices i and j.</span>
+0008 <span class="comment">%</span>
+0009 <span class="comment">% The code for all pairs shortest distance was written by Michael Kleder</span>
+0010 <span class="comment">% and found on the Mathwork's MATLAB Central file exchange.</span>
+0011 
+0012 
+0013 <span class="keyword">if</span> nargin == 3
+0014     dd = <a href="dist.html" class="code" title="function d = dist(g,v,w)">dist</a>(g,v);
+0015     d = dd(w);
+0016     <span class="keyword">return</span>
+0017 <span class="keyword">end</span>
+0018 
+0019 n = <a href="nv.html" class="code" title="function n = nv(g)">nv</a>(g);
+0020 
+0021 
+0022 <span class="keyword">if</span> nargin==1
+0023     d = <a href="#_sub1" class="code" title="subfunction d = alltoall(g)">alltoall</a>(g);
+0024     <span class="keyword">return</span>
+0025 <span class="keyword">end</span>
+0026 
+0027 d = <a href="#_sub2" class="code" title="subfunction d = onetoall(g,v)">onetoall</a>(g,v);
+0028 
+0029 
+0030 <span class="comment">% this subroutine was written by Michael Kleder and was found on The</span>
+0031 <span class="comment">% Mathwork's MATLAB Central file exchange. I think my new alltoall is</span>
+0032 <span class="comment">% faster, though.</span>
+0033 <span class="comment">%</span>
+0034 <span class="comment">% function B = allspath(A)</span>
+0035 <span class="comment">% B=full(double(A));</span>
+0036 <span class="comment">% B(B==0)=Inf;</span>
+0037 <span class="comment">% C=ones(size(B));</span>
+0038 <span class="comment">% iter=0;</span>
+0039 <span class="comment">% while any(C(:))</span>
+0040 <span class="comment">%     C=B;</span>
+0041 <span class="comment">%     B=min(B,squeeze(min(repmat(B,[1 1 length(B)])+...</span>
+0042 <span class="comment">%         repmat(permute(B,[1 3 2]),[1 length(B) 1]),[],1)));</span>
+0043 <span class="comment">%     C=B-C;</span>
+0044 <span class="comment">% end</span>
+0045 <span class="comment">% B(logical(eye(length(B))))=0;</span>
+0046 <span class="comment">% return</span>
+0047 
+0048 
+0049 <span class="comment">% This is my replacement for allspath; I think this is faster for large</span>
+0050 <span class="comment">% sparse graphs.</span>
+0051 <a name="_sub1" href="#_subfunctions" class="code">function d = alltoall(g)</a>
+0052 n = <a href="nv.html" class="code" title="function n = nv(g)">nv</a>(g);
+0053 d = zeros(n,n);
+0054 <span class="keyword">for</span> v=1:n
+0055     d(:,v) = <a href="dist.html" class="code" title="function d = dist(g,v,w)">dist</a>(g,v);
+0056 <span class="keyword">end</span>
+0057 <span class="keyword">return</span>
+0058 
+0059 
+0060 <span class="comment">% This is a function that finds the shortest distance from v to all other</span>
+0061 <span class="comment">% vertices in a graph</span>
+0062 <a name="_sub2" href="#_subfunctions" class="code">function d = onetoall(g,v)</a>
+0063 A = double(<a href="matrix.html" class="code" title="function A = matrix(g)">matrix</a>(g));
+0064 n = <a href="nv.html" class="code" title="function n = nv(g)">nv</a>(g);
+0065 vec = zeros(n,1);
+0066 vec(v) = 1;
+0067 d = inf*ones(1,n);
+0068 d(v) = 0;
+0069 
+0070 count = 0;
+0071 <span class="keyword">while</span> true
+0072     count = count + 1;
+0073     newv = (A*vec + vec)&gt;0;
+0074     morev = newv - vec;
+0075     <span class="keyword">if</span> (nnz(morev)==0)
+0076         <span class="keyword">break</span>
+0077     <span class="keyword">end</span>
+0078     d(find(morev))=count;
+0079     vec = newv;
+0080 <span class="keyword">end</span>
+0081 <span class="keyword">return</span></pre></div>
+<hr><address>Generated on Fri 30-Apr-2010 07:51:16 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

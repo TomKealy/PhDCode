@@ -1,0 +1,151 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of cdraw</title>
+  <meta name="keywords" content="cdraw">
+  <meta name="description" content="cdraw(g,coloring) -- draw g with a given vertex coloring">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">matgraph</a> &gt; <a href="index.html">@graph</a> &gt; cdraw.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for matgraph/@graph&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>cdraw
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>cdraw(g,coloring) -- draw g with a given vertex coloring</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function cdraw(g,coloring,line_style,color_matrix) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> cdraw(g,coloring) -- draw g with a given vertex coloring
+ If no coloring is specified, the default is 'greedy'. 
+
+ cdraw(g,coloring,line_style) --- lines have given line_style. If this is
+ not given, the style '-' is used (solid lines). Try ':' for dotted lines.
+
+ cdraw(g,coloring,line_style,color_matrix) --- specify the colors for the
+ vertices. color_matrix is an nc-by-3 matrix of RGB values where nc is the
+ number of colors in the coloring. The default is hsv(nc). 
+
+ color_matrix can also be a string of MATLAB color specifiers, e.g., 
+ cdraw(g,color(g),'-','kwrgb') will draw vertices in color class 1 with
+ color 'k' (black), vertices in color class 2 'w' (white), etc. 
+
+ In either case (matrix or letter string) the user must make sure the
+ matrix contains sufficiently many colors.
+ 
+ See also <a href="draw.html" class="code" title="function draw(g,line_style)">draw</a>, <a href="ldraw.html" class="code" title="function ldraw(g,line_style)">ldraw</a>, and <a href="ndraw.html" class="code" title="function ndraw(g,line_style)">ndraw</a>.
+
+ Original author: Brian Towne; modifications by ERS.</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="color.html" class="code" title="function p = color(g,algo,max_time)">color</a>	color(g,algo) --- color the graph g by a given algorithm</li><li><a href="edge_color.html" class="code" title="function c = edge_color(g,algo)">edge_color</a>	edge_color(g,algo) --- find a proper edge coloring of the graph g</li><li><a href="edges.html" class="code" title="function elist = edges(g)">edges</a>	edges(g) --- list the edges in g as a 2-column matrix</li><li><a href="embed.html" class="code" title="function embed(g,xy)">embed</a>	embed --- create an embedding for a graph</li><li><a href="getxy.html" class="code" title="function z = getxy(g)">getxy</a>	getxy(g) --- give g's embedding (or [] if g doesn't have one)</li><li><a href="hasxy.html" class="code" title="function yn = hasxy(g)">hasxy</a>	hasxy(g) --- determine if an embedding has been created for g</li><li><a href="ne.html" class="code" title="function m = ne(g,h)">ne</a>	ne(g) --- number of edges in g or ne(g,h) --- check for inequality</li><li><a href="nv.html" class="code" title="function n = nv(g)">nv</a>	nv(g) --- number of vertices in g</li><li><a href="size.html" class="code" title="function [sz,tz] = size(g)">size</a>	size(g) --- returns [nv,ne] for the graph</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function cdraw(g,coloring,line_style,color_matrix)</a>
+0002 <span class="comment">% cdraw(g,coloring) -- draw g with a given vertex coloring</span>
+0003 <span class="comment">% If no coloring is specified, the default is 'greedy'.</span>
+0004 <span class="comment">%</span>
+0005 <span class="comment">% cdraw(g,coloring,line_style) --- lines have given line_style. If this is</span>
+0006 <span class="comment">% not given, the style '-' is used (solid lines). Try ':' for dotted lines.</span>
+0007 <span class="comment">%</span>
+0008 <span class="comment">% cdraw(g,coloring,line_style,color_matrix) --- specify the colors for the</span>
+0009 <span class="comment">% vertices. color_matrix is an nc-by-3 matrix of RGB values where nc is the</span>
+0010 <span class="comment">% number of colors in the coloring. The default is hsv(nc).</span>
+0011 <span class="comment">%</span>
+0012 <span class="comment">% color_matrix can also be a string of MATLAB color specifiers, e.g.,</span>
+0013 <span class="comment">% cdraw(g,color(g),'-','kwrgb') will draw vertices in color class 1 with</span>
+0014 <span class="comment">% color 'k' (black), vertices in color class 2 'w' (white), etc.</span>
+0015 <span class="comment">%</span>
+0016 <span class="comment">% In either case (matrix or letter string) the user must make sure the</span>
+0017 <span class="comment">% matrix contains sufficiently many colors.</span>
+0018 <span class="comment">%</span>
+0019 <span class="comment">% See also draw, ldraw, and ndraw.</span>
+0020 <span class="comment">%</span>
+0021 <span class="comment">% Original author: Brian Towne; modifications by ERS.</span>
+0022 
+0023 <a href="edge_color.html" class="code" title="function c = edge_color(g,algo)">edge_color</a> = <span class="string">'k'</span>;
+0024 vertex_color = <span class="string">'k'</span>;
+0025 r = 0.15;
+0026 
+0027 <span class="keyword">if</span> nargin &lt; 3
+0028     line_style = <span class="string">'-'</span>;
+0029 <span class="keyword">end</span>
+0030 
+0031 <span class="keyword">if</span> nargin &lt; 2
+0032     coloring = <a href="color.html" class="code" title="function p = color(g,algo,max_time)">color</a>(g,<span class="string">'greedy'</span>);
+0033 <span class="keyword">end</span>
+0034 
+0035 n = <a href="nv.html" class="code" title="function n = nv(g)">nv</a>(g);
+0036 n2 = <a href="nv.html" class="code" title="function n = nv(g)">nv</a>(coloring);
+0037 
+0038 <span class="keyword">if</span> nargin &lt; 4
+0039     color_matrix = hsv(np(coloring));
+0040 <span class="keyword">end</span>
+0041 
+0042 <span class="keyword">if</span> ~(n==n2)
+0043     error(<span class="string">'Graph and coloring must have equal number of vertices.'</span>)
+0044 <span class="keyword">end</span>
+0045 
+0046 <span class="keyword">if</span> ~<a href="hasxy.html" class="code" title="function yn = hasxy(g)">hasxy</a>(g)
+0047     <a href="embed.html" class="code" title="function embed(g,xy)">embed</a>(g);
+0048 <span class="keyword">end</span>
+0049 
+0050 xy = <a href="getxy.html" class="code" title="function z = getxy(g)">getxy</a>(g);
+0051 
+0052 <span class="comment">% first draw the edges</span>
+0053 elist = <a href="edges.html" class="code" title="function elist = edges(g)">edges</a>(g);
+0054 <span class="keyword">for</span> j=1:<a href="ne.html" class="code" title="function m = ne(g,h)">ne</a>(g)
+0055     u = elist(j,1);
+0056     v = elist(j,2);
+0057     x = xy([u,v],1);
+0058     y = xy([u,v],2);
+0059     line(x,y,<span class="string">'Color'</span>, <a href="edge_color.html" class="code" title="function c = edge_color(g,algo)">edge_color</a>,<span class="string">'LineStyle'</span>,line_style);
+0060 <span class="keyword">end</span>
+0061 
+0062 
+0063 <span class="comment">% Now draw the vertices by color class</span>
+0064 color_classes = parts(coloring);
+0065 num_colors = np(coloring);
+0066 
+0067 <span class="keyword">for</span> i=1:num_colors
+0068     color_class_size = <a href="size.html" class="code" title="function [sz,tz] = size(g)">size</a>(color_classes{i},2);
+0069     <span class="keyword">if</span> ischar(color_matrix)
+0070         vertex_fill = color_matrix(i) ;
+0071     <span class="keyword">else</span>
+0072         vertex_fill = color_matrix(i,:);
+0073     <span class="keyword">end</span>
+0074     <span class="keyword">for</span> j=1:color_class_size
+0075         v = color_classes{i}(j);
+0076         x = xy(v,1);
+0077         y = xy(v,2);
+0078         rectangle(<span class="string">'Position'</span>, [x-r/2, y-r/2, r, r],<span class="keyword">...</span>
+0079                   <span class="string">'Curvature'</span>, [1 1], <span class="keyword">...</span>
+0080                   <span class="string">'EdgeColor'</span>, vertex_color, <span class="keyword">...</span>
+0081                   <span class="string">'FaceColor'</span>, vertex_fill);    
+0082     <span class="keyword">end</span>
+0083 <span class="keyword">end</span>    
+0084 
+0085 axis equal
+0086 axis off</pre></div>
+<hr><address>Generated on Fri 30-Apr-2010 07:51:16 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

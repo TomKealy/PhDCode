@@ -1,0 +1,48 @@
+%SUPERDATE PACKAGE by Edward R. Scheinerman
+\ProvidesPackage{superdate}
+
+\newcounter{h@ur}     % the current hour
+\newcounter{h@urs}    % the current hour times 60
+\newcounter{m@nute}   % the current minute
+\newcounter{m@nth}    % current month
+\newcounter{d@y}      % current day
+\newcounter{h@12}     % 12-hour clock hour
+
+\newcommand{\setcl@ck}{%
+        \setcounter{h@ur}{\time}%
+        \setcounter{m@nute}{\time}%
+        \divide \value{h@ur} by 60%
+        \setcounter{h@urs}{\value{h@ur}}%
+        \multiply \value{h@urs} by 60%
+        \advance \value{m@nute} by -\value{h@urs}%
+        \setcounter{m@nth}{\month}%
+        \setcounter{d@y}{\day}%
+}
+
+
+\newcommand{\dd}[1]{%
+        \ifnum\the\value{#1}<10 0\fi%
+        \the\value{#1}%
+}
+
+
+\newcommand{\superdate}{%
+        \setcl@ck%
+        \the\year:\dd{m@nth}:\dd{d@y}:\dd{h@ur}:\dd{m@nute}%
+}
+
+\newcommand{\ampm}{%
+        \setcl@ck
+        \setcounter{h@12}{\value{h@ur}}
+        \ifnum\the\value{h@12}>11
+                \ifnum\the\value{h@12}>12
+                        \advance\value{h@12} by -12
+                \fi
+                \the\value{h@12}:\dd{m@nute}~pm
+        \else
+                \ifnum\the\value{h@12}=0
+                        \setcounter{h@12}{12}
+                \fi
+                \the\value{h@12}:\dd{m@nute}~am%
+        \fi
+}

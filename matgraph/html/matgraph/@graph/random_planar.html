@@ -1,0 +1,67 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of random_planar</title>
+  <meta name="keywords" content="random_planar">
+  <meta name="description" content="random_planar(g,n) --- create a random planar triangulation">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">matgraph</a> &gt; <a href="index.html">@graph</a> &gt; random_planar.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for matgraph/@graph&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>random_planar
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>random_planar(g,n) --- create a random planar triangulation</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function random_planar(g,n) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> random_planar(g,n) --- create a random planar triangulation
+ This does NOT create a random &quot;uniform&quot; triangulation. Rather, it places
+ n points at random in the plane and builds the Delaunay triangulation
+ thereon.</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="add.html" class="code" title="function add(g,i,j)">add</a>	add --- add edge(s) to the graph</li><li><a href="edges.html" class="code" title="function elist = edges(g)">edges</a>	edges(g) --- list the edges in g as a 2-column matrix</li><li><a href="embed.html" class="code" title="function embed(g,xy)">embed</a>	embed --- create an embedding for a graph</li><li><a href="resize.html" class="code" title="function resize(g, n)">resize</a>	resize(g,n) --- change the number of vertices in g to n</li><li><a href="size.html" class="code" title="function [sz,tz] = size(g)">size</a>	size(g) --- returns [nv,ne] for the graph</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function random_planar(g,n)</a>
+0002 <span class="comment">% random_planar(g,n) --- create a random planar triangulation</span>
+0003 <span class="comment">% This does NOT create a random &quot;uniform&quot; triangulation. Rather, it places</span>
+0004 <span class="comment">% n points at random in the plane and builds the Delaunay triangulation</span>
+0005 <span class="comment">% thereon.</span>
+0006 
+0007 xy = rand(n,2)*sqrt(n);
+0008 <a href="resize.html" class="code" title="function resize(g, n)">resize</a>(g,0)
+0009 <a href="resize.html" class="code" title="function resize(g, n)">resize</a>(g,n)
+0010 <a href="embed.html" class="code" title="function embed(g,xy)">embed</a>(g,xy)
+0011 
+0012 triangles = delaunay(xy(:,1), xy(:,2));
+0013 nt = <a href="size.html" class="code" title="function [sz,tz] = size(g)">size</a>(triangles,1);
+0014 
+0015 <a href="edges.html" class="code" title="function elist = edges(g)">edges</a> = [triangles(:,1:2); triangles(:,2:3); triangles(:,[1,3])];
+0016 <a href="edges.html" class="code" title="function elist = edges(g)">edges</a> = sortrows(<a href="edges.html" class="code" title="function elist = edges(g)">edges</a>);
+0017 <a href="edges.html" class="code" title="function elist = edges(g)">edges</a> = unique(<a href="edges.html" class="code" title="function elist = edges(g)">edges</a>,<span class="string">'rows'</span>);
+0018 <a href="add.html" class="code" title="function add(g,i,j)">add</a>(g,<a href="edges.html" class="code" title="function elist = edges(g)">edges</a>)</pre></div>
+<hr><address>Generated on Fri 30-Apr-2010 07:51:16 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

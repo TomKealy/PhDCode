@@ -1,0 +1,111 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of miss</title>
+  <meta name="keywords" content="miss">
+  <meta name="description" content="miss(p) -- maximum increasing subsequence">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">matgraph</a> &gt; <a href="index.html">@permutation</a> &gt; miss.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for matgraph/@permutation&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>miss
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>miss(p) -- maximum increasing subsequence</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function s = miss(p,dir) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> miss(p) -- maximum increasing subsequence
+ Viewing the permutation p as a sequence (return from array(p)) find a
+ longest increasing subsequence. May also be called with two arguments:
+ miss(p,'up') -- find longest increasing subsequence
+ miss(p,'down') -- find longest decreasing subsequence</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="array.html" class="code" title="function a = array(p)">array</a>	array(p) --- return p as an array</li><li><a href="length.html" class="code" title="function s = length(p)">length</a>	length(p) gives the size of the permutation</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+<h2><a name="_subfunctions"></a>SUBFUNCTIONS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="#_sub1" class="code">function ss = miss_array(a)</a></li></ul>
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function s = miss(p,dir)</a>
+0002 <span class="comment">% miss(p) -- maximum increasing subsequence</span>
+0003 <span class="comment">% Viewing the permutation p as a sequence (return from array(p)) find a</span>
+0004 <span class="comment">% longest increasing subsequence. May also be called with two arguments:</span>
+0005 <span class="comment">% miss(p,'up') -- find longest increasing subsequence</span>
+0006 <span class="comment">% miss(p,'down') -- find longest decreasing subsequence</span>
+0007 
+0008 <span class="keyword">if</span> nargin &lt; 2
+0009     dir = <span class="string">'up'</span>;
+0010 <span class="keyword">end</span>
+0011 
+0012 <span class="keyword">switch</span>(lower(dir))
+0013     <span class="keyword">case</span> <span class="string">'up'</span>
+0014         a = <a href="array.html" class="code" title="function a = array(p)">array</a>(p);
+0015         s = <a href="#_sub1" class="code" title="subfunction ss = miss_array(a)">miss_array</a>(a);
+0016     <span class="keyword">case</span> <span class="string">'dn'</span>
+0017         a = <a href="array.html" class="code" title="function a = array(p)">array</a>(p);
+0018         a = fliplr(a);
+0019         s = <a href="#_sub1" class="code" title="subfunction ss = miss_array(a)">miss_array</a>(a);
+0020         s = fliplr(s);
+0021     <span class="keyword">otherwise</span>
+0022         error(<span class="string">'Second argument should be ''up'' or ''down''.'</span>);
+0023 <span class="keyword">end</span>
+0024 <span class="keyword">end</span>
+0025 
+0026 
+0027 
+0028 
+0029 <a name="_sub1" href="#_subfunctions" class="code">function ss = miss_array(a)</a>
+0030 n = <a href="length.html" class="code" title="function s = length(p)">length</a>(a);
+0031 up = zeros(1,n);
+0032 up(n) = 1;
+0033 
+0034 <span class="comment">% create an array up whose i'th element gives the length of the longest</span>
+0035 <span class="comment">% increasing subsequence starting at position i.</span>
+0036 <span class="keyword">for</span> i=(n-1):-1:1
+0037     up(i) = 1;
+0038     <span class="keyword">for</span> j=(i+1):n
+0039         <span class="keyword">if</span> (a(i) &lt; a(j))
+0040             <span class="keyword">if</span> (up(i) &lt;= up(j))
+0041                 up(i) = up(j)+1;
+0042             <span class="keyword">end</span>
+0043         <span class="keyword">end</span>
+0044     <span class="keyword">end</span>            
+0045 <span class="keyword">end</span>
+0046 
+0047 <span class="comment">% now use the up array to find longest subseq</span>
+0048 maxup = max(up);
+0049 si = find(up==maxup,1,<span class="string">'first'</span>);
+0050 <span class="keyword">for</span> k=(maxup-1):-1:1
+0051     tail = up(si(end)+1:end);
+0052     i = find(tail==k,1,<span class="string">'first'</span>);
+0053     si = [si, si(end)+i];
+0054 <span class="keyword">end</span>
+0055     
+0056 ss = a(si);
+0057    
+0058 <span class="keyword">end</span>
+0059</pre></div>
+<hr><address>Generated on Fri 30-Apr-2010 07:51:16 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

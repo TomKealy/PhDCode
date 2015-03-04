@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of line_graph</title>
+  <meta name="keywords" content="line_graph">
+  <meta name="description" content="line_graph(g,h) --- set g to be the line graph of h">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">matgraph</a> &gt; <a href="index.html">@graph</a> &gt; line_graph.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for matgraph/@graph&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>line_graph
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>line_graph(g,h) --- set g to be the line graph of h</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function line_graph(g,h) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> line_graph(g,h) --- set g to be the line graph of h
+ The line graph of h is the intersection graph of its edges.</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="add.html" class="code" title="function add(g,i,j)">add</a>	add --- add edge(s) to the graph</li><li><a href="clear_edges.html" class="code" title="function clear_edges(g)">clear_edges</a>	clear_edges(g) --- delete all edges of g</li><li><a href="edges.html" class="code" title="function elist = edges(g)">edges</a>	edges(g) --- list the edges in g as a 2-column matrix</li><li><a href="embed.html" class="code" title="function embed(g,xy)">embed</a>	embed --- create an embedding for a graph</li><li><a href="getxy.html" class="code" title="function z = getxy(g)">getxy</a>	getxy(g) --- give g's embedding (or [] if g doesn't have one)</li><li><a href="hasxy.html" class="code" title="function yn = hasxy(g)">hasxy</a>	hasxy(g) --- determine if an embedding has been created for g</li><li><a href="resize.html" class="code" title="function resize(g, n)">resize</a>	resize(g,n) --- change the number of vertices in g to n</li><li><a href="rmxy.html" class="code" title="function rmxy(g)">rmxy</a>	rmxy(g) --- erase g's embedding</li><li><a href="size.html" class="code" title="function [sz,tz] = size(g)">size</a>	size(g) --- returns [nv,ne] for the graph</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="edge_color.html" class="code" title="function c = edge_color(g,algo)">edge_color</a>	edge_color(g,algo) --- find a proper edge coloring of the graph g</li></ul>
+<!-- crossreference -->
+
+<h2><a name="_subfunctions"></a>SUBFUNCTIONS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="#_sub1" class="code">function yn = common_endpoint(e1,e2)</a></li></ul>
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function line_graph(g,h)</a>
+0002 <span class="comment">% line_graph(g,h) --- set g to be the line graph of h</span>
+0003 <span class="comment">% The line graph of h is the intersection graph of its edges.</span>
+0004 
+0005 elist = sortrows(<a href="edges.html" class="code" title="function elist = edges(g)">edges</a>(h));
+0006 [m,c] = <a href="size.html" class="code" title="function [sz,tz] = size(g)">size</a>(elist);
+0007 
+0008 <a href="resize.html" class="code" title="function resize(g, n)">resize</a>(g,m);
+0009 <a href="rmxy.html" class="code" title="function rmxy(g)">rmxy</a>(g);
+0010 <a href="clear_edges.html" class="code" title="function clear_edges(g)">clear_edges</a>(g);
+0011 
+0012 <span class="keyword">for</span> i=1:m-1;
+0013     a = elist(i,:);
+0014     <span class="keyword">for</span> j=i+1:m
+0015         b = elist(j,:);
+0016         <span class="keyword">if</span> <a href="#_sub1" class="code" title="subfunction yn = common_endpoint(e1,e2)">common_endpoint</a>(a,b)
+0017             <a href="add.html" class="code" title="function add(g,i,j)">add</a>(g,i,j);
+0018         <span class="keyword">end</span>
+0019         <span class="keyword">if</span> (a(2) &lt; b(1))
+0020             <span class="keyword">break</span>
+0021         <span class="keyword">end</span>
+0022     <span class="keyword">end</span>
+0023 <span class="keyword">end</span>
+0024 
+0025 
+0026 <span class="keyword">if</span> <a href="hasxy.html" class="code" title="function yn = hasxy(g)">hasxy</a>(h)
+0027     xy = <a href="getxy.html" class="code" title="function z = getxy(g)">getxy</a>(h);
+0028     gxy = zeros(m,2);
+0029     <span class="keyword">for</span> i=1:m
+0030         a = elist(i,1);
+0031         b = elist(i,2);
+0032         gxy(i,:) = (xy(a,:) + xy(b,:))/2;
+0033     <span class="keyword">end</span>
+0034     <a href="embed.html" class="code" title="function embed(g,xy)">embed</a>(g,gxy);
+0035 <span class="keyword">end</span>
+0036 
+0037 
+0038 <a name="_sub1" href="#_subfunctions" class="code">function yn = common_endpoint(e1,e2)</a>
+0039 yn = ( e1(1) == e2(1) ) | ( e1(1) == e2(2) ) | ( e1(2) == e2(1) ) | <span class="keyword">...</span>
+0040     (e1(2) == e2(2));
+0041</pre></div>
+<hr><address>Generated on Fri 30-Apr-2010 07:51:16 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

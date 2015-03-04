@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of bipmatch</title>
+  <meta name="keywords" content="bipmatch">
+  <meta name="description" content="bipmatch --- maximum matching in a bipartite graph">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">matgraph</a> &gt; <a href="index.html">@graph</a> &gt; bipmatch.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for matgraph/@graph&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>bipmatch
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>bipmatch --- maximum matching in a bipartite graph</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function elist = bipmatch(g,X,Y) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> bipmatch --- maximum matching in a bipartite graph
+ This may be called either as bipmatch(g,X,Y) or bipmatch(g,p).
+ In either case, g is any graph.
+ X,Y are disjoint sets of vertices of g or p is a partition of a subset of
+ V(g) into two parts.
+ In either case, this returns a maximum matching on the bipartite 
+ (sub)graph of G with bipartition (X,Y).</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="intersect.html" class="code" title="function intersect(g,h1,h2)">intersect</a>	intersect(g,h1,h2) --- g is set to the intersection of h1 and h2.</li><li><a href="matrix.html" class="code" title="function A = matrix(g)">matrix</a>	matrix(g) --- return (a copy of) the adjacency matrix of g</li><li><a href="nv.html" class="code" title="function n = nv(g)">nv</a>	nv(g) --- number of vertices in g</li><li><a href="union.html" class="code" title="function union(g,h1,h2)">union</a>	union(g,h1,h2) --- set g equal to the union of h1 and h2.</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function elist = bipmatch(g,X,Y) </a>
+0002 <span class="comment">% bipmatch --- maximum matching in a bipartite graph</span>
+0003 <span class="comment">% This may be called either as bipmatch(g,X,Y) or bipmatch(g,p).</span>
+0004 <span class="comment">% In either case, g is any graph.</span>
+0005 <span class="comment">% X,Y are disjoint sets of vertices of g or p is a partition of a subset of</span>
+0006 <span class="comment">% V(g) into two parts.</span>
+0007 <span class="comment">% In either case, this returns a maximum matching on the bipartite</span>
+0008 <span class="comment">% (sub)graph of G with bipartition (X,Y).</span>
+0009 
+0010 
+0011 <span class="keyword">if</span> nargin==2
+0012     c = parts(X);
+0013     <span class="keyword">if</span> length(c) ~= 2
+0014         error(<span class="string">'partition must have two parts'</span>);
+0015     <span class="keyword">end</span>
+0016     X = c{1};
+0017     Y = c{2};
+0018 <span class="keyword">else</span>
+0019     X = unique(X);
+0020     Y = unique(Y);
+0021 <span class="keyword">end</span>
+0022 
+0023 <span class="keyword">if</span> length(<a href="intersect.html" class="code" title="function intersect(g,h1,h2)">intersect</a>(X,Y)) &gt; 0
+0024     error(<span class="string">'The sets X and Y must be disjoint'</span>)
+0025 <span class="keyword">end</span>
+0026 
+0027 n = <a href="nv.html" class="code" title="function n = nv(g)">nv</a>(g);
+0028 
+0029 Z = <a href="union.html" class="code" title="function union(g,h1,h2)">union</a>(X,Y);
+0030 
+0031 <span class="keyword">if</span> any(Z&lt;1) || any(Z&gt;n)
+0032     error(<span class="string">'Some vertices out of range'</span>)
+0033 <span class="keyword">end</span>
+0034 
+0035 A = <a href="matrix.html" class="code" title="function A = matrix(g)">matrix</a>(g);
+0036 A = A(X,Y);
+0037 
+0038 p = dmperm(A); <span class="comment">% one of Matlab's best kept secrets :-)</span>
+0039 
+0040 yidx = find(p);
+0041 xidx = p(p&gt;0);
+0042 
+0043 x = X(xidx);
+0044 y = Y(yidx);
+0045 
+0046 elist = [ x(:), y(:)];
+0047 elist = sortrows(elist);</pre></div>
+<hr><address>Generated on Fri 30-Apr-2010 07:51:16 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

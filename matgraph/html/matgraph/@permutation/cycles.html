@@ -1,0 +1,77 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of cycles</title>
+  <meta name="keywords" content="cycles">
+  <meta name="description" content="cycles(p) returns a cell array containing the cycle structure of p">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">matgraph</a> &gt; <a href="index.html">@permutation</a> &gt; cycles.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for matgraph/@permutation&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>cycles
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>cycles(p) returns a cell array containing the cycle structure of p</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function c = cycles(p) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> cycles(p) returns a cell array containing the cycle structure of p</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="length.html" class="code" title="function s = length(p)">length</a>	length(p) gives the size of the permutation</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="display.html" class="code" title="function st = display(p)">display</a>	display(p) --- display a permutation in disjoint cycle form.</li><li><a href="longest_cycle.html" class="code" title="function maxlen = longest_cycle(p)">longest_cycle</a>	longest_cycle(p) -- return the length of the longest cycle in p</li><li><a href="sign.html" class="code" title="function s = sign(p)">sign</a>	sign of a permutation (1 for even, -1 for odd)</li><li><a href="size.html" class="code" title="function s = size(p)">size</a>	size(p) returns the number of elements permuted and the number of cycles.</li></ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function c = cycles(p)</a>
+0002 <span class="comment">% cycles(p) returns a cell array containing the cycle structure of p</span>
+0003 
+0004 c = {}; 
+0005 
+0006 n = <a href="length.html" class="code" title="function s = length(p)">length</a>(p);
+0007 
+0008 <span class="keyword">if</span> n == 0
+0009     <span class="keyword">return</span>
+0010 <span class="keyword">end</span>
+0011 
+0012 used = zeros(1,n);
+0013 count = 0;
+0014 <span class="keyword">while</span> (sum(used)&lt;n)
+0015     count = count + 1;
+0016     avail = find(used == 0);
+0017     i = avail(1);
+0018     current = i;
+0019     used(i) = 1;
+0020     <span class="keyword">while</span>(true)
+0021         j = p.array(i);
+0022         <span class="keyword">if</span> used(j)
+0023             <span class="keyword">break</span>
+0024         <span class="keyword">else</span>
+0025             current = [current,j];
+0026             i = j;
+0027             used(i)=1;
+0028         <span class="keyword">end</span>
+0029     <span class="keyword">end</span>
+0030     c{count} = current;
+0031 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Fri 30-Apr-2010 07:51:16 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

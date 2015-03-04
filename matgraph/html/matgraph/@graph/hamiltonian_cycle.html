@@ -1,0 +1,133 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of hamiltonian_cycle</title>
+  <meta name="keywords" content="hamiltonian_cycle">
+  <meta name="description" content="hamiltonian_cycle(g) --- find a Hamiltonian cycle in g (if one exists)">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">matgraph</a> &gt; <a href="index.html">@graph</a> &gt; hamiltonian_cycle.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for matgraph/@graph&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>hamiltonian_cycle
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>hamiltonian_cycle(g) --- find a Hamiltonian cycle in g (if one exists)</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function [hlist, exists] = hamiltonian_cycle(g,h) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> hamiltonian_cycle(g) --- find a Hamiltonian cycle in g (if one exists)
+ This can be called with two output arguments: 
+    [hlist, exists] = hamiltonian_cycle(g)
+ the 2nd output argument is set to 0 if no such cycle exists.
+ This can also be called hamiltonian_cycle(h,g). In this case, h is
+ overwritten with a Hamiltonian cycle of g (if one exists).
+
+ The important part of this function was written by Brian Towne.</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="add.html" class="code" title="function add(g,i,j)">add</a>	add --- add edge(s) to the graph</li><li><a href="clear_edges.html" class="code" title="function clear_edges(g)">clear_edges</a>	clear_edges(g) --- delete all edges of g</li><li><a href="components.html" class="code" title="function p = components(g)">components</a>	components(g) --- find the components of the graph g</li><li><a href="copy.html" class="code" title="function copy(g,h)">copy</a>	copy(g,h) --- overwrite g with a copy of h</li><li><a href="hamiltonian_cycle.html" class="code" title="function [hlist, exists] = hamiltonian_cycle(g,h)">hamiltonian_cycle</a>	hamiltonian_cycle(g) --- find a Hamiltonian cycle in g (if one exists)</li><li><a href="has.html" class="code" title="function yn = has(g,u,v)">has</a>	has --- check if the graph has a particular vertex or edge</li><li><a href="neighbors.html" class="code" title="function nlist = neighbors(g,v)">neighbors</a>	neighbors(g,v) --- neighbors of v as a list.</li><li><a href="nv.html" class="code" title="function n = nv(g)">nv</a>	nv(g) --- number of vertices in g</li><li><a href="path.html" class="code" title="function path(g,n)">path</a>	path(g,n) --- make g a path on n vertices</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="hamiltonian_cycle.html" class="code" title="function [hlist, exists] = hamiltonian_cycle(g,h)">hamiltonian_cycle</a>	hamiltonian_cycle(g) --- find a Hamiltonian cycle in g (if one exists)</li></ul>
+<!-- crossreference -->
+
+<h2><a name="_subfunctions"></a>SUBFUNCTIONS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="#_sub1" class="code">function [hlist, exists] = extend(g,i,n,used,path)</a></li></ul>
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function [hlist, exists] = hamiltonian_cycle(g,h)</a>
+0002 <span class="comment">% hamiltonian_cycle(g) --- find a Hamiltonian cycle in g (if one exists)</span>
+0003 <span class="comment">% This can be called with two output arguments:</span>
+0004 <span class="comment">%    [hlist, exists] = hamiltonian_cycle(g)</span>
+0005 <span class="comment">% the 2nd output argument is set to 0 if no such cycle exists.</span>
+0006 <span class="comment">% This can also be called hamiltonian_cycle(h,g). In this case, h is</span>
+0007 <span class="comment">% overwritten with a Hamiltonian cycle of g (if one exists).</span>
+0008 <span class="comment">%</span>
+0009 <span class="comment">% The important part of this function was written by Brian Towne.</span>
+0010 
+0011 <span class="keyword">if</span> (nargin &gt; 1) 
+0012     [hlist, exists] = <a href="hamiltonian_cycle.html" class="code" title="function [hlist, exists] = hamiltonian_cycle(g,h)">hamiltonian_cycle</a>(h);
+0013     <span class="keyword">if</span> (exists)
+0014         n = <a href="nv.html" class="code" title="function n = nv(g)">nv</a>(h);
+0015         <a href="copy.html" class="code" title="function copy(g,h)">copy</a>(g,h);
+0016         <a href="clear_edges.html" class="code" title="function clear_edges(g)">clear_edges</a>(g);
+0017         <span class="keyword">for</span> k=1:n-1
+0018             <a href="add.html" class="code" title="function add(g,i,j)">add</a>(g,hlist(k),hlist(k+1));
+0019         <span class="keyword">end</span>
+0020         <a href="add.html" class="code" title="function add(g,i,j)">add</a>(g,hlist(1),hlist(n));
+0021     <span class="keyword">end</span>
+0022     <span class="keyword">return</span>;
+0023 <span class="keyword">end</span>
+0024 
+0025 n = <a href="nv.html" class="code" title="function n = nv(g)">nv</a>(g);
+0026 used = false(n,1); <span class="comment">% used(i)==true if i is in partially constructed cycle</span>
+0027 <a href="path.html" class="code" title="function path(g,n)">path</a> = zeros(n,1); <span class="comment">% partially constructed cycle</span>
+0028 
+0029 <span class="comment">% if there are no vertices in the graph, return an empty list, too</span>
+0030 <span class="keyword">if</span> <a href="nv.html" class="code" title="function n = nv(g)">nv</a>(g) == 0
+0031     hlist = [];
+0032     exists = true;
+0033     <span class="keyword">return</span>
+0034 <span class="keyword">end</span>
+0035 
+0036 
+0037 <span class="comment">% We have to make sure there is exactly one component</span>
+0038 
+0039 c = <a href="components.html" class="code" title="function p = components(g)">components</a>(g);
+0040 <span class="keyword">if</span> np(c) &gt; 1
+0041     hlist = [];
+0042     exists = false;
+0043     <span class="keyword">return</span>
+0044 <span class="keyword">end</span>
+0045 
+0046 <span class="comment">% Since we are looking for a cycle, we can start w/ vertex 1 wolog:</span>
+0047 used(1) = true;
+0048 <a href="path.html" class="code" title="function path(g,n)">path</a>(1) = 1;
+0049 
+0050 <span class="comment">% Recursively try to extend path</span>
+0051 [hlist,exists] = <a href="#_sub1" class="code" title="subfunction [hlist, exists] = extend(g,i,n,used,path)">extend</a>(g,1,n,used,<a href="path.html" class="code" title="function path(g,n)">path</a>);
+0052 <span class="keyword">return</span>
+0053 
+0054 
+0055 
+0056 <a name="_sub1" href="#_subfunctions" class="code">function [hlist, exists] = extend(g,i,n,used,path)</a>
+0057 
+0058 <span class="keyword">for</span> j=<a href="neighbors.html" class="code" title="function nlist = neighbors(g,v)">neighbors</a>(g,<a href="path.html" class="code" title="function path(g,n)">path</a>(i))
+0059     <span class="keyword">if</span> used(j)==false
+0060         <a href="path.html" class="code" title="function path(g,n)">path</a>(i+1) = j;
+0061         used(j) = true;
+0062         <span class="keyword">if</span> ((i+1==n) &amp;&amp; (<a href="has.html" class="code" title="function yn = has(g,u,v)">has</a>(g,j,<a href="path.html" class="code" title="function path(g,n)">path</a>(1))))
+0063             hlist = <a href="path.html" class="code" title="function path(g,n)">path</a>;
+0064             exists = true;
+0065             <span class="keyword">return</span>
+0066         <span class="keyword">else</span>
+0067             [hlist,exists] = <a href="#_sub1" class="code" title="subfunction [hlist, exists] = extend(g,i,n,used,path)">extend</a>(g,i+1,n,used,<a href="path.html" class="code" title="function path(g,n)">path</a>);
+0068             <span class="keyword">if</span> exists
+0069                 <span class="keyword">return</span>
+0070             <span class="keyword">end</span>
+0071         <span class="keyword">end</span>
+0072         used(j) = false;
+0073     <span class="keyword">end</span>
+0074 <span class="keyword">end</span>
+0075 hlist = [];
+0076 exists = false;
+0077 <span class="keyword">return</span>
+0078</pre></div>
+<hr><address>Generated on Fri 30-Apr-2010 07:51:16 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

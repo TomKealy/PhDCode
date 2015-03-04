@@ -1,0 +1,55 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of max_available</title>
+  <meta name="keywords" content="max_available">
+  <meta name="description" content="num_available --- maximum number of graphs we can hold in this system">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">matgraph</a> &gt; max_available.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for matgraph&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>max_available
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>num_available --- maximum number of graphs we can hold in this system</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>function max_graphs = max_available </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> num_available --- maximum number of graphs we can hold in this system</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="graph_system_exists.html" class="code" title="function tf = graph_system_exists">graph_system_exists</a>	graph_system_exists checks to see if the GRAPH_MAGIC global structure has</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function max_graphs = max_available</a>
+0002 <span class="comment">% num_available --- maximum number of graphs we can hold in this system</span>
+0003 
+0004 <span class="keyword">if</span> ~<a href="graph_system_exists.html" class="code" title="function tf = graph_system_exists">graph_system_exists</a>
+0005     error(<span class="string">'Graph system has not been initialized.'</span>)
+0006 <span class="keyword">end</span>
+0007 
+0008 <span class="keyword">global</span> GRAPH_MAGIC;
+0009 max_graphs = GRAPH_MAGIC.ngraphs;</pre></div>
+<hr><address>Generated on Fri 30-Apr-2010 07:51:16 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

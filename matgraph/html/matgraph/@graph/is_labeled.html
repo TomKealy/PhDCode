@@ -1,0 +1,58 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of is_labeled</title>
+  <meta name="keywords" content="is_labeled">
+  <meta name="description" content="is_labeled(g) --- determine if there are labels on vertices.">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">matgraph</a> &gt; <a href="index.html">@graph</a> &gt; is_labeled.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for matgraph/@graph&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>is_labeled
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>is_labeled(g) --- determine if there are labels on vertices.</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function yn = is_labeled(g) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> is_labeled(g) --- determine if there are labels on vertices.
+ By definition, an empty graph is NOT labeled.</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="bfstree.html" class="code" title="function bfstree(t,g,v)">bfstree</a>	bfstree(t,g,v) --- create a breadth-first spanning tree of g</li><li><a href="cartesian.html" class="code" title="function cartesian(g,h1,h2)">cartesian</a>	cartesian(g,h1,h2) --- overwrite g with the product of h1 and h2</li><li><a href="copy_labels.html" class="code" title="function copy_labels(g,h)">copy_labels</a>	copy_labels(g,h) --- copy labels from h to g</li><li><a href="delete.html" class="code" title="function delete(g,i,j)">delete</a>	delete --- delete vertices or edges from a graph</li><li><a href="dfstree.html" class="code" title="function dfstree(t,g,v)">dfstree</a>	dfstree(t,g,v) --- create a depth-first spanning tree of g</li><li><a href="dot.html" class="code" title="function dot(g,filename)">dot</a>	dot(g,filename) --- save graph for use by graphviz.</li><li><a href="draw_labels.html" class="code" title="function draw_labels(g,offset)">draw_labels</a>	draw_labels(g) --- add labels to a drawing of g</li><li><a href="get_label.html" class="code" title="function out = get_label(g,v)">get_label</a>	get_label(g) or get_label(g,v) --- get vertex label(s)</li><li><a href="induce.html" class="code" title="function induce(g,arg1,arg2)">induce</a>	induce --- create induced subgraphs</li><li><a href="label.html" class="code" title="function label(g,v,name)">label</a>	Assign labels to vertices of g</li><li><a href="ldraw.html" class="code" title="function ldraw(g,line_style)">ldraw</a>	ldraw(g,line_style) --- draw a graph with vertices marked with their labels</li><li><a href="renumber.html" class="code" title="function renumber(g,perm)">renumber</a>	renumber the vertices of a graph</li><li><a href="resize.html" class="code" title="function resize(g, n)">resize</a>	resize(g,n) --- change the number of vertices in g to n</li><li><a href="save.html" class="code" title="function save(g,filename)">save</a>	save(g,filename) --- save a graph to disk</li></ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function yn = is_labeled(g)</a>
+0002 <span class="comment">% is_labeled(g) --- determine if there are labels on vertices.</span>
+0003 <span class="comment">% By definition, an empty graph is NOT labeled.</span>
+0004 
+0005 <span class="keyword">global</span> GRAPH_MAGIC
+0006 
+0007 <span class="keyword">if</span> (isfield(GRAPH_MAGIC.graphs{g.idx},<span class="string">'labels'</span>))
+0008     yn = length(GRAPH_MAGIC.graphs{g.idx}.labels) &gt; 0;
+0009 <span class="keyword">else</span>
+0010     yn = false;
+0011 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Fri 30-Apr-2010 07:51:16 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

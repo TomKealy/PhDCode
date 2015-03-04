@@ -1,0 +1,66 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of omega</title>
+  <meta name="keywords" content="omega">
+  <meta name="description" content="[w,S] = omega(g) --- clique number">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">matgraph</a> &gt; <a href="index.html">@graph</a> &gt; omega.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for matgraph/@graph&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>omega
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>[w,S] = omega(g) --- clique number</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function [w,S] = omega(g) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> [w,S] = omega(g) --- clique number
+ Returns w, the size of a largest clique, and S, a largest clique.
+ Note: Uses integer programming so may run slowly (if at all) on larger
+ graphs. 
+
+ REQUIRES THE OPTIMIZATION TOOLBOX</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="alpha.html" class="code" title="function [a,S] = alpha(g)">alpha</a>	[a,S] = alpha(g) --- indepencence number</li><li><a href="complement.html" class="code" title="function complement(g,h)">complement</a>	graph complement</li><li><a href="copy.html" class="code" title="function copy(g,h)">copy</a>	copy(g,h) --- overwrite g with a copy of h</li><li><a href="free.html" class="code" title="function free(g)">free</a>	free(g) --- free the graph from the system</li><li><a href="graph.html" class="code" title="function g = graph(n)">graph</a>	graph: constructor for the graph class</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function [w,S] = omega(g)</a>
+0002 <span class="comment">% [w,S] = omega(g) --- clique number</span>
+0003 <span class="comment">% Returns w, the size of a largest clique, and S, a largest clique.</span>
+0004 <span class="comment">% Note: Uses integer programming so may run slowly (if at all) on larger</span>
+0005 <span class="comment">% graphs.</span>
+0006 <span class="comment">%</span>
+0007 <span class="comment">% REQUIRES THE OPTIMIZATION TOOLBOX</span>
+0008 
+0009 <span class="comment">% Note: Our implementation is simply alpha(-g).</span>
+0010 
+0011 h = <a href="graph.html" class="code" title="function g = graph(n)">graph</a>;
+0012 <a href="copy.html" class="code" title="function copy(g,h)">copy</a>(h,g);
+0013 <a href="complement.html" class="code" title="function complement(g,h)">complement</a>(h);
+0014 [w,S] = <a href="alpha.html" class="code" title="function [a,S] = alpha(g)">alpha</a>(h);
+0015 <a href="free.html" class="code" title="function free(g)">free</a>(h);</pre></div>
+<hr><address>Generated on Fri 30-Apr-2010 07:51:16 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

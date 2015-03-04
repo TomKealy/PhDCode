@@ -1,0 +1,71 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of ldraw</title>
+  <meta name="keywords" content="ldraw">
+  <meta name="description" content="ldraw(g,line_style) --- draw a graph with vertices marked with their labels">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">matgraph</a> &gt; <a href="index.html">@graph</a> &gt; ldraw.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for matgraph/@graph&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>ldraw
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>ldraw(g,line_style) --- draw a graph with vertices marked with their labels</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function ldraw(g,line_style) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> ldraw(g,line_style) --- draw a graph with vertices marked with their labels
+ If the graph is unlabled, we use the vertex numbers instead.
+ See also <a href="draw.html" class="code" title="function draw(g,line_style)">draw</a>, <a href="cdraw.html" class="code" title="function cdraw(g,coloring,line_style,color_matrix)">cdraw</a>, and <a href="ndraw.html" class="code" title="function ndraw(g,line_style)">ndraw</a>.</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="draw.html" class="code" title="function draw(g,line_style)">draw</a>	draw(g) --- draw g in a figure window</li><li><a href="draw_labels.html" class="code" title="function draw_labels(g,offset)">draw_labels</a>	draw_labels(g) --- add labels to a drawing of g</li><li><a href="is_labeled.html" class="code" title="function yn = is_labeled(g)">is_labeled</a>	is_labeled(g) --- determine if there are labels on vertices.</li><li><a href="ndraw.html" class="code" title="function ndraw(g,line_style)">ndraw</a>	ndraw(g) --- draw g in a figure window with numbered vertices</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function ldraw(g,line_style)</a>
+0002 <span class="comment">% ldraw(g,line_style) --- draw a graph with vertices marked with their labels</span>
+0003 <span class="comment">% If the graph is unlabled, we use the vertex numbers instead.</span>
+0004 <span class="comment">% See also draw, cdraw, and ndraw.</span>
+0005 
+0006 
+0007 <span class="keyword">if</span> ~<a href="is_labeled.html" class="code" title="function yn = is_labeled(g)">is_labeled</a>(g)
+0008     <span class="keyword">if</span> nargin ==1
+0009         <a href="ndraw.html" class="code" title="function ndraw(g,line_style)">ndraw</a>(g);
+0010         <span class="keyword">return</span>
+0011     <span class="keyword">else</span>
+0012         <a href="ndraw.html" class="code" title="function ndraw(g,line_style)">ndraw</a>(g,line_style)
+0013         <span class="keyword">return</span>
+0014     <span class="keyword">end</span>
+0015 <span class="keyword">end</span>
+0016 
+0017 <span class="keyword">if</span> nargin == 1
+0018     <a href="draw.html" class="code" title="function draw(g,line_style)">draw</a>(g);
+0019 <span class="keyword">else</span>
+0020     <a href="draw.html" class="code" title="function draw(g,line_style)">draw</a>(g,line_style);
+0021 <span class="keyword">end</span>
+0022 
+0023 <a href="draw_labels.html" class="code" title="function draw_labels(g,offset)">draw_labels</a>(g);</pre></div>
+<hr><address>Generated on Fri 30-Apr-2010 07:51:16 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

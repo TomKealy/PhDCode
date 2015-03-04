@@ -1,0 +1,109 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of partition</title>
+  <meta name="keywords" content="partition">
+  <meta name="description" content="partition --- constructor for the partition class">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">matgraph</a> &gt; <a href="index.html">@partition</a> &gt; partition.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for matgraph/@partition&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>partition
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>partition --- constructor for the partition class</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function p = partition(param) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> partition --- constructor for the partition class
+ p = partition(n) creates a default partition of [n] with all parts of
+ size 1 (finest possible partition).
+ p = partition(cell_array) creates a partition whose parts are given in
+ the cell array.</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="check.html" class="code" title="function yn = check(p)">check</a>	check(p) --- check that the datastructure holding p is a valid partition</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function p = partition(param)</a>
+0002 <span class="comment">% partition --- constructor for the partition class</span>
+0003 <span class="comment">% p = partition(n) creates a default partition of [n] with all parts of</span>
+0004 <span class="comment">% size 1 (finest possible partition).</span>
+0005 <span class="comment">% p = partition(cell_array) creates a partition whose parts are given in</span>
+0006 <span class="comment">% the cell array.</span>
+0007 
+0008 
+0009 <span class="keyword">if</span> nargin==0
+0010     param = 0;
+0011 <span class="keyword">end</span>
+0012 
+0013 <span class="comment">% if called with a single argument, presumably a positive integer</span>
+0014 
+0015 <span class="keyword">if</span> ~isa(param,<span class="string">'cell'</span>)
+0016     n = param;
+0017     p.array = logical(speye(n,n));  <span class="comment">% singleton parts</span>
+0018     p.array = sortrows(p.array);
+0019     p = class(p,<span class="string">'partition'</span>);
+0020     <span class="keyword">return</span>
+0021 <span class="keyword">end</span>
+0022 
+0023 <span class="comment">% otherwise, called with a cell array containing the parts of p</span>
+0024 
+0025 <span class="comment">% special case: param is an empty cell array</span>
+0026 <span class="keyword">if</span> isempty(param)
+0027     p.array = speye(0);
+0028     p = class(p,<span class="string">'partition'</span>);
+0029     <span class="keyword">return</span>
+0030 <span class="keyword">end</span>
+0031 
+0032 <span class="comment">% Find nv (n) and np (m)</span>
+0033 maxv = 0;
+0034 <span class="keyword">for</span> i=1:length(param)
+0035     m = max(param{i});
+0036     maxv = max([m,maxv]);
+0037 <span class="keyword">end</span>
+0038 n = maxv;
+0039 m = length(param);
+0040 
+0041 
+0042 <span class="comment">% allocate the matrix</span>
+0043 p.array = logical(sparse([],[],[],m,n,n));
+0044 
+0045 <span class="comment">% load the entries</span>
+0046 <span class="keyword">for</span> i=1:m
+0047     row = zeros(1,n);
+0048     row(param{i}) = 1;
+0049     p.array(i,:) = logical(row);
+0050 <span class="keyword">end</span>
+0051 p.array = sortrows(p.array);
+0052 
+0053 p = class(p,<span class="string">'partition'</span>);
+0054 
+0055 <span class="keyword">if</span> ~<a href="check.html" class="code" title="function yn = check(p)">check</a>(p)
+0056     p.array = speye(0);
+0057     error(<span class="string">'The cell array does not define a valid partition'</span>);
+0058 <span class="keyword">end</span>
+0059</pre></div>
+<hr><address>Generated on Fri 30-Apr-2010 07:51:16 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

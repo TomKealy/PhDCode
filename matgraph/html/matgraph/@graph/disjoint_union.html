@@ -1,0 +1,78 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of disjoint_union</title>
+  <meta name="keywords" content="disjoint_union">
+  <meta name="description" content="disjoint_union(g,h,k) --- overwrite g with the disjoint union of the">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">matgraph</a> &gt; <a href="index.html">@graph</a> &gt; disjoint_union.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for matgraph/@graph&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>disjoint_union
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>disjoint_union(g,h,k) --- overwrite g with the disjoint union of the</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function disjoint_union(g,h,k) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> disjoint_union(g,h,k) --- overwrite g with the disjoint union of the
+ graphs h and k. 
+ If h and k both have embeddings, those embeddings are combined to form an
+ embedding for g.</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="embed.html" class="code" title="function embed(g,xy)">embed</a>	embed --- create an embedding for a graph</li><li><a href="getxy.html" class="code" title="function z = getxy(g)">getxy</a>	getxy(g) --- give g's embedding (or [] if g doesn't have one)</li><li><a href="hasxy.html" class="code" title="function yn = hasxy(g)">hasxy</a>	hasxy(g) --- determine if an embedding has been created for g</li><li><a href="issparse.html" class="code" title="function yn = issparse(g)">issparse</a>	issparse(g) --- check if g's adjacency matrix is sparse</li><li><a href="make_logical.html" class="code" title="function make_logical(g)">make_logical</a>	make_logical(g) --- ensure that the internal storage for g's matrix is a</li><li><a href="nv.html" class="code" title="function n = nv(g)">nv</a>	nv(g) --- number of vertices in g</li><li><a href="rmxy.html" class="code" title="function rmxy(g)">rmxy</a>	rmxy(g) --- erase g's embedding</li><li><a href="sparse.html" class="code" title="function sparse(g)">sparse</a>	sparse(g) --- convert internal storage for g to sparse</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function disjoint_union(g,h,k)</a>
+0002 <span class="comment">% disjoint_union(g,h,k) --- overwrite g with the disjoint union of the</span>
+0003 <span class="comment">% graphs h and k.</span>
+0004 <span class="comment">% If h and k both have embeddings, those embeddings are combined to form an</span>
+0005 <span class="comment">% embedding for g.</span>
+0006 
+0007 <span class="keyword">global</span> GRAPH_MAGIC
+0008 
+0009 n1 = <a href="nv.html" class="code" title="function n = nv(g)">nv</a>(h);
+0010 n2 = <a href="nv.html" class="code" title="function n = nv(g)">nv</a>(k);
+0011 
+0012 <span class="keyword">if</span> (<a href="issparse.html" class="code" title="function yn = issparse(g)">issparse</a>(h) || <a href="issparse.html" class="code" title="function yn = issparse(g)">issparse</a>(k))
+0013     z = logical(<a href="sparse.html" class="code" title="function sparse(g)">sparse</a>([],[],[],n1,n2,0));
+0014 <span class="keyword">else</span>
+0015     z = false(n1,n2);
+0016 <span class="keyword">end</span>
+0017 
+0018 <a href="rmxy.html" class="code" title="function rmxy(g)">rmxy</a>(g);
+0019 
+0020 GRAPH_MAGIC.graphs{g.idx}.array = <span class="keyword">...</span>
+0021     [GRAPH_MAGIC.graphs{h.idx}.array, z; <span class="keyword">...</span>
+0022      z', GRAPH_MAGIC.graphs{k.idx}.array
+0023     ];
+0024 <a href="make_logical.html" class="code" title="function make_logical(g)">make_logical</a>(g);
+0025 
+0026 <span class="keyword">if</span> (<a href="hasxy.html" class="code" title="function yn = hasxy(g)">hasxy</a>(h) &amp;&amp; <a href="hasxy.html" class="code" title="function yn = hasxy(g)">hasxy</a>(k))
+0027     xy = [<a href="getxy.html" class="code" title="function z = getxy(g)">getxy</a>(h);<a href="getxy.html" class="code" title="function z = getxy(g)">getxy</a>(k)];
+0028     <a href="embed.html" class="code" title="function embed(g,xy)">embed</a>(g,xy);
+0029 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Fri 30-Apr-2010 07:51:16 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

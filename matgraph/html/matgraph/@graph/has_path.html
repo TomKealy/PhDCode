@@ -1,0 +1,81 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of has_path</title>
+  <meta name="keywords" content="has_path">
+  <meta name="description" content="has_path(g,u,v) --- determine if there is a path from u to v in g">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">matgraph</a> &gt; <a href="index.html">@graph</a> &gt; has_path.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for matgraph/@graph&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>has_path
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>has_path(g,u,v) --- determine if there is a path from u to v in g</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function yn = has_path(g,u,v) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> has_path(g,u,v) --- determine if there is a path from u to v in g
+ this is implemented a bit differently from find_path</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="nv.html" class="code" title="function n = nv(g)">nv</a>	nv(g) --- number of vertices in g</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="euler_trail.html" class="code" title="function [elist, exists] = euler_trail(g)">euler_trail</a>	euler_trail(g) --- find an euler trail in g (if one exists)</li></ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function yn = has_path(g,u,v)</a>
+0002 <span class="comment">% has_path(g,u,v) --- determine if there is a path from u to v in g</span>
+0003 <span class="comment">% this is implemented a bit differently from find_path</span>
+0004 
+0005 <span class="keyword">global</span> GRAPH_MAGIC
+0006 
+0007 n = <a href="nv.html" class="code" title="function n = nv(g)">nv</a>(g);
+0008 
+0009 <span class="keyword">if</span> (u&lt;1) || (u&gt;n) || (v&lt;1) || (v&gt;n)
+0010     yn = 0;
+0011     <span class="keyword">return</span>
+0012 <span class="keyword">end</span>
+0013 
+0014 <span class="keyword">if</span> u==v
+0015     yn = 1;
+0016     <span class="keyword">return</span>
+0017 <span class="keyword">end</span>
+0018 
+0019 x = zeros(n,1);
+0020 x(u) = 1;
+0021 
+0022 last_sum = 0;
+0023 
+0024 <span class="keyword">while</span> last_sum &lt; sum(x)
+0025     last_sum = sum(x);
+0026     x = GRAPH_MAGIC.graphs{g.idx}.array * x + x;
+0027     x = double(x&gt;0);
+0028     <span class="keyword">if</span> (x(v))
+0029         yn = 1;
+0030         <span class="keyword">return</span>
+0031     <span class="keyword">end</span>
+0032 <span class="keyword">end</span>
+0033 
+0034 yn = 0;</pre></div>
+<hr><address>Generated on Fri 30-Apr-2010 07:51:16 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

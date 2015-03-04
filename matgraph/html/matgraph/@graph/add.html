@@ -1,0 +1,111 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of add</title>
+  <meta name="keywords" content="add">
+  <meta name="description" content="add --- add edge(s) to the graph">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">matgraph</a> &gt; <a href="index.html">@graph</a> &gt; add.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for matgraph/@graph&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>add
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>add --- add edge(s) to the graph</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function add(g,i,j) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> add --- add edge(s) to the graph
+ add(g,i,j) --- adds the edge ij
+ add(g,elist) --- adds edges specified in elist to the graph
+                  elist is an n-by-2 array of edges
+ If an end point is larger than the number of vertices, the graph is
+ extended. End points must be positive integers. Loops are ignored.</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="full.html" class="code" title="function full(g)">full</a>	full(g) --- convert internal storage for g to full</li><li><a href="isfull.html" class="code" title="function yn = isfull(g)">isfull</a>	isfull(g) --- check if g's adjacency matrix is full</li><li><a href="nv.html" class="code" title="function n = nv(g)">nv</a>	nv(g) --- number of vertices in g</li><li><a href="resize.html" class="code" title="function resize(g, n)">resize</a>	resize(g,n) --- change the number of vertices in g to n</li><li><a href="size.html" class="code" title="function [sz,tz] = size(g)">size</a>	size(g) --- returns [nv,ne] for the graph</li><li><a href="sparse.html" class="code" title="function sparse(g)">sparse</a>	sparse(g) --- convert internal storage for g to sparse</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="bfstree.html" class="code" title="function bfstree(t,g,v)">bfstree</a>	bfstree(t,g,v) --- create a breadth-first spanning tree of g</li><li><a href="bridges.html" class="code" title="function blist = bridges(g,algo)">bridges</a>	bridges(g,algo) --- find all cut edges in g</li><li><a href="cartesian.html" class="code" title="function cartesian(g,h1,h2)">cartesian</a>	cartesian(g,h1,h2) --- overwrite g with the product of h1 and h2</li><li><a href="cayley.html" class="code" title="function cayley(g,perms,verbose)">cayley</a>	cayley(g,perms) -- create a Cayley graph (undirected)</li><li><a href="circulant.html" class="code" title="function circulant(g,n,k)">circulant</a>	circulant(g,n,k) --- overwrite g with an n,k circulant graph</li><li><a href="contract.html" class="code" title="function contract(g,u,v)">contract</a>	contract(g,u,v) --- contract v into u</li><li><a href="cube.html" class="code" title="function cube(g,k)">cube</a>	cube(g,k) --- create a k-cube (default k = 3)</li><li><a href="cycle.html" class="code" title="function cycle(g,n)">cycle</a>	cycle(g,n) --- create a cycle graph on n vertices</li><li><a href="dfstree.html" class="code" title="function dfstree(t,g,v)">dfstree</a>	dfstree(t,g,v) --- create a depth-first spanning tree of g</li><li><a href="dodecahedron.html" class="code" title="function dodecahedron(g)">dodecahedron</a>	dodecahedron(g) --- overwrite g with the dodecahedron graph</li><li><a href="euler_trail.html" class="code" title="function [elist, exists] = euler_trail(g)">euler_trail</a>	euler_trail(g) --- find an euler trail in g (if one exists)</li><li><a href="graph.html" class="code" title="function g = graph(n)">graph</a>	graph: constructor for the graph class</li><li><a href="grid.html" class="code" title="function grid(g,a,b)">grid</a>	grid(g,a,b) --- create an a-by-b grid graph</li><li><a href="hamiltonian_cycle.html" class="code" title="function [hlist, exists] = hamiltonian_cycle(g,h)">hamiltonian_cycle</a>	hamiltonian_cycle(g) --- find a Hamiltonian cycle in g (if one exists)</li><li><a href="icosahedron.html" class="code" title="function icosahedron(g)">icosahedron</a>	icosahedron(g) --- overwrite g with the icosahedron graph</li><li><a href="interval_graph.html" class="code" title="function interval_graph(g,ilist)">interval_graph</a>	interval_graph(g,ilist) --- create an interval graph</li><li><a href="line_graph.html" class="code" title="function line_graph(g,h)">line_graph</a>	line_graph(g,h) --- set g to be the line graph of h</li><li><a href="load.html" class="code" title="function load(g,filename)">load</a>	load(g,filename) --- read a saved graph on disk</li><li><a href="mobius.html" class="code" title="function mobius(g,nverts)">mobius</a>	mobius(g,nverts) --- create a Mobius ladder graph</li><li><a href="octahedron.html" class="code" title="function octahedron(g)">octahedron</a>	octahedron(g) --- overwrite g with the octahedron graph, K(2,2,2)</li><li><a href="paley.html" class="code" title="function paley(g,n)">paley</a>	paley(g,n) --- create a Paley graph with n vertices</li><li><a href="path.html" class="code" title="function path(g,n)">path</a>	path(g,n) --- make g a path on n vertices</li><li><a href="petersen.html" class="code" title="function petersen(g)">petersen</a>	petersen(g) --- overwrite g with the Petersen graph</li><li><a href="prufer.html" class="code" title="function output = prufer(g, code)">prufer</a>	prufer --- convert a tree to/from its Prufer code</li><li><a href="random_planar.html" class="code" title="function random_planar(g,n)">random_planar</a>	random_planar(g,n) --- create a random planar triangulation</li><li><a href="random_regular.html" class="code" title="function random_regular(g,n,k)">random_regular</a>	random_regular(g,n,k) --- create a random regular graph</li><li><a href="random_tree.html" class="code" title="function random_tree(t,n)">random_tree</a>	random_tree(t,n) --- overwrite t with a random tree on n vertices</li><li><a href="selective.html" class="code" title="function selective(g,n,n0,d)">selective</a>	selective(g,n,n0,d) --- selective attachment random graph</li><li><a href="sgf.html" class="code" title="function A = sgf(g,M)">sgf</a>	sgf --- simple graph format: a 2-column matrix representation</li><li><a href="shiftgraph.html" class="code" title="function shiftgraph(g,k,t)">shiftgraph</a>	shiftgraph(g,k,t) -- create a shiftgraph g based on t-tuples of k symbols</li><li><a href="sl2graph.html" class="code" title="function sl2graph(g,p)">sl2graph</a>	sl2graph(g,p) -- create an SL(2,p) graph</li><li><a href="wheel.html" class="code" title="function wheel(g,n)">wheel</a>	wheel(g,n) --- overwrite g with a wheel graph on n vertices</li></ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function add(g,i,j)</a>
+0002 <span class="comment">% add --- add edge(s) to the graph</span>
+0003 <span class="comment">% add(g,i,j) --- adds the edge ij</span>
+0004 <span class="comment">% add(g,elist) --- adds edges specified in elist to the graph</span>
+0005 <span class="comment">%                  elist is an n-by-2 array of edges</span>
+0006 <span class="comment">% If an end point is larger than the number of vertices, the graph is</span>
+0007 <span class="comment">% extended. End points must be positive integers. Loops are ignored.</span>
+0008 
+0009 <span class="keyword">global</span> GRAPH_MAGIC
+0010 n = <a href="nv.html" class="code" title="function n = nv(g)">nv</a>(g);
+0011 
+0012 
+0013 <span class="keyword">if</span> nargin == 3
+0014     <span class="keyword">if</span> (i==j) || (i&lt;1) || (j&lt;1) 
+0015         <span class="keyword">return</span>
+0016     <span class="keyword">end</span>
+0017     
+0018     maxij = max(i,j);
+0019     <span class="keyword">if</span> maxij &gt; n
+0020         <a href="resize.html" class="code" title="function resize(g, n)">resize</a>(g,maxij)
+0021     <span class="keyword">end</span>
+0022 
+0023     GRAPH_MAGIC.graphs{g.idx}.array(i,j) = 1;
+0024     GRAPH_MAGIC.graphs{g.idx}.array(j,i) = 1;
+0025     <span class="keyword">return</span>
+0026 <span class="keyword">end</span>
+0027 
+0028 <span class="keyword">if</span> nargin == 2
+0029     [nr,nc] = <a href="size.html" class="code" title="function [sz,tz] = size(g)">size</a>(i);
+0030     <span class="comment">% check shape</span>
+0031     <span class="keyword">if</span> (nc ~= 2)
+0032         error(<span class="string">'in add(elist), elist should have exactly two columns'</span>);
+0033     <span class="keyword">end</span>
+0034     
+0035     maxv = max(max(i));
+0036     <span class="keyword">if</span> maxv &gt; n
+0037         <span class="keyword">if</span> maxv &gt; set_large
+0038             <a href="sparse.html" class="code" title="function sparse(g)">sparse</a>(g)
+0039         <span class="keyword">end</span>
+0040         <a href="resize.html" class="code" title="function resize(g, n)">resize</a>(g,maxv)
+0041     <span class="keyword">end</span>
+0042     n = <a href="nv.html" class="code" title="function n = nv(g)">nv</a>(g);
+0043     was_full = <a href="isfull.html" class="code" title="function yn = isfull(g)">isfull</a>(g);
+0044     
+0045     data = [i; n,n]; <span class="comment">% note phony last row</span>
+0046     m = <a href="size.html" class="code" title="function [sz,tz] = size(g)">size</a>(data,1);
+0047     data = [data, ones(m,1)];
+0048     A = spconvert(double(data));
+0049     <span class="keyword">for</span> k=1:n
+0050         A(k,k)=0;
+0051     <span class="keyword">end</span>
+0052     
+0053     A = (A+A')&gt;0;
+0054     A = logical(A);
+0055     <span class="keyword">if</span> (was_full) 
+0056         A = <a href="full.html" class="code" title="function full(g)">full</a>(A);
+0057     <span class="keyword">end</span>
+0058     GRAPH_MAGIC.graphs{g.idx}.array = GRAPH_MAGIC.graphs{g.idx}.array | A;
+0059     <span class="keyword">return</span>
+0060 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Fri 30-Apr-2010 07:51:16 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

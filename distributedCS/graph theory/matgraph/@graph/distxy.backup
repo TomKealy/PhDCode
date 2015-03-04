@@ -1,0 +1,53 @@
+function e = distxy(g) 
+% distxy(g) -- give g a distance based embedding
+% we attempt to embed g in the plane so that the graph-theoretic distance
+% between vertices matches the eucliden distance
+tic;
+n = nv(g);
+d = dist(g);
+
+[i,j] = find(d==inf);
+ni = length(i);
+for k=1:ni
+    d(i(k),j(k)) = n/2;
+end
+
+
+
+if (hasxy(g))
+    xy0 = getxy(g);
+else
+    xy0 = 5*randn(n,2);
+end
+
+opts = optimset('MaxIter', 10*n,'Display', 'final');
+
+[xy,e] = lsqnonlin(@dist_discrep, xy0, [], [], opts);
+
+embed(g,xy);
+toc
+
+function dd = dist_discrep(xy)
+
+nn = n*(n-1)/2;
+dd = zeros(nn,1);
+
+idx = 0;
+for u = 1:n-1
+    x = xy(u,1);
+    y = xy(u,2);
+    for v = u+1:n
+        idx = idx+1;
+        xx = xy(v,1);
+        yy = xy(v,2);
+        dd(idx) = (sqrt((x-xx)*(x-xx) + (y-yy)*(y-yy)) - (d(u,v)))/(d(u,v));
+    end
+end
+
+dd = dd(:);
+
+end % end dist_discrep
+
+
+
+end % end of distxy

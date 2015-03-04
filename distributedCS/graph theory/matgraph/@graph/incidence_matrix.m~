@@ -1,0 +1,49 @@
+function M = incidence_matrix(g,type)
+% incidence_matrix(g) --- return the vertex/edge incidence matrix.
+% We return M an nv-by-ne matrix whose ij entry is 1 if vertex i is an
+% end point of edge j.
+% Optional: incidence_matrix(g,'signed') which is the same matrix but one
+% entry in each column is negative.
+
+
+
+
+
+[n,m] = size(g);
+e = edges(g);
+
+if nargin<2
+	type = 'unsigned';  % default type
+end
+
+signed = false;
+
+switch type
+	case 'signed'
+		signed = true;
+	case 'unsigned'
+		signed = false;
+	otherwise
+		error(['Unknown incidende matrix type:', type]);
+end
+
+
+%T 
+M = zeros(n,m);
+
+if signed
+	for k=1:m
+		a = e(k,1);
+		b = e(k,2);
+		M(a,k)=1;
+		M(b,k)=-1;
+	end
+
+else
+	for k=1:m
+		a = e(k,1);
+		b = e(k,2);
+		M(a,k)=1;
+		M(b,k)=1;
+	end
+end

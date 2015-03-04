@@ -1,0 +1,58 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of free</title>
+  <meta name="keywords" content="free">
+  <meta name="description" content="free(g) --- free the graph from the system">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">matgraph</a> &gt; <a href="index.html">@graph</a> &gt; free.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for matgraph/@graph&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>free
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>free(g) --- free the graph from the system</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function free(g) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> free(g) --- free the graph from the system</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="bridges.html" class="code" title="function blist = bridges(g,algo)">bridges</a>	bridges(g,algo) --- find all cut edges in g</li><li><a href="cube.html" class="code" title="function cube(g,k)">cube</a>	cube(g,k) --- create a k-cube (default k = 3)</li><li><a href="edge_color.html" class="code" title="function c = edge_color(g,algo)">edge_color</a>	edge_color(g,algo) --- find a proper edge coloring of the graph g</li><li><a href="euler_trail.html" class="code" title="function [elist, exists] = euler_trail(g)">euler_trail</a>	euler_trail(g) --- find an euler trail in g (if one exists)</li><li><a href="intersect.html" class="code" title="function intersect(g,h1,h2)">intersect</a>	intersect(g,h1,h2) --- g is set to the intersection of h1 and h2.</li><li><a href="iso.html" class="code" title="function [yn,p] = iso(g,h,options)">iso</a>	[yn,p] = iso(g,h,options) --- is g isomorphic to h?</li><li><a href="omega.html" class="code" title="function [w,S] = omega(g)">omega</a>	[w,S] = omega(g) --- clique number</li><li><a href="prufer.html" class="code" title="function output = prufer(g, code)">prufer</a>	prufer --- convert a tree to/from its Prufer code</li><li><a href="random_regular.html" class="code" title="function random_regular(g,n,k)">random_regular</a>	random_regular(g,n,k) --- create a random regular graph</li><li><a href="union.html" class="code" title="function union(g,h1,h2)">union</a>	union(g,h1,h2) --- set g equal to the union of h1 and h2.</li></ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function free(g)</a>
+0002 <span class="comment">% free(g) --- free the graph from the system</span>
+0003 
+0004 <span class="keyword">if</span> ~graph_system_exists
+0005     error(<span class="string">'Graph system has not been initialized'</span>)
+0006 <span class="keyword">end</span>
+0007 
+0008 <span class="keyword">global</span> GRAPH_MAGIC
+0009 i = g.idx;
+0010 
+0011 GRAPH_MAGIC.in_use(i) = 0;
+0012 GRAPH_MAGIC.graphs{i} = [];</pre></div>
+<hr><address>Generated on Fri 30-Apr-2010 07:51:16 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of copy_labels</title>
+  <meta name="keywords" content="copy_labels">
+  <meta name="description" content="copy_labels(g,h) --- copy labels from h to g">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">matgraph</a> &gt; <a href="index.html">@graph</a> &gt; copy_labels.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for matgraph/@graph&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>copy_labels
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>copy_labels(g,h) --- copy labels from h to g</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function copy_labels(g,h) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> copy_labels(g,h) --- copy labels from h to g</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="get_label.html" class="code" title="function out = get_label(g,v)">get_label</a>	get_label(g) or get_label(g,v) --- get vertex label(s)</li><li><a href="is_labeled.html" class="code" title="function yn = is_labeled(g)">is_labeled</a>	is_labeled(g) --- determine if there are labels on vertices.</li><li><a href="label.html" class="code" title="function label(g,v,name)">label</a>	Assign labels to vertices of g</li><li><a href="nv.html" class="code" title="function n = nv(g)">nv</a>	nv(g) --- number of vertices in g</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="bfstree.html" class="code" title="function bfstree(t,g,v)">bfstree</a>	bfstree(t,g,v) --- create a breadth-first spanning tree of g</li><li><a href="dfstree.html" class="code" title="function dfstree(t,g,v)">dfstree</a>	dfstree(t,g,v) --- create a depth-first spanning tree of g</li></ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function copy_labels(g,h)</a>
+0002 <span class="comment">% copy_labels(g,h) --- copy labels from h to g</span>
+0003 
+0004 <span class="keyword">if</span> ~<a href="is_labeled.html" class="code" title="function yn = is_labeled(g)">is_labeled</a>(h)
+0005     error(<span class="string">'Source graph (2nd argument) must be labeled'</span>)
+0006 <span class="keyword">end</span>
+0007 
+0008 ng = <a href="nv.html" class="code" title="function n = nv(g)">nv</a>(g);
+0009 nh = <a href="nv.html" class="code" title="function n = nv(g)">nv</a>(h);
+0010 
+0011 <a href="label.html" class="code" title="function label(g,v,name)">label</a>(g);
+0012 <span class="keyword">for</span> v=1:min(ng,nh)
+0013     <a href="label.html" class="code" title="function label(g,v,name)">label</a>(g,v,<a href="get_label.html" class="code" title="function out = get_label(g,v)">get_label</a>(h,v));
+0014 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Fri 30-Apr-2010 07:51:16 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

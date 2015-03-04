@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of cube</title>
+  <meta name="keywords" content="cube">
+  <meta name="description" content="cube(g,k) --- create a k-cube (default k = 3)">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">matgraph</a> &gt; <a href="index.html">@graph</a> &gt; cube.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for matgraph/@graph&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>cube
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>cube(g,k) --- create a k-cube (default k = 3)</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function cube(g,k) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> cube(g,k) --- create a k-cube (default k = 3)</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="add.html" class="code" title="function add(g,i,j)">add</a>	add --- add edge(s) to the graph</li><li><a href="cartesian.html" class="code" title="function cartesian(g,h1,h2)">cartesian</a>	cartesian(g,h1,h2) --- overwrite g with the product of h1 and h2</li><li><a href="clear_edges.html" class="code" title="function clear_edges(g)">clear_edges</a>	clear_edges(g) --- delete all edges of g</li><li><a href="complete.html" class="code" title="function complete(g,a,b)">complete</a>	complete: build complete and complete multipartite graphs</li><li><a href="copy.html" class="code" title="function copy(g,h)">copy</a>	copy(g,h) --- overwrite g with a copy of h</li><li><a href="cube.html" class="code" title="function cube(g,k)">cube</a>	cube(g,k) --- create a k-cube (default k = 3)</li><li><a href="embed.html" class="code" title="function embed(g,xy)">embed</a>	embed --- create an embedding for a graph</li><li><a href="free.html" class="code" title="function free(g)">free</a>	free(g) --- free the graph from the system</li><li><a href="full.html" class="code" title="function full(g)">full</a>	full(g) --- convert internal storage for g to full</li><li><a href="graph.html" class="code" title="function g = graph(n)">graph</a>	graph: constructor for the graph class</li><li><a href="path.html" class="code" title="function path(g,n)">path</a>	path(g,n) --- make g a path on n vertices</li><li><a href="resize.html" class="code" title="function resize(g, n)">resize</a>	resize(g,n) --- change the number of vertices in g to n</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="cube.html" class="code" title="function cube(g,k)">cube</a>	cube(g,k) --- create a k-cube (default k = 3)</li></ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function cube(g,k)</a>
+0002 <span class="comment">% cube(g,k) --- create a k-cube (default k = 3)</span>
+0003 
+0004 <span class="keyword">if</span> nargin==1
+0005     <a href="cube.html" class="code" title="function cube(g,k)">cube</a>(g,3);
+0006     xy = [ 
+0007         0   0
+0008         1   0
+0009         0   1  
+0010         1   1
+0011         ];
+0012     xy = [xy ; 2*xy-1/2];
+0013     <a href="embed.html" class="code" title="function embed(g,xy)">embed</a>(g,xy);
+0014     <span class="keyword">return</span>
+0015         
+0016 <span class="keyword">end</span>
+0017 
+0018 <span class="keyword">if</span> (k==1)
+0019     <a href="path.html" class="code" title="function path(g,n)">path</a>(g,2);
+0020     <span class="keyword">return</span>
+0021 <span class="keyword">end</span>
+0022 
+0023 <span class="keyword">if</span> (k==2)
+0024     <a href="resize.html" class="code" title="function resize(g, n)">resize</a>(g,4);
+0025     <a href="clear_edges.html" class="code" title="function clear_edges(g)">clear_edges</a>(g);
+0026     <a href="full.html" class="code" title="function full(g)">full</a>(g);
+0027     elist = [ 1 2; 2 4; 4 3; 3 1];
+0028     <a href="add.html" class="code" title="function add(g,i,j)">add</a>(g,elist);
+0029     xy = [ 0 0 ; 1 0 ; 0 1 ; 1 1];
+0030     <a href="embed.html" class="code" title="function embed(g,xy)">embed</a>(g,xy);
+0031     <span class="keyword">return</span>
+0032 <span class="keyword">end</span>
+0033 
+0034 <a href="cube.html" class="code" title="function cube(g,k)">cube</a>(g,k-1);
+0035 
+0036 k2 = <a href="graph.html" class="code" title="function g = graph(n)">graph</a>(2);
+0037 tmp = <a href="graph.html" class="code" title="function g = graph(n)">graph</a>;
+0038 
+0039 <a href="complete.html" class="code" title="function complete(g,a,b)">complete</a>(k2);
+0040 <a href="embed.html" class="code" title="function embed(g,xy)">embed</a>(k2,[-1,0;1,0]);
+0041 <a href="copy.html" class="code" title="function copy(g,h)">copy</a>(tmp,g);
+0042 <a href="cartesian.html" class="code" title="function cartesian(g,h1,h2)">cartesian</a>(g,tmp,k2);
+0043 
+0044 <a href="free.html" class="code" title="function free(g)">free</a>(k2);
+0045 <a href="free.html" class="code" title="function free(g)">free</a>(tmp);</pre></div>
+<hr><address>Generated on Fri 30-Apr-2010 07:51:16 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

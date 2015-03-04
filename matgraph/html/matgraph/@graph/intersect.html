@@ -1,0 +1,76 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of intersect</title>
+  <meta name="keywords" content="intersect">
+  <meta name="description" content="intersect(g,h1,h2) --- g is set to the intersection of h1 and h2.">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">matgraph</a> &gt; <a href="index.html">@graph</a> &gt; intersect.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for matgraph/@graph&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>intersect
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>intersect(g,h1,h2) --- g is set to the intersection of h1 and h2.</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function intersect(g,h1,h2) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> intersect(g,h1,h2) --- g is set to the intersection of h1 and h2.
+ The vertex set of g is intersection of the vertex sets of h1 and h2, and
+ the edge set of g is the intersection of the edge sets of h1 and h2.</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="copy.html" class="code" title="function copy(g,h)">copy</a>	copy(g,h) --- overwrite g with a copy of h</li><li><a href="free.html" class="code" title="function free(g)">free</a>	free(g) --- free the graph from the system</li><li><a href="graph.html" class="code" title="function g = graph(n)">graph</a>	graph: constructor for the graph class</li><li><a href="matrix.html" class="code" title="function A = matrix(g)">matrix</a>	matrix(g) --- return (a copy of) the adjacency matrix of g</li><li><a href="nv.html" class="code" title="function n = nv(g)">nv</a>	nv(g) --- number of vertices in g</li><li><a href="resize.html" class="code" title="function resize(g, n)">resize</a>	resize(g,n) --- change the number of vertices in g to n</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="bipmatch.html" class="code" title="function elist = bipmatch(g,X,Y)">bipmatch</a>	bipmatch --- maximum matching in a bipartite graph</li></ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function intersect(g,h1,h2)</a>
+0002 <span class="comment">% intersect(g,h1,h2) --- g is set to the intersection of h1 and h2.</span>
+0003 <span class="comment">% The vertex set of g is intersection of the vertex sets of h1 and h2, and</span>
+0004 <span class="comment">% the edge set of g is the intersection of the edge sets of h1 and h2.</span>
+0005 
+0006 <span class="keyword">global</span> GRAPH_MAGIC
+0007 
+0008 
+0009 n1 = <a href="nv.html" class="code" title="function n = nv(g)">nv</a>(h1);
+0010 n2 = <a href="nv.html" class="code" title="function n = nv(g)">nv</a>(h2);
+0011 
+0012 g1 = <a href="graph.html" class="code" title="function g = graph(n)">graph</a>;
+0013 g2 = <a href="graph.html" class="code" title="function g = graph(n)">graph</a>;
+0014 
+0015 <a href="copy.html" class="code" title="function copy(g,h)">copy</a>(g1,h1);
+0016 <a href="copy.html" class="code" title="function copy(g,h)">copy</a>(g2,h2);
+0017 
+0018 <span class="keyword">if</span> n1 &gt; n2
+0019     <a href="resize.html" class="code" title="function resize(g, n)">resize</a>(g1,n2)
+0020 <span class="keyword">else</span>
+0021     <a href="resize.html" class="code" title="function resize(g, n)">resize</a>(g2,n1)
+0022 <span class="keyword">end</span>
+0023 
+0024 GRAPH_MAGIC.graphs{g.idx}.array = <span class="keyword">...</span>
+0025     (<a href="matrix.html" class="code" title="function A = matrix(g)">matrix</a>(g1) &amp; <a href="matrix.html" class="code" title="function A = matrix(g)">matrix</a>(g2));
+0026 
+0027 <a href="free.html" class="code" title="function free(g)">free</a>(g1);
+0028 <a href="free.html" class="code" title="function free(g)">free</a>(g2);</pre></div>
+<hr><address>Generated on Fri 30-Apr-2010 07:51:16 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

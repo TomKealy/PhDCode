@@ -1,0 +1,153 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of bridges</title>
+  <meta name="keywords" content="bridges">
+  <meta name="description" content="bridges(g,algo) --- find all cut edges in g">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">matgraph</a> &gt; <a href="index.html">@graph</a> &gt; bridges.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for matgraph/@graph&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>bridges
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>bridges(g,algo) --- find all cut edges in g</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function blist = bridges(g,algo) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> bridges(g,algo) --- find all cut edges in g
+ algo specifies the algorithm. Current choices are these:
+
+ 'path'    Deletes each edge from the graph and checks if there is a path
+           between its endpoints. A few tricks are employed so we don't
+           have to check every edge.
+
+ 'matrix'  Uses a basis for the null space of the signed incidence
+           matrix. 
+
+ No decision yet on which of these is better as the default. 
+
+ Main idea for the path code due to Mel Janowitz.</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="add.html" class="code" title="function add(g,i,j)">add</a>	add --- add edge(s) to the graph</li><li><a href="copy.html" class="code" title="function copy(g,h)">copy</a>	copy(g,h) --- overwrite g with a copy of h</li><li><a href="delete.html" class="code" title="function delete(g,i,j)">delete</a>	delete --- delete vertices or edges from a graph</li><li><a href="edges.html" class="code" title="function elist = edges(g)">edges</a>	edges(g) --- list the edges in g as a 2-column matrix</li><li><a href="find_path.html" class="code" title="function p = find_path(g,u,v)">find_path</a>	find_path(g,u,v) --- find a shortest path from u to v</li><li><a href="free.html" class="code" title="function free(g)">free</a>	free(g) --- free the graph from the system</li><li><a href="full.html" class="code" title="function full(g)">full</a>	full(g) --- convert internal storage for g to full</li><li><a href="graph.html" class="code" title="function g = graph(n)">graph</a>	graph: constructor for the graph class</li><li><a href="has.html" class="code" title="function yn = has(g,u,v)">has</a>	has --- check if the graph has a particular vertex or edge</li><li><a href="incidence_matrix.html" class="code" title="function M = incidence_matrix(g,type)">incidence_matrix</a>	incidence_matrix(g) --- return the vertex/edge incidence matrix.</li><li><a href="ne.html" class="code" title="function m = ne(g,h)">ne</a>	ne(g) --- number of edges in g or ne(g,h) --- check for inequality</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+<h2><a name="_subfunctions"></a>SUBFUNCTIONS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="#_sub1" class="code">function blist = matrix_bridges(g)</a></li><li><a href="#_sub2" class="code">function blist = path_bridges(g)</a></li></ul>
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function blist = bridges(g,algo)</a>
+0002 <span class="comment">% bridges(g,algo) --- find all cut edges in g</span>
+0003 <span class="comment">% algo specifies the algorithm. Current choices are these:</span>
+0004 <span class="comment">%</span>
+0005 <span class="comment">% 'path'    Deletes each edge from the graph and checks if there is a path</span>
+0006 <span class="comment">%           between its endpoints. A few tricks are employed so we don't</span>
+0007 <span class="comment">%           have to check every edge.</span>
+0008 <span class="comment">%</span>
+0009 <span class="comment">% 'matrix'  Uses a basis for the null space of the signed incidence</span>
+0010 <span class="comment">%           matrix.</span>
+0011 <span class="comment">%</span>
+0012 <span class="comment">% No decision yet on which of these is better as the default.</span>
+0013 <span class="comment">%</span>
+0014 <span class="comment">% Main idea for the path code due to Mel Janowitz.</span>
+0015 
+0016 DEFAULT_ALGORITHM = <span class="string">'matrix'</span>;
+0017 
+0018 <span class="keyword">if</span> nargin &lt; 2
+0019     algo = DEFAULT_ALGORITHM;
+0020 <span class="keyword">end</span>
+0021 
+0022 <span class="keyword">switch</span> lower(algo)
+0023     <span class="keyword">case</span> {<span class="string">'path'</span>, <span class="string">'paths'</span>}
+0024         blist = <a href="#_sub2" class="code" title="subfunction blist = path_bridges(g)">path_bridges</a>(g);
+0025     <span class="keyword">case</span> <span class="string">'matrix'</span>
+0026         blist = <a href="#_sub1" class="code" title="subfunction blist = matrix_bridges(g)">matrix_bridges</a>(g);
+0027     <span class="keyword">otherwise</span>
+0028         error([<span class="string">'Unknown algorithm: '</span>, algo]);
+0029 <span class="keyword">end</span>
+0030 
+0031 <a name="_sub1" href="#_subfunctions" class="code">function blist = matrix_bridges(g)</a>
+0032 <span class="comment">% Based on the following observation. Let M be the signed incidence matrix</span>
+0033 <span class="comment">% of the graph. An edge e is a bridge of g if and only if every vector in</span>
+0034 <span class="comment">% the null space of M has a 0 in the e'th coordinate.</span>
+0035 
+0036 M = <a href="full.html" class="code" title="function full(g)">full</a>(<a href="incidence_matrix.html" class="code" title="function M = incidence_matrix(g,type)">incidence_matrix</a>(g,<span class="string">'signed'</span>));
+0037 N = null(M);
+0038 
+0039 <span class="comment">% find rows that are entirely zero (or nearly so)</span>
+0040 N = abs(N) &lt; 100*eps;
+0041 idx = all(N,2);
+0042 
+0043 blist = <a href="edges.html" class="code" title="function elist = edges(g)">edges</a>(g);
+0044 blist = blist(idx,:);
+0045 
+0046 
+0047 <a name="_sub2" href="#_subfunctions" class="code">function blist = path_bridges(g)</a>
+0048 <span class="comment">% Implement the path method for finding bridges</span>
+0049 
+0050 bgraph = <a href="graph.html" class="code" title="function g = graph(n)">graph</a>;     <span class="comment">% hold the cut edges</span>
+0051 notbridges = <a href="graph.html" class="code" title="function g = graph(n)">graph</a>; <span class="comment">% hold the non cut edges</span>
+0052 gsave = <a href="graph.html" class="code" title="function g = graph(n)">graph</a>;      <span class="comment">% save a copy of g since our code modifies g</span>
+0053 <a href="copy.html" class="code" title="function copy(g,h)">copy</a>(gsave,g);
+0054 
+0055 elist = <a href="edges.html" class="code" title="function elist = edges(g)">edges</a>(g);  <span class="comment">% list of edges</span>
+0056 m = <a href="ne.html" class="code" title="function m = ne(g,h)">ne</a>(g);         <span class="comment">% number of edges</span>
+0057 
+0058 <span class="keyword">for</span> k=1:m
+0059     <span class="comment">% xy is the edge we're considering</span>
+0060     x = elist(k,1);
+0061     y = elist(k,2);
+0062     
+0063     <span class="comment">% if xy is in a cycle, we skip the rest of this iteration</span>
+0064     <span class="keyword">if</span> (<a href="has.html" class="code" title="function yn = has(g,u,v)">has</a>(notbridges,x,y))
+0065         <span class="keyword">continue</span>
+0066     <span class="keyword">end</span>
+0067     
+0068     <span class="comment">% find an xy-path in G-e</span>
+0069     <a href="delete.html" class="code" title="function delete(g,i,j)">delete</a>(g,x,y);
+0070     P = <a href="find_path.html" class="code" title="function p = find_path(g,u,v)">find_path</a>(g,x,y);
+0071     
+0072     
+0073     <span class="comment">% if no such path, we have a cut edge</span>
+0074     <span class="keyword">if</span> isempty(P)
+0075         <a href="add.html" class="code" title="function add(g,i,j)">add</a>(bgraph,x,y)
+0076     <span class="keyword">else</span>
+0077         <span class="comment">% otherwise, note that xy and all edges on P cannot be cut edges</span>
+0078         <a href="add.html" class="code" title="function add(g,i,j)">add</a>(g,x,y);
+0079         <a href="add.html" class="code" title="function add(g,i,j)">add</a>(notbridges,x,y)
+0080         <span class="keyword">for</span> j=1:length(P)-1
+0081             <a href="add.html" class="code" title="function add(g,i,j)">add</a>(notbridges,P(j),P(j+1))
+0082         <span class="keyword">end</span>
+0083     <span class="keyword">end</span>
+0084 <span class="keyword">end</span>
+0085 
+0086 blist = <a href="edges.html" class="code" title="function elist = edges(g)">edges</a>(bgraph);
+0087 
+0088 <span class="comment">% restore g</span>
+0089 <a href="copy.html" class="code" title="function copy(g,h)">copy</a>(g, gsave)
+0090 <span class="comment">% release temporary storage</span>
+0091 <a href="free.html" class="code" title="function free(g)">free</a>(bgraph)
+0092 <a href="free.html" class="code" title="function free(g)">free</a>(notbridges)
+0093 <a href="free.html" class="code" title="function free(g)">free</a>(gsave)</pre></div>
+<hr><address>Generated on Fri 30-Apr-2010 07:51:16 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

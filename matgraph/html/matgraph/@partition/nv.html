@@ -1,0 +1,49 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of nv</title>
+  <meta name="keywords" content="nv">
+  <meta name="description" content="nv(p) --- number of vertices (elements) of a partition">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">matgraph</a> &gt; <a href="index.html">@partition</a> &gt; nv.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for matgraph/@partition&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>nv
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>nv(p) --- number of vertices (elements) of a partition</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function n = nv(p) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> nv(p) --- number of vertices (elements) of a partition</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="size.html" class="code" title="function s = size(p)">size</a>	size(p) --- returns [nv,np]: number of vertices, parts.</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="array.html" class="code" title="function a = array(p)">array</a>	array(p) --- return a single array showing the part numbers of elements.</li><li><a href="merge.html" class="code" title="function q = merge(p,x,y)">merge</a>	merge(p,x,y) --- form a partition from p by combining x and y's parts.</li><li><a href="mtimes.html" class="code" title="function r = mtimes(p,q)">mtimes</a>	mtimes(p,q) --- p*q is the meet of the partitions p and q</li><li><a href="plus.html" class="code" title="function r = plus(p,q)">plus</a>	plus --- p+q is the join of p and q</li></ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function n = nv(p)</a>
+0002 <span class="comment">% nv(p) --- number of vertices (elements) of a partition</span>
+0003 n = <a href="size.html" class="code" title="function s = size(p)">size</a>(p.array,2);</pre></div>
+<hr><address>Generated on Fri 30-Apr-2010 07:51:16 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

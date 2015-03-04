@@ -1,0 +1,70 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of contract</title>
+  <meta name="keywords" content="contract">
+  <meta name="description" content="contract(g,u,v) --- contract v into u">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">matgraph</a> &gt; <a href="index.html">@graph</a> &gt; contract.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for matgraph/@graph&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>contract
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>contract(g,u,v) --- contract v into u</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function contract(g,u,v) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> contract(g,u,v) --- contract v into u
+ All neighbors of v are added to the neighborhood of u, 
+ and then v is deleted. (When v is deleted, vertices that have higher
+ index than v are renumbered.)</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="add.html" class="code" title="function add(g,i,j)">add</a>	add --- add edge(s) to the graph</li><li><a href="delete.html" class="code" title="function delete(g,i,j)">delete</a>	delete --- delete vertices or edges from a graph</li><li><a href="neighbors.html" class="code" title="function nlist = neighbors(g,v)">neighbors</a>	neighbors(g,v) --- neighbors of v as a list.</li><li><a href="nv.html" class="code" title="function n = nv(g)">nv</a>	nv(g) --- number of vertices in g</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function contract(g,u,v)</a>
+0002 <span class="comment">% contract(g,u,v) --- contract v into u</span>
+0003 <span class="comment">% All neighbors of v are added to the neighborhood of u,</span>
+0004 <span class="comment">% and then v is deleted. (When v is deleted, vertices that have higher</span>
+0005 <span class="comment">% index than v are renumbered.)</span>
+0006 
+0007 n = <a href="nv.html" class="code" title="function n = nv(g)">nv</a>(g);
+0008 
+0009 <span class="keyword">if</span> (u&lt;0) || (u&gt;n) || (v&lt;0) || (v&gt;n) || (u==v) 
+0010     <span class="keyword">return</span>
+0011 <span class="keyword">end</span>
+0012 
+0013 nlist = <a href="neighbors.html" class="code" title="function nlist = neighbors(g,v)">neighbors</a>(g,v);
+0014 
+0015 <span class="keyword">for</span> x = nlist;
+0016     <span class="keyword">if</span> (x ~= u)
+0017         <a href="add.html" class="code" title="function add(g,i,j)">add</a>(g,u,x)
+0018     <span class="keyword">end</span>
+0019 <span class="keyword">end</span>
+0020 
+0021 <a href="delete.html" class="code" title="function delete(g,i,j)">delete</a>(g,v);</pre></div>
+<hr><address>Generated on Fri 30-Apr-2010 07:51:16 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

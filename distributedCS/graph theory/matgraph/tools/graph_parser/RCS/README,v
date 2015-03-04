@@ -1,0 +1,118 @@
+head	1.3;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.3
+date	2006.09.30.22.48.26;	author ers;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2006.09.30.22.47.56;	author ers;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2006.09.30.22.26.00;	author ers;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.3
+log
+@*** empty log message ***
+@
+text
+@This directory contains C++ code to build a program named
+"graph_parser": a program to convert text files into a form that is
+usable by matgraph.
+
+BUILD AND INSTALL
+
+A Makefile has been included. With luck, simply typing "make" in this
+directory should create the program "graph_parser"; this can be copied
+to any location that is convenient.
+
+RUNNING
+
+Prepare the input file (based on the specifications below) and issue
+the command:
+
+./graph_parser < Input_File
+
+where "Input_File" is the name of your file. This creates an output
+file named "parsed_graph.m" (see "OUTPUT"). Then, inside MATLAB, give
+the commands:
+
+g = graph;  % if g has not already been declared a graph variable
+parsed_graph(g)
+
+This will create a labeled graph based on your input file.
+
+
+INPUT
+
+graph_parser reads input from the standard input. The input file
+specifies a graph in the following manner. Each line of the input file
+consists of space separated words. Each word is the name of a
+vertex. A typical line contains exactly words that are different from
+each other. This indicates there is an edge between the two named
+vertices, like this:
+
+alpha  beta
+
+Every time the program encounters a name it has not seen before, it
+creates a vertex with that name. 
+
+A line may contain a single word. If that word has not been previously
+encountered, a new vertex with that name is created.
+
+If a line contains the same word twice, the second word is ignored.
+
+If a line contains more than two words, the third and subsequent words
+are ignored.
+
+If a line is blank, it is ignored.
+
+If a line begins with the # symbol, it is ignored; this is useful for
+commenting the input file.
+
+See the file named "test" in the graph_parser directory for an example. 
+
+OUTPUT
+
+The output of the program is a file named "parsed_graph.m" --- this is
+not changeable. The program should be invoked in a directory with
+write permission, or else the output file will not be created.
+
+This file should not be renamed because it contains a MATLAB function
+named "parsed_graph" (and the file name needs to match the function
+name). The file may be moved to any convenient location.
+
+@
+
+
+1.2
+log
+@*** empty log message ***
+@
+text
+@d55 2
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d2 63
+a64 1
+"graph_parser". @

@@ -1,0 +1,68 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of plus</title>
+  <meta name="keywords" content="plus">
+  <meta name="description" content="plus --- p+q is the join of p and q">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">matgraph</a> &gt; <a href="index.html">@partition</a> &gt; plus.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for matgraph/@partition&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>plus
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>plus --- p+q is the join of p and q</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function r = plus(p,q) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> plus --- p+q is the join of p and q</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="merge.html" class="code" title="function q = merge(p,x,y)">merge</a>	merge(p,x,y) --- form a partition from p by combining x and y's parts.</li><li><a href="nv.html" class="code" title="function n = nv(p)">nv</a>	nv(p) --- number of vertices (elements) of a partition</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function r = plus(p,q)</a>
+0002 <span class="comment">% plus --- p+q is the join of p and q</span>
+0003 
+0004 n1 = <a href="nv.html" class="code" title="function n = nv(p)">nv</a>(p);
+0005 n2 = <a href="nv.html" class="code" title="function n = nv(p)">nv</a>(q);
+0006 
+0007 <span class="keyword">if</span> n1 ~= n2
+0008     error(<span class="string">'+ only defined for partitions on the same ground set'</span>);
+0009 <span class="keyword">end</span>
+0010 
+0011 r = q;
+0012 
+0013 n = n1;
+0014 
+0015 <span class="keyword">for</span> i=1:n-1
+0016     idx = find(p.array(:,i));
+0017     irow = p.array(idx,:);
+0018     <span class="keyword">for</span> j=find(irow)
+0019         r=<a href="merge.html" class="code" title="function q = merge(p,x,y)">merge</a>(r,i,j);
+0020     <span class="keyword">end</span>
+0021 <span class="keyword">end</span>
+0022 r.array = sortrows(r.array);</pre></div>
+<hr><address>Generated on Fri 30-Apr-2010 07:51:16 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

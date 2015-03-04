@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of label</title>
+  <meta name="keywords" content="label">
+  <meta name="description" content="Assign labels to vertices of g">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">matgraph</a> &gt; <a href="index.html">@graph</a> &gt; label.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for matgraph/@graph&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>label
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>Assign labels to vertices of g</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function label(g,v,name) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> Assign labels to vertices of g
+ With no arguments, we assign default names for vertices (string versions
+ of the vertex numbers)
+ label(g,v,name) gives vertex v the name in the string name.
+ label(g,vnamelist) assigns names to vertices in the cell array vlist</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="clear_labels.html" class="code" title="function clear_labels(g)">clear_labels</a>	clear_labels(g) --- delete all labels in g</li><li><a href="is_labeled.html" class="code" title="function yn = is_labeled(g)">is_labeled</a>	is_labeled(g) --- determine if there are labels on vertices.</li><li><a href="label.html" class="code" title="function label(g,v,name)">label</a>	Assign labels to vertices of g</li><li><a href="nv.html" class="code" title="function n = nv(g)">nv</a>	nv(g) --- number of vertices in g</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="cartesian.html" class="code" title="function cartesian(g,h1,h2)">cartesian</a>	cartesian(g,h1,h2) --- overwrite g with the product of h1 and h2</li><li><a href="cayley.html" class="code" title="function cayley(g,perms,verbose)">cayley</a>	cayley(g,perms) -- create a Cayley graph (undirected)</li><li><a href="copy_labels.html" class="code" title="function copy_labels(g,h)">copy_labels</a>	copy_labels(g,h) --- copy labels from h to g</li><li><a href="dot.html" class="code" title="function dot(g,filename)">dot</a>	dot(g,filename) --- save graph for use by graphviz.</li><li><a href="draw_labels.html" class="code" title="function draw_labels(g,offset)">draw_labels</a>	draw_labels(g) --- add labels to a drawing of g</li><li><a href="induce.html" class="code" title="function induce(g,arg1,arg2)">induce</a>	induce --- create induced subgraphs</li><li><a href="label.html" class="code" title="function label(g,v,name)">label</a>	Assign labels to vertices of g</li><li><a href="load.html" class="code" title="function load(g,filename)">load</a>	load(g,filename) --- read a saved graph on disk</li><li><a href="shiftgraph.html" class="code" title="function shiftgraph(g,k,t)">shiftgraph</a>	shiftgraph(g,k,t) -- create a shiftgraph g based on t-tuples of k symbols</li><li><a href="sl2graph.html" class="code" title="function sl2graph(g,p)">sl2graph</a>	sl2graph(g,p) -- create an SL(2,p) graph</li></ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function label(g,v,name)</a>
+0002 <span class="comment">% Assign labels to vertices of g</span>
+0003 <span class="comment">% With no arguments, we assign default names for vertices (string versions</span>
+0004 <span class="comment">% of the vertex numbers)</span>
+0005 <span class="comment">% label(g,v,name) gives vertex v the name in the string name.</span>
+0006 <span class="comment">% label(g,vnamelist) assigns names to vertices in the cell array vlist</span>
+0007 
+0008 
+0009 <span class="keyword">global</span> GRAPH_MAGIC;
+0010 
+0011 n = <a href="nv.html" class="code" title="function n = nv(g)">nv</a>(g);
+0012 i = g.idx;
+0013 
+0014 <span class="keyword">if</span> nargin == 1
+0015     <a href="clear_labels.html" class="code" title="function clear_labels(g)">clear_labels</a>(g);
+0016     GRAPH_MAGIC.graphs{i}.labels = cell(n,1);
+0017     <span class="keyword">for</span> v=1:n
+0018         GRAPH_MAGIC.graphs{i}.labels{v} = int2str(v);
+0019     <span class="keyword">end</span>
+0020     <span class="keyword">return</span>
+0021 <span class="keyword">end</span>
+0022 
+0023 <span class="keyword">if</span> nargin == 2
+0024     <a href="clear_labels.html" class="code" title="function clear_labels(g)">clear_labels</a>(g);
+0025     GRAPH_MAGIC.graphs{i}.labels = v;
+0026     <span class="keyword">return</span>    
+0027 <span class="keyword">end</span>
+0028 
+0029 <span class="keyword">if</span> ~<a href="is_labeled.html" class="code" title="function yn = is_labeled(g)">is_labeled</a>(g)
+0030     <a href="label.html" class="code" title="function label(g,v,name)">label</a>(g);
+0031 <span class="keyword">end</span>
+0032 
+0033 <span class="keyword">if</span> (v&lt;0) || (v&gt;n)
+0034     error(<span class="string">'No such vertex to label'</span>)
+0035 <span class="keyword">end</span>
+0036 
+0037 GRAPH_MAGIC.graphs{i}.labels{v} = name;</pre></div>
+<hr><address>Generated on Fri 30-Apr-2010 07:51:16 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

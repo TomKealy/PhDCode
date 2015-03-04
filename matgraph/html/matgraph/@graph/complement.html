@@ -1,0 +1,66 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of complement</title>
+  <meta name="keywords" content="complement">
+  <meta name="description" content="graph complement">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">matgraph</a> &gt; <a href="index.html">@graph</a> &gt; complement.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for matgraph/@graph&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>complement
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>graph complement</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function complement(g,h) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> graph complement
+ complement(g) --- overwrite a graph with its own complement
+ complement(g,h) --- overwrite g with the complement of h</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="copy.html" class="code" title="function copy(g,h)">copy</a>	copy(g,h) --- overwrite g with a copy of h</li><li><a href="fast_set_matrix.html" class="code" title="function fast_set_matrix(g,A)">fast_set_matrix</a>	fast_set_matrix(g,A) --- overwrite the adjacency matrix of g with A</li><li><a href="full.html" class="code" title="function full(g)">full</a>	full(g) --- convert internal storage for g to full</li><li><a href="issparse.html" class="code" title="function yn = issparse(g)">issparse</a>	issparse(g) --- check if g's adjacency matrix is sparse</li><li><a href="matrix.html" class="code" title="function A = matrix(g)">matrix</a>	matrix(g) --- return (a copy of) the adjacency matrix of g</li><li><a href="nv.html" class="code" title="function n = nv(g)">nv</a>	nv(g) --- number of vertices in g</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="omega.html" class="code" title="function [w,S] = omega(g)">omega</a>	[w,S] = omega(g) --- clique number</li></ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function complement(g,h)</a>
+0002 <span class="comment">% graph complement</span>
+0003 <span class="comment">% complement(g) --- overwrite a graph with its own complement</span>
+0004 <span class="comment">% complement(g,h) --- overwrite g with the complement of h</span>
+0005 
+0006 <span class="keyword">if</span> nargin&gt;1
+0007     <a href="copy.html" class="code" title="function copy(g,h)">copy</a>(g,h)
+0008 <span class="keyword">end</span>
+0009 
+0010 <span class="comment">% complement only makes sense for full storage</span>
+0011 <span class="keyword">if</span> (<a href="issparse.html" class="code" title="function yn = issparse(g)">issparse</a>(g))
+0012     <a href="full.html" class="code" title="function full(g)">full</a>(g);
+0013 <span class="keyword">end</span>
+0014 
+0015 n = <a href="nv.html" class="code" title="function n = nv(g)">nv</a>(g);
+0016 i = g.idx;
+0017 
+0018 <a href="fast_set_matrix.html" class="code" title="function fast_set_matrix(g,A)">fast_set_matrix</a>(g, ones(n) - eye(n) - <a href="matrix.html" class="code" title="function A = matrix(g)">matrix</a>(g))</pre></div>
+<hr><address>Generated on Fri 30-Apr-2010 07:51:16 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of mdsxy</title>
+  <meta name="keywords" content="mdsxy">
+  <meta name="description" content="mdsxy(g) -- create an embedding based on multidimensional scaling">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">matgraph</a> &gt; <a href="index.html">@graph</a> &gt; mdsxy.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for matgraph/@graph&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>mdsxy
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>mdsxy(g) -- create an embedding based on multidimensional scaling</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function DD = mdsxy(g,D) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> mdsxy(g) -- create an embedding based on multidimensional scaling
+ 
+ This may also be invoked as mdsxy(g,D) where D is a distance matrix
+ (i.e., the i,j entry of D is the desired distance between i and j). 
+ The default is the graph-theoretic distance from i to j.</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="dist.html" class="code" title="function d = dist(g,v,w)">dist</a>	dist(g,v,w) and dist(g,v) --- find distance(s) between vertices</li><li><a href="eig.html" class="code" title="function v = eig(g)">eig</a>	eig(g) -- compute the eigenvalues of this graph</li><li><a href="embed.html" class="code" title="function embed(g,xy)">embed</a>	embed --- create an embedding for a graph</li><li><a href="nv.html" class="code" title="function n = nv(g)">nv</a>	nv(g) --- number of vertices in g</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function DD = mdsxy(g,D)</a>
+0002 <span class="comment">% mdsxy(g) -- create an embedding based on multidimensional scaling</span>
+0003 <span class="comment">%</span>
+0004 <span class="comment">% This may also be invoked as mdsxy(g,D) where D is a distance matrix</span>
+0005 <span class="comment">% (i.e., the i,j entry of D is the desired distance between i and j).</span>
+0006 <span class="comment">% The default is the graph-theoretic distance from i to j.</span>
+0007 
+0008 <span class="comment">% if the user does not</span>
+0009 <span class="keyword">if</span> nargin == 1
+0010     D = <a href="dist.html" class="code" title="function d = dist(g,v,w)">dist</a>(g);
+0011 <span class="keyword">end</span>
+0012 
+0013 <span class="comment">% any distances &gt; cutoff  are truncated to cutoff.</span>
+0014 
+0015 cutoff = 10;
+0016 [i,j] = find(D&gt;cutoff);
+0017 m = length(i);
+0018 <span class="keyword">for</span> k=1:m
+0019     D( i(k), j(k) ) = cutoff;
+0020 <span class="keyword">end</span>
+0021 
+0022 
+0023 
+0024 <span class="comment">% rescale the D matrix so that the smallest positive entry is 1</span>
+0025 
+0026 vals = D(:);
+0027 vals = sort(vals);
+0028 vals = vals(vals&gt;0);
+0029 minval = vals(1);
+0030 D = D/minval;
+0031 
+0032 
+0033 <span class="comment">% find embedding vectors</span>
+0034 D = D.^2;
+0035 n = <a href="nv.html" class="code" title="function n = nv(g)">nv</a>(g);
+0036 
+0037 d1 = sum(D)/n;
+0038 d2 = sum(d1)/n;
+0039 
+0040 u = ones(1,n);
+0041 
+0042 D1 = u'*d1;
+0043 D2 = d2 * ones(n,n);
+0044 
+0045 Dstar = (-1/2) * (D - D1 - D1' + D2);
+0046 
+0047 [v,d] = <a href="eig.html" class="code" title="function v = eig(g)">eig</a>(Dstar);
+0048 d = real(d);
+0049 v = real(v);
+0050 dvec = (diag(d));
+0051 [dvec,idx] = sort(-dvec);
+0052 
+0053 a = idx(1);
+0054 b = idx(2);
+0055 
+0056 Lambda = d([a,b],[a,b]);
+0057 sqrt(Lambda);
+0058 xy = v(:,[a,b])*sqrt(Lambda);
+0059 
+0060 
+0061 <a href="embed.html" class="code" title="function embed(g,xy)">embed</a>(g,xy)
+0062 
+0063 <span class="keyword">if</span> nargout &gt; 0
+0064     DD = Dstar;
+0065 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Fri 30-Apr-2010 07:51:16 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

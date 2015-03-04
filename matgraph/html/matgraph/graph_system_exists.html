@@ -1,0 +1,51 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of graph_system_exists</title>
+  <meta name="keywords" content="graph_system_exists">
+  <meta name="description" content="graph_system_exists checks to see if the GRAPH_MAGIC global structure has">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">matgraph</a> &gt; graph_system_exists.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for matgraph&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>graph_system_exists
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>graph_system_exists checks to see if the GRAPH_MAGIC global structure has</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>function tf = graph_system_exists </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> graph_system_exists checks to see if the GRAPH_MAGIC global structure has
+ been initialized.</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="free_all.html" class="code" title="function free_all">free_all</a>	free_all --- delete all graphs from the GRAPH_MAGIC system</li><li><a href="graph_init.html" class="code" title="function graph_init(capacity)">graph_init</a>	graph_init(capacity) --- used to initialize the GRAPH_MAGIC data</li><li><a href="max_available.html" class="code" title="function max_graphs = max_available">max_available</a>	num_available --- maximum number of graphs we can hold in this system</li><li><a href="num_available.html" class="code" title="function nfree = num_available">num_available</a>	num_available --- number of free slots in the graph system</li><li><a href="set_large.html" class="code" title="function sz = set_large(n)">set_large</a>	set_large(n) --- set the cut off size for large graphs.</li></ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function tf = graph_system_exists</a>
+0002 <span class="comment">% graph_system_exists checks to see if the GRAPH_MAGIC global structure has</span>
+0003 <span class="comment">% been initialized.</span>
+0004 tf = ~isempty(whos(<span class="string">'global'</span>,<span class="string">'GRAPH_MAGIC'</span>));</pre></div>
+<hr><address>Generated on Fri 30-Apr-2010 07:51:16 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

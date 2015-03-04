@@ -1,0 +1,215 @@
+<html xmlns:mwsh="http://www.mathworks.com/namespace/mcode/v1/syntaxhighlight.dtd">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <!--
+This HTML is auto-generated from an M-file.
+To make changes, update the M-file and republish this document.
+      -->
+      <title>Creating a Cayley graph</title>
+      <meta name="generator" content="MATLAB 7.2">
+      <meta name="date" content="2008-03-13">
+      <meta name="m-file" content="cayley_graph"><style>
+
+body {
+  background-color: white;
+  margin:10px;
+}
+
+h1 {
+  color: #990000; 
+  font-size: x-large;
+}
+
+h2 {
+  color: #990000;
+  font-size: medium;
+}
+
+/* Make the text shrink to fit narrow windows, but not stretch too far in 
+wide windows.  On Gecko-based browsers, the shrink-to-fit doesn't work. */ 
+p,h1,h2,div.content div {
+  /* for MATLAB's browser */
+  width: 600px;
+  /* for Mozilla, but the "width" tag overrides it anyway */
+  max-width: 600px;
+  /* for IE */
+  width:expression(document.body.clientWidth > 620 ? "600px": "auto" );
+}
+
+pre.codeinput {
+  background: #EEEEEE;
+  padding: 10px;
+}
+@media print {
+  pre.codeinput {word-wrap:break-word; width:100%;}
+} 
+
+span.keyword {color: #0000FF}
+span.comment {color: #228B22}
+span.string {color: #A020F0}
+span.untermstring {color: #B20000}
+span.syscmd {color: #B28C00}
+
+pre.codeoutput {
+  color: #666666;
+  padding: 10px;
+}
+
+pre.error {
+  color: red;
+}
+
+p.footer {
+  text-align: right;
+  font-size: xx-small;
+  font-weight: lighter;
+  font-style: italic;
+  color: gray;
+}
+
+  </style></head>
+   <body>
+      <div class="content">
+         <h1>Creating a Cayley graph</h1>
+         <introduction></introduction>
+         <h2>Contents</h2>
+         <div>
+            <ul>
+               <li><a href="#1">Specifying the group by its generators</a></li>
+               <li><a href="#2">Create the graph</a></li>
+               <li><a href="#3">Draw the graph</a></li>
+               <li><a href="#4">Another example</a></li>
+               <li><a href="#5">Showing the labels on vertices</a></li>
+               <li><a href="#6">The cube as a Cayley graph</a></li>
+               <li><a href="#7">Free storage</a></li>
+            </ul>
+         </div>
+         <h2>Specifying the group by its generators<a name="1"></a></h2>
+         <p>We specify a finite group by giving a list of its generators. The generators are a cell array of permutations of a common
+            ground set.
+         </p>
+         <p>In this example, we create a graph using two generators from the permutations of the set {1,2,3,4,5,6}.</p><pre class="codeinput">p1 = permutation([1,3,6,4,5,2])
+p2 = permutation([6,3,2,5,4,1])
+perms = {p1,p2};
+</pre><pre class="codeoutput">(1)(2,3,6)(4)(5)
+(1,6)(2,3)(4,5)
+</pre><h2>Create the graph<a name="2"></a></h2><pre class="codeinput">g = graph;
+cayley(g,perms);
+</pre><h2>Draw the graph<a name="3"></a></h2><pre class="codeinput">distxy(g);
+clf;
+draw(g);
+</pre><pre class="codeoutput">Optimization terminated: relative function value
+ changing by less than OPTIONS.TolFun.
+Embedding score = 41.4477
+Elapsed time is 1.397237 seconds.
+</pre><img vspace="5" hspace="5" src="cayley_graph_01.png"> <h2>Another example<a name="4"></a></h2><pre class="codeinput">p1 = permutation([2 3 4 1])
+p2 = swap(1,2)
+cayley(g,{p1,p2},true) <span class="comment">% verbose output</span>
+distxy(g);
+clf;
+draw(g);
+</pre><pre class="codeoutput">(1,2,3,4)
+(1,2)
+Generating the group elements from these:
+(1,2,3,4)
+(1,2)(3)(4)
+Expanding. Group size = 3
+Expanding. Group size = 6
+Expanding. Group size = 11
+Expanding. Group size = 16
+Expanding. Group size = 21
+Expanding. Group size = 24
+Generating edge list
+48 edges created
+Optimization terminated: relative function value
+ changing by less than OPTIONS.TolFun.
+Embedding score = 50.6385
+Elapsed time is 1.192996 seconds.
+</pre><img vspace="5" hspace="5" src="cayley_graph_02.png"> <h2>Showing the labels on vertices<a name="5"></a></h2>
+         <p>The vertices of a Cayley graph are labeled by the group elements (permutations) they represent.</p><pre class="codeinput">p1 = permutation([3 2 4 1]);
+p2 = swap(1,2)*swap(3,4)
+cayley(g,{p1,p2})
+distxy(g);
+clf;
+ldraw(g)
+</pre><pre class="codeoutput">(1,2)(3,4)
+Optimization terminated: relative function value
+ changing by less than OPTIONS.TolFun.
+Embedding score = 8.4932
+Elapsed time is 0.181026 seconds.
+</pre><img vspace="5" hspace="5" src="cayley_graph_03.png"> <h2>The cube as a Cayley graph<a name="6"></a></h2><pre class="codeinput">p1 = permutation([2 1 3 4 5 6])
+p2 = permutation([1 2 4 3 5 6])
+p3 = permutation([1 2 3 4 6 5])
+perms = {p1,p2,p3};
+cayley(g,perms);
+distxy(g);
+clf;draw(g)
+</pre><pre class="codeoutput">(1,2)(3)(4)(5)(6)
+(1)(2)(3,4)(5)(6)
+(1)(2)(3)(4)(5,6)
+Optimization terminated: relative function value
+ changing by less than OPTIONS.TolFun.
+Embedding score = 4.7576
+Elapsed time is 0.221048 seconds.
+</pre><img vspace="5" hspace="5" src="cayley_graph_04.png"> <h2>Free storage<a name="7"></a></h2><pre class="codeinput">free(g);
+</pre><p class="footer"><br>
+            Published with MATLAB&reg; 7.2<br></p>
+      </div>
+      <!--
+##### SOURCE BEGIN #####
+%% Creating a Cayley graph
+%% Specifying the group by its generators
+% We specify a finite group by giving a list of its generators. 
+% The generators are a cell array of permutations of a common ground set.
+% 
+% In this example, we create a graph using two generators from the
+% permutations of the set {1,2,3,4,5,6}.
+
+p1 = permutation([1,3,6,4,5,2])
+p2 = permutation([6,3,2,5,4,1])
+perms = {p1,p2};
+
+%% Create the graph
+g = graph;
+cayley(g,perms);
+
+%% Draw the graph
+distxy(g);
+clf;
+draw(g);
+
+%% Another example
+p1 = permutation([2 3 4 1])
+p2 = swap(1,2)
+cayley(g,{p1,p2},true) % verbose output
+distxy(g);
+clf;
+draw(g);
+
+%% Showing the labels on vertices
+% The vertices of a Cayley graph are labeled by the group elements
+% (permutations) they represent.
+p1 = permutation([3 2 4 1]);
+p2 = swap(1,2)*swap(3,4)
+cayley(g,{p1,p2})
+distxy(g);
+clf;
+ldraw(g)
+
+%% The cube as a Cayley graph
+p1 = permutation([2 1 3 4 5 6])
+p2 = permutation([1 2 4 3 5 6])
+p3 = permutation([1 2 3 4 6 5])
+perms = {p1,p2,p3};
+cayley(g,perms);
+distxy(g);
+clf;draw(g)
+
+%% Free storage
+free(g);
+
+##### SOURCE END #####
+-->
+   </body>
+</html>

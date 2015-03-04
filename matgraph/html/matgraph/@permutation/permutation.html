@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of permutation</title>
+  <meta name="keywords" content="permutation">
+  <meta name="description" content="constructor for the permutation class">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">matgraph</a> &gt; <a href="index.html">@permutation</a> &gt; permutation.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for matgraph/@permutation&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>permutation
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>constructor for the permutation class</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function p = permutation(n) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> constructor for the permutation class
+ p = permutation(n) --- create a new (identity) permutation on 1:n
+ p = permutation(vec) --- create a new permutation based on the array vec
+ (which should be a permutation of 1:n).</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="length.html" class="code" title="function s = length(p)">length</a>	length(p) gives the size of the permutation</li><li><a href="size.html" class="code" title="function s = size(p)">size</a>	size(p) returns the number of elements permuted and the number of cycles.</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="inv.html" class="code" title="function q = inv(p)">inv</a>	inv(p) returns the inverse permutation of p</li><li><a href="mpower.html" class="code" title="function q = mpower(p,t)">mpower</a>	p^t is p multiplied by itself t times. May have t <= 0.</li><li><a href="mtimes.html" class="code" title="function r = mtimes(p,q)">mtimes</a>	p*q is the composition of p and q</li><li><a href="random.html" class="code" title="function q = random(p)">random</a>	random(p) --- return a random reordering of the elements of p</li></ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function p = permutation(n)</a>
+0002 <span class="comment">% constructor for the permutation class</span>
+0003 <span class="comment">% p = permutation(n) --- create a new (identity) permutation on 1:n</span>
+0004 <span class="comment">% p = permutation(vec) --- create a new permutation based on the array vec</span>
+0005 <span class="comment">% (which should be a permutation of 1:n).</span>
+0006 
+0007 <span class="keyword">if</span> nargin==0
+0008     n = 1;
+0009 <span class="keyword">end</span>
+0010 
+0011 bad = <span class="string">'Input invalid: must be a permutation of 1:n or a single integer'</span>;
+0012 [r,c] = <a href="size.html" class="code" title="function s = size(p)">size</a>(n);
+0013 
+0014 <span class="keyword">if</span> (r&gt;1) &amp;&amp; (c&gt;1)
+0015     error(bad);
+0016 <span class="keyword">end</span>
+0017 
+0018 <span class="keyword">if</span> (r==1) &amp;&amp; (c==1)
+0019     x = 1:n;
+0020 <span class="keyword">else</span>
+0021     x = n;
+0022 <span class="keyword">end</span>
+0023 
+0024 
+0025 x = x(:)';
+0026 n = <a href="length.html" class="code" title="function s = length(p)">length</a>(x);
+0027 
+0028 
+0029 y = sort(x);
+0030 <span class="keyword">if</span> any(y ~= 1:n)
+0031     error(bad);
+0032 <span class="keyword">end</span>
+0033 
+0034 p.array = x;
+0035 p = class(p,<span class="string">'permutation'</span>);</pre></div>
+<hr><address>Generated on Fri 30-Apr-2010 07:51:16 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

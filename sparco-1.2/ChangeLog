@@ -1,0 +1,154 @@
+--------- Release 1.2 --------------------------------------------------
+
+2008-06-26  Ewout van den Berg  <ewout78@cs.ubc.ca>
+
+	* operators/opCurvelet2d.m: changed the modes
+
+	* operators: All operators now check the dimensions of the vector
+	before applying the operator.
+
+	* tools/parseDefaultOpts.m: Improved performance by avoiding the
+	which command.
+
+	* parseOptions.m, getOption.m: Use setfield and getfield functions
+	instead of using eval on a dynamically generated string.
+
+	* operators/@classOp: Added premultiplying by vectors and fixed
+	bug in resetting counters.
+	
+--------- Release 1.1.3 ------------------------------------------------
+
+2008-03-25  Michael P. Friedlander <mpf@cs.ubc.ca>
+	
+	* tools/rwt: added pre-compiled MEX interfaces for Matlab
+	- v.704 on Windows  (.dll)
+	- v.7.5 (R2007b) on Linux (.mexglx)
+	- v.7.5 (R2007b) on Windows (.mexw32)
+	- v.7.5 (R2007b) on MacIntel (.mexmaci)
+	(Thanks to Igor Carron for this suggestion.)  Also, changed the
+	extensions of m-file placeholders to ".mhelp" so that older
+	versions of Matlab have an easier time finding the .dll files.
+
+        * examples/exSeismic: load seismic data from the 'data' subdir,
+        and test for the CurveLab interface before running problem.
+
+2008-03-24  Ewout van den Berg  <ewout78@cs.ubc.ca>
+
+	* problems/data/prob502_angiogram.mat: store mask, pdf, and
+	angiogram to avoid having to use 'twister' mode in rand
+
+	* problems/prob502.m: load data from file for default
+	problem. This avoids having to use the 'twister' mode in rand
+	which was added only in Matlab 7.4. Thanks to Igor Carron for
+	reporting this problem.
+
+--------- Release 1.1.2 ------------------------------------------------
+
+2008-03-21  Ewout van den Berg  <ewout78@cs.ubc.ca>
+
+	* problems/data/prob901_seismic.mat: replaced normalized data by
+	original data.
+
+	* opCrop.m: Added  crop operator to `extract' rectangular regions
+	from other operators.
+
+	* opSum.m: Added sum operator to form the weighted sum of a set
+	of operators.
+
+	* opBlockDiag.m, opDictionary.m, opStack.m: Removed bug with
+	respect to complex weights.
+
+	* opToepGauss.m, opToepSign.m: Added Toeplitz-based measurement
+	operators with Gaussian and sign entries.
+
+	* dottest.m: Report ratio between y'*Ax and x'*A'y in case the dot
+	test fails. This helps find scaling related bugs in operators.
+	Thanks to Gilles Hennenfent for suggesting this feature.
+
+	* opisreal.m: Added function that returns 1 if results of
+	multiplication by the given operator are real, and 0
+	otherwise. Also added an equivalent isreal member function to
+	classOp.
+
+2008-03-02  Ewout van den Berg  <ewout78@cs.ubc.ca>
+
+	* opsize.m: Added opsize to query the size of an operator. This
+	function works the same as the size function on matrices.
+
+	* opStack.m: Added this operator to vertically stack a set of
+	operators, similar to opDictionary which does this horizontally.
+	
+2008-02-15  Ewout van den Berg  <ewout78@cs.ubc.ca>
+
+	* generateProblem.m: Added 'version' option to query Sparco
+	version. Example: version = generateProblem('version');
+	
+2008-02-14  Ewout van den Berg  <ewout78@cs.ubc.ca>
+
+	* operators/opHadamard.m: Added multiplication by the Hadamard
+	matrix.
+
+	* operators/opGaussian.m: Also added checks in row
+	orthogonalization mode to see if number of rows does not exceed
+	the number of columns, in which case the normalization cannot
+	work.
+
+	* problems/prob007.m, problems/prob008.m: Use QR instead of ORTH
+	to generate orthogonal rows in A; speeds up problem generation.
+
+2008-01-25  Ewout van den Berg  <ewout78@cs.ubc.ca>
+
+	* problems/prob501.m: Bug fixed in generating the observation b.
+	Thanks to Elaine Hale for reporting this bug.  
+
+	* generateProblem.m: Added `lookup' option to get problem index
+	based on name. Example: index = generateProblem(name/index,'lookup');
+
+2008-01-23  Ewout van den Berg  <ewout78@cs.ubc.ca>
+
+	* generateProblem.m: Added problem look up by name. Each data.info
+	now also has a sparcoID field by default.
+	Example: name = generateProblem(name/index,'getname');
+
+	* parseDefaultOpts.m: Added parsing for getname flag.
+
+	* problems/*: Added handling of the getname query.
+
+
+2008-01-22  Ewout van den Berg  <ewout78@cs.ubc.ca>
+
+	* operators/opSplitComplex.m: Added new non-linear operator for
+	splitting complex numbers into its real and imaginary parts and
+	vice versa.
+	
+2008-01-15  Michael P. Friedlander  <mpf@cs.ubc.ca>
+
+	* problems/*: Added short names to all problems as info.name.
+
+2008-01-12  Michael P. Friedlander  <mpf@cs.ubc.ca>
+
+	* sparcoSetup: Don't compile RWT if the MEX interfaces already
+	exist.
+
+2007-11-27  Ewout van den Berg  <ewout78@cs.ubc.ca>
+
+	* problems/prob001.m: Set the normalize flag in the Heaviside
+	matrix to ensure the solution is indeed sparse. Without it there
+	is too. much energy in the columns of the Heaviside matrix which
+	gives a dense optimal solution.
+
+	* problems/prob001.m: Generate the signal locally and compute the
+	exact sparse solution.
+
+--------- Release 1.1 --------------------------------------------------
+
+2007-11-30  Ewout van den Berg  <ewout78@cs.ubc.ca>
+
+	* operators/classOp/mtimes.m, operators/classOp/size.m: Support
+	matrix and classOp operators in addition to functions. This
+	feature can be used to unify matrix vector multiplication as well
+	as to associated counters to matrices and existing classOp
+	instances.
+
+
+--------- Release 1.0 --------------------------------------------------

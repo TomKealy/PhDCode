@@ -1,0 +1,189 @@
+head	1.5;
+access;
+symbols;
+locks; strict;
+comment	@// @;
+
+
+1.5
+date	2006.10.04.00.55.48;	author ers;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2006.09.30.22.31.31;	author ers;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2006.09.30.20.49.06;	author ers;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2006.09.30.20.30.06;	author ers;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2006.09.30.20.19.18;	author ers;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.5
+log
+@*** empty log message ***
+@
+text
+@#include <iostream>
+#include <fstream>
+#include <map>
+#include "LineParser.hxx"
+using namespace std; 
+
+int main() {
+  const char* OUTFILE = "parsed_graph.m"; 
+  ofstream fout(OUTFILE);
+  if (!fout) {
+    cerr << "Unable to open file " << OUTFILE << " for output" << endl;
+    exit(1);
+  }
+  
+  string theLine;           // line of text read from cin
+  long nv = 0;              // number of vertices read
+  map<string, long> dict;   // name to vertex number table
+  map<long, string> undict; // vertex number to name table
+
+  fout << "function parsed_graph(g)" << endl;
+  fout << "edges = [" << endl;
+  while(getline(cin,theLine)) {
+    LineParser LP(theLine); 
+
+    // if no words on this line, skip it
+    if (LP.size() == 0) continue;
+
+    // Check if first character of first word is #
+    if ( *(LP[0].c_str()) == '#') continue;
+
+    if (dict.count(LP[0]) == 0) {
+      ++nv;
+      dict[LP[0]] = nv;
+      undict[nv] = LP[0];
+    }
+    
+    if (LP.size() > 1) {
+      if (dict.count(LP[1]) == 0) {
+	++nv;
+	dict[LP[1]] = nv;
+	undict[nv] = LP[1];
+      }
+      long u,v;
+      u = dict[LP[0]];
+      v = dict[LP[1]];
+      if (u != v) {
+	fout << u << "\t" << v << endl;
+      }
+    }
+  }
+  fout << "];" << endl;
+  fout << "resize(g,0);" << endl;
+  fout << "resize(g," << nv << ");" << endl;
+  fout << "add(g,edges);" << endl;
+
+  fout << "vlabels = {" << endl;
+  for(int v=1; v<=nv; ++v) {
+    fout << "'" << undict[v] << "'" << endl;
+  }
+  fout << "};" << endl;
+  fout << "label(g,vlabels)" << endl;
+
+  return 0;
+
+}
+
+      
+@
+
+
+1.4
+log
+@*** empty log message ***
+@
+text
+@d18 1
+d34 1
+d41 1
+d56 3
+a58 5
+  map<string,long>::iterator mi;
+  for (mi = dict.begin(); mi != dict.end(); ++mi) {
+    string name = mi -> first;
+    long   vnum = mi -> second;
+    fout << "label(g," << vnum << ",'" << name << "');" << endl;
+d60 4
+@
+
+
+1.3
+log
+@*** empty log message ***
+@
+text
+@d23 2
+d26 4
+@
+
+
+1.2
+log
+@*** empty log message ***
+@
+text
+@d2 1
+d5 1
+a5 2
+using namespace std;
+
+d8 7
+d19 12
+a30 4
+  while(getline(cin,theString)) {
+    LineParser LP(theString) {
+      if (LP.size() == 0) continue;
+      if (dict.count(LP[0]) == 0) {
+d32 1
+a32 1
+	dict[LP[0]] = nv;
+d34 5
+a38 12
+
+      if (LP.size() > 1) {
+	if (dict.count(LP[1]) == 0) {
+	  ++nv;
+	  dict[LP[1]] = nv;
+	}
+	long u,v;
+	u = dict[LP[0]];
+	v = dict[LP[1]];
+	if (u != v) {
+	  cout << u << "\t" << v << endl;
+	}
+d42 12
+d55 1
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d1 35
+a35 1
+#include
+@

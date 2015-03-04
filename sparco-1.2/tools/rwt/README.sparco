@@ -1,0 +1,21 @@
+What are these funny ".mhelp" files?!
+-------------------------------------
+
+Some users of Matlab 7.0.4 have reported that the Rice Wavelet Toolbox
+MEX interfaces aren't being found.  Instead, the .m files (which only
+contain the help text) are taking precedence, and function calls to
+these routines cause an error.
+
+A simple workaround is to move these .m help files so that Matlab
+doesn't have to choose between them and the MEX versions.  We've
+renamed these files:
+
+mdwt.m    to  mdwt.mhelp
+midwt.m   to  midwt.mhelpm
+mirdwt.m  to  mirdwt.mhelpm
+mrdwt.dll to  mrdwt.mhelpm
+
+-- The Sparco development team
+   (Michael P. Friedlander and Ewout van den Berg)
+$Id: README.sparco 830 2008-03-25 22:28:04Z mpf $
+

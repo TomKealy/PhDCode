@@ -1,0 +1,22 @@
+function fgraph(g,n,func)
+% fgraph(g,n,func) -- create a graph based on a function.
+% n is the number of vertices 
+% func is the name of a function that is called with three arguments:
+% The numbrer of vertices n, and the two verti
+% We create a graph g that has n vertices and an edge from i to j iff
+% func(n,i,j) is nonzero. The function is supplied by the user and it is the
+% user's responsibility that this function be symmetric.
+
+resize(g,0)
+resize(g,n)
+
+A = zeros(n,n);
+
+for u=1:n-1
+    for v=(u+1):n
+        A(u,v) = feval(func,n,u,v);
+    end
+end
+A = A+A';
+A = A~=0;
+fast_set_matrix(g,A);

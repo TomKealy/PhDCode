@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of bfstree</title>
+  <meta name="keywords" content="bfstree">
+  <meta name="description" content="bfstree(t,g,v) --- create a breadth-first spanning tree of g">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">matgraph</a> &gt; <a href="index.html">@graph</a> &gt; bfstree.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for matgraph/@graph&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>bfstree
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>bfstree(t,g,v) --- create a breadth-first spanning tree of g</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function bfstree(t,g,v) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> bfstree(t,g,v) --- create a breadth-first spanning tree of g
+ The tree is rooted a the vertex v (or vertex 1 if missing). If g is not
+ connected, we generate a tree only for the component containing v;
+ vertices in the other components are isolated vertices in t.</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="add.html" class="code" title="function add(g,i,j)">add</a>	add --- add edge(s) to the graph</li><li><a href="copy_labels.html" class="code" title="function copy_labels(g,h)">copy_labels</a>	copy_labels(g,h) --- copy labels from h to g</li><li><a href="embed.html" class="code" title="function embed(g,xy)">embed</a>	embed --- create an embedding for a graph</li><li><a href="getxy.html" class="code" title="function z = getxy(g)">getxy</a>	getxy(g) --- give g's embedding (or [] if g doesn't have one)</li><li><a href="hasxy.html" class="code" title="function yn = hasxy(g)">hasxy</a>	hasxy(g) --- determine if an embedding has been created for g</li><li><a href="is_labeled.html" class="code" title="function yn = is_labeled(g)">is_labeled</a>	is_labeled(g) --- determine if there are labels on vertices.</li><li><a href="issparse.html" class="code" title="function yn = issparse(g)">issparse</a>	issparse(g) --- check if g's adjacency matrix is sparse</li><li><a href="neighbors.html" class="code" title="function nlist = neighbors(g,v)">neighbors</a>	neighbors(g,v) --- neighbors of v as a list.</li><li><a href="nv.html" class="code" title="function n = nv(g)">nv</a>	nv(g) --- number of vertices in g</li><li><a href="resize.html" class="code" title="function resize(g, n)">resize</a>	resize(g,n) --- change the number of vertices in g to n</li><li><a href="sparse.html" class="code" title="function sparse(g)">sparse</a>	sparse(g) --- convert internal storage for g to sparse</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function bfstree(t,g,v)</a>
+0002 <span class="comment">% bfstree(t,g,v) --- create a breadth-first spanning tree of g</span>
+0003 <span class="comment">% The tree is rooted a the vertex v (or vertex 1 if missing). If g is not</span>
+0004 <span class="comment">% connected, we generate a tree only for the component containing v;</span>
+0005 <span class="comment">% vertices in the other components are isolated vertices in t.</span>
+0006 
+0007 
+0008 
+0009 <span class="keyword">if</span> nargin==2
+0010     v = 1;
+0011 <span class="keyword">end</span>
+0012 
+0013 n = <a href="nv.html" class="code" title="function n = nv(g)">nv</a>(g);
+0014 <span class="keyword">if</span> (v&lt;0) || (v&gt;n)
+0015     error(<span class="string">'Seed vertex out of range'</span>)
+0016 <span class="keyword">end</span>
+0017 
+0018 <span class="keyword">if</span> (<a href="issparse.html" class="code" title="function yn = issparse(g)">issparse</a>(g))
+0019     <a href="sparse.html" class="code" title="function sparse(g)">sparse</a>(t)
+0020 <span class="keyword">end</span>
+0021 <a href="resize.html" class="code" title="function resize(g, n)">resize</a>(t,0);
+0022 <a href="resize.html" class="code" title="function resize(g, n)">resize</a>(t,n);
+0023 
+0024 
+0025 q_init(n+1);
+0026 
+0027 visited = zeros(n,1);
+0028 visited(v) = 1;
+0029 q_push(v);
+0030 
+0031 <span class="keyword">while</span>(q_size &gt; 0)
+0032     x = q_pop_front;
+0033     nlist = <a href="neighbors.html" class="code" title="function nlist = neighbors(g,v)">neighbors</a>(g,x);
+0034     <span class="keyword">for</span> w = nlist
+0035         <span class="keyword">if</span> (visited(w)==0)
+0036             visited(w) = 1;
+0037             <a href="add.html" class="code" title="function add(g,i,j)">add</a>(t,x,w);
+0038             q_push(w);
+0039         <span class="keyword">end</span>
+0040     <span class="keyword">end</span>
+0041 <span class="keyword">end</span>
+0042 
+0043 
+0044 <span class="keyword">if</span> <a href="hasxy.html" class="code" title="function yn = hasxy(g)">hasxy</a>(g)
+0045     <a href="embed.html" class="code" title="function embed(g,xy)">embed</a>(t,<a href="getxy.html" class="code" title="function z = getxy(g)">getxy</a>(g))
+0046 <span class="keyword">end</span>
+0047 
+0048 <span class="keyword">if</span> <a href="is_labeled.html" class="code" title="function yn = is_labeled(g)">is_labeled</a>(g)
+0049     <a href="copy_labels.html" class="code" title="function copy_labels(g,h)">copy_labels</a>(t,g);
+0050 <span class="keyword">end</span>
+0051</pre></div>
+<hr><address>Generated on Fri 30-Apr-2010 07:51:16 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>
