@@ -1,0 +1,7 @@
+from bitarray import bitarray
+import mmh3
+
+bitarray = bitarray(255)
+bitarray.setall(0)
+b1 = mmh3.hash("TomKealy", 41)%10
+bitarray[b1] = 1

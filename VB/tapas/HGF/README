@@ -1,0 +1,130 @@
+HGF Toolbox - Release ID: 5e8a4e0  (HEAD, tag: v4.0, googledrive/master, master)
+
+************************************************************************
+Copyright (C) 2012-2015 Christoph Mathys <chmathys@ethz.ch>
+Translational Neuromodeling Unit (TNU)
+University of Zurich and ETH Zurich
+------------------------------------------------------------------------
+
+The HGF toolbox is free software: you can redistribute it and/or
+modify it under the terms of the GNU General Public License as
+published by the Free Software Foundation, either version 3 of the
+License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program (see the file COPYING).  If not, see
+<http://www.gnu.org/licenses/>.
+************************************************************************
+
+INSTALLATION
+
+Move this folder to a location of your choice and add it to your Matlab
+path.
+
+
+DOCUMENTATION AND CONFIGURATION
+
+Documentation can be found in the manual contained in the Manual.pdf
+file. This will point you to the relevant configuration files. Further
+documentation is available throughout the source code.
+
+
+TUTORIAL DEMO
+
+There is a tutorial demo that can be launched with the command
+tapas_hgf_demo().
+
+RELEASE NOTES
+
+v4.0
+~~~~
+- Added PDF manual
+- Added interactive demo in hgf_demo
+- Added file of raw commands from hgf_demo in hgf_demo_commands
+- Adapted fitModel to calculate AIC and BIC
+- Renamed F (negative variational free energy) to LME (log-model evidence, to
+  which it is an approximation)
+- Calculate accuracy and complexity in fitModel
+- Save everything relating to model quality under r.optim
+- Improved output of fitModel
+- Added hierarchical hidden Markov model (hhmm)
+- Added hidden Markov model (hmm)
+- Added WhatWorld (hgf_whatworld) model
+- Added linear log-reaction time (logrt_linear_whatworld) model for WhatWorld
+- Added WhichWorld (hgf_whichworld) model
+- Added AR(1) model for binary outcomes (hgf_ar1_binary)
+- Added Jumping Gaussian Estimation (hgf_jget) model
+- Added unitsq_sgm_mu3 decision model
+- Added binary multi-armed bandit model hgf_binary_mab
+- Added beta_obs observation model for decision noise on the unit interval
+- Added softmax decision model with different inverse temperature for each
+  kind of binary decision (softmax_2beta)
+- Added logrt_linear_binary decision model
+- Added Rescorla-Wagner model with different learning rate for each kind of
+  binary outcome (rw_binary_dual)
+- Included additional trajectories in output of hgf, hgf_ar1, hgf_ar1_mab,
+  hgf_binary, hgf_ar1_binary, hgf_binary_mab, hgf_whichworld, and
+  hgf_whatworld
+- Made infStates more consistent across models
+- Removed deprecated hgf_binary3l
+- Made fitModel explicitly return negative log-joint probability and negative
+  log-likelihood
+- Modified simModel to read configuration files of perceptual and observation
+  models
+- Abolished theta in hgf, hgf_binary, hgf_ar1, hgf_ar1_mab, hgf_ar1_binary,
+  hgf_binary_mab, and hgf_jget
+- Moved kappa estimation from logit-space to log-space for hgf, hgf_binary,
+  hgf_ar1, hgf_ar1_mab, hgf_ar1_binary, hgf_binary_mab, and hgf_jget
+- Introduced checking for implausible jumps in trajectories for hgf,
+  hgf_binary, hgf_ar1, hgf_ar1_mab, hgf_ar1_binary, hgf_binary_mab, and
+  hgf_jget
+- Adapted fitModel to deal with cases the <prc_model>_transp() function
+  performs operations important to the <model>() function
+- Introduced multinomial softmax decision model
+- Improved documentation for hgf_ar1_mab model
+- Added error IDs for all errors
+
+v3.0
+~~~~
+- Improved error handling in tapas_fitModel()
+- Prefixed all function names with “tapas_”
+- Added rs_precision
+- Added rs_belief
+- Added rs_surprise
+- Added sutton_k1
+- Added hgf_ar1_mab
+- Added softmax for continuous responses
+- Improved checking of trajectory validity in HGF models
+- Debugged input handling in softmax_binary
+
+v2.1
+~~~~
+- Introduced Bayesian parameter averaging
+- Amended calculation of log-priors in fitModel.m
+- Debugged construction of time axis in hgf_plotTraj
+- Debugged removal of placeholder field in estimate structure
+
+v2.0
+~~~~
+- Estimation of Bayes optimal parameters added
+- infStates the same 3-dim array in hgf_binary as in hgf
+- Changes to softmax_binary: trial-by-trial rewards read from input matrix
+- hgf_binary generalized to n levels
+- Old hgf_binary lives on as hgf_binary3l
+- Input at irregular intervals enabled in hgf and hgf_binary
+- Support for constant drift in hgf and hgf_binary
+- Introduced use of placeholders in config files
+- quasinewton_optim: increased default maximum number of regularizations to 16
+- Automatic detection of upper bound on theta for hgf
+- Improved input checks
+- Support for AR(1) processes in new hgf_ar1
+- quasinewton_optim: improved resetting after exhaustion of regularizations
+
+v1.0
+~~~~
+- Original release

@@ -1,0 +1,10 @@
+class FIR {
+ public:
+  FIR();
+  ~FIR();
+  double reset();
+  double filter(double input);
+
+ private:
+  
+};

@@ -1,0 +1,14 @@
+For detailed information about the changes below, please see the git log
+
+v0.2.0
+ * Add option to store job description by returning value from matlab function
+ * Add counting of jobs which are running
+ * Add check for missing matlab log file headers
+ * Add option to set ppn value
+ * Add automatic matlab version detection
+
+v0.1.1
+ * Add missing matlab log headers
+
+v0.1.0
+ * Initial release

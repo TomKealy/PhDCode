@@ -1,0 +1,31 @@
+--- usage ---
+
+[x,Out] = YALL1_group(A,b,groups,varargin)
+
+
+--- help ---
+
+>> doc YALL1_group
+or
+visit yall1.blogs.rice.edu
+
+
+--- demos ---
+
+Run
+ >> demo_group
+ >> demo_overlap_group
+ >> demo_joint
+ >> demo_joint_multiple_A
+ >> demo_nonnegative
+ 
+
+
+--- Website ---
+
+yall1.blogs.rice.edu
+
+
+--- support ---
+
+wei.deng@rice.edu, wotao.yin@rice.edu, yzhang@rice.edu.

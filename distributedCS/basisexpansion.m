@@ -9,9 +9,9 @@ freq = 0:260;
 
 network = gengeonet(50, 0.25);
 
-ns = 1681;
-candidates_x = 0:0.025:1;
-candidates_y = 0:0.025:1;
+ns = 441;
+candidates_x = 0:0.05:1;
+candidates_y = 0:0.05:1;
 [x,y] = meshgrid(candidates_x, candidates_y);
 candidates = zeros(ns,2);
 candidates(:,1) = x(:);
@@ -41,17 +41,17 @@ beta_bs(121*2+25) = 1000; %the base spanned by pulses(3, :) is 1, and there's on
 
 %g_srf = zeros(nb*P,ns*nb); %matrix of channel coeffs AT EACH FREQ
 %g_srf(50:99,242:362) = g_sr;
-A = exprnd(0.25, [nb*P, ns*nb]);
+A_BPDN = exprnd(0.25, [nb*P, ns*nb]);
 
-phi_rf = A*beta_bs';
+phi_rf = A_BPDN*beta_bs';
 
 y = phi_rf'; %+ 0.001*randn(1,400); %observations taken by the Rx
 
 %LASSO
-solution = GPSR_BB(y', A, 1000, 'Verbose', 1, 'StopCriterion', 3, 'ToleranceA', 1e-4);
+solution = GPSR_BB(y', A_BPDN, 1000, 'Verbose', 1, 'StopCriterion', 3, 'ToleranceA', 1e-4);
 
 %BPDN
-[s, r, g, info] = spg_bp(A, y');
+[s, r, g, info] = spg_bp(A_BPDN, y');
 
 m=400;
 
@@ -85,9 +85,11 @@ end
 
 %Create struct with problem data used in 'minimize_quad_prog_plus_l1_BB'
 vars_prob = struct('handler', @minimize_quad_prog_plus_l1_BB,...
-    'A_BP', {A}, ...
-    'b_BP', {y'},...
-    'dual_var', {dual_var} ...
+    'A_BPDN', {A_BPDN}, ...
+    'b_BPDN', {y'},...
+    'dual_var', {dual_var}, ...
+    'relax', {1.0}, ...
+    'beta', {sqrt(2*log(ns))} ...
     );
 
 ops = struct('rho', {0.1}, ...%penalty param
@@ -193,7 +195,7 @@ stop_crit = ops_out.stop_crit;
 error_iterations = ops_out.error_iterations;
 iter_for_errors = ops_out.iter_for_errors;
 
-fprintf('norm(A*X{1} - b)/norm(b) = %f\n',norm(A*X{1} - y)/norm(y));
+fprintf('norm(A*X{1} - b)/norm(b) = %f\n',norm(A_BPDN*X{1} - y)/norm(y));
 fprintf('||X{1}||_1 = %f\n',norm(X{1},1));
 fprintf('||X{1} - solutionl||/||solution|| = %f\n',norm(X{1}-solution)/norm(solution));
 fprintf('Number of iterations = %d\n', iterations);

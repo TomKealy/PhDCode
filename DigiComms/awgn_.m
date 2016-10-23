@@ -1,0 +1,4 @@
+function y=awgn_(x,SNRdB,sigpowerdB)
+[M,N]=size(x);
+if nargin<3, sigpowerdB = 10*log10(sum(sum(x.^2))/(M*N)); end 
+y = x + 10^((????????????????)/??)*randn(size(x));

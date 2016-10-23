@@ -1,0 +1,92 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+#PBS -l nodes=1:ppn=${ppn},walltime=${wall_time}
+
+__author__ = "Denys Berkovskyy"
+__email__ = "berkovskyy@gmail.com"
+__status__ = "Development"
+
+import os
+import subprocess
+import datetime
+
+
+def insert_escape_characters(value):
+    value.replace('$$', '\\$$')
+    value.replace('`', '\\`')
+    value.replace('\\', '\\\\')
+    value.replace('"', '\\"')
+    return value
+
+
+def start_script(internal_id, project_absolute_path, function_string, matlab_version):
+    function_name = function_string.split('(')[0]
+    cluster_id_str = os.environ.get('PBS_JOBID')
+    cluster_hostname = os.environ.get('HOSTNAME')
+    cluster_queue = os.environ.get('PBS_QUEUE')
+    cluster_nodefile = os.environ.get('PBS_NODEFILE')
+    cluster_tasknum = os.environ.get('PBS_TASKNUM')
+    cluster_nodenum = os.environ.get('PBS_NODENUM')
+    cluster_vnodenum = os.environ.get('PBS_VNODENUM')
+    if cluster_id_str is not None:
+        cluster_id_num = cluster_id_str.split('.')[0]
+    else:
+        cluster_id_num = 0
+
+    # Module parameters
+    module_parameters = ['load', 'apps/matlab-{}'.format(matlab_version)]
+
+    # Switch to working directory
+    os.chdir(project_absolute_path)
+
+    # Matlab parameters
+    matlab_code_path = os.path.join(project_absolute_path, 'Code')
+    matlab_log_filename = os.path.join(project_absolute_path, 'Temp', '{}_{}_matlab_log.txt'.format(internal_id, cluster_id_num))
+    matlab_output_filename = os.path.join(project_absolute_path, 'Temp', '{}_{}_matlab_output.txt'.format(internal_id, cluster_id_num))
+    matlab_error_filename = os.path.join(project_absolute_path, 'Temp', '{}_{}_matlab_error.txt'.format(internal_id, cluster_id_num))
+    matlab_parameters = ['-nodisplay', '-nojvm', '-nodesktop', '-nosplash', '-singleCompThread',
+                         '-logfile', '"{}"'.format(insert_escape_characters(matlab_log_filename)),
+                         '1>', '"{}"'.format(insert_escape_characters(matlab_output_filename)),
+                         '2>', '"{}"'.format(insert_escape_characters(matlab_error_filename))]
+
+    matlab_startup_code = ['addpath \'{}\''.format(matlab_code_path),
+                           'if (nargout(\'{}\') == 0) {}'.format(function_name, function_string),
+                           'else fd=fopen(\'Temp/{}_{}_description.txt\',\'w\')'.format(internal_id, cluster_id_num),
+                           'desc={}'.format(function_string),
+                           'fprintf(fd,\'%s\\n\',desc)',
+                           'fclose(fd)',
+                           'end']
+    matlab_startup_code = insert_escape_characters(';'.join(matlab_startup_code))
+
+    # Timing start
+    start_time = datetime.datetime.utcnow()
+
+    # Start matlab script
+    subprocess.call('module ' + ' '.join(module_parameters) + ' && ' +
+                    'echo "' + matlab_startup_code + '" | ' +
+                    'matlab ' + ' '.join(matlab_parameters), shell=True)
+
+    # Timing end
+    end_time = datetime.datetime.utcnow()
+
+    # Timing delta
+    time_delta = (end_time - start_time).total_seconds()
+
+    # Write time
+    info_filename = os.path.join(project_absolute_path, 'Temp', '{}_{}_info.txt'.format(internal_id, cluster_id_num))
+    with open(info_filename, 'w') as fout:
+        fout.write('{}\n'.format(cluster_id_str))
+        fout.write('{}\n'.format(start_time.strftime('%Y-%m-%d %H:%M:%S.%f')))
+        fout.write('{:f}\n'.format(time_delta))
+        fout.write('{}\n'.format(cluster_hostname))
+        fout.write('{}\n'.format(cluster_queue))
+
+
+def main():
+    start_script(${internal_id},
+                 '${project_path}',
+                 '${function_string}',
+                 '${matlab_version}')
+
+if __name__ == '__main__':
+    main()

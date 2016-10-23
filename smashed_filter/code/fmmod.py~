@@ -1,0 +1,20 @@
+# Import the plotting library
+from matplotlib import pyplot as plot
+import scipy.signal
+import numpy as np
+
+# Define the setup
+fCarrier = 10;
+fAudio = 1;
+fs = 1000;
+timeEnd = 1;
+time = np.linspace(0,2,fs*timeEnd);
+
+# Create the signals
+carrier = np.sin(2*np.pi*fCarrier*time);
+audio = np.sin(2*np.pi*fAudio*time);
+audioInt = -np.cos(2*np.pi*fAudio*time);
+freqMod = np.sin(2*np.pi*fCarrier*time + 2*np.pi*1*audioInt);
+
+plt.plot(freqMod)
+plt.show()

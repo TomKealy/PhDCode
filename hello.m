@@ -1,0 +1,2 @@
+y  = 'heelo world'
+exit;

@@ -1,0 +1,159 @@
+clear all;
+close all;
+
+% M = 300;
+% Ks = [5, 10, 15, 20, 30, 50, 100, 150, 200, 250, 300];
+% 
+% K = 200;
+
+data = csvread('tvws_data1.csv');
+
+chunklength = 12810;
+signal = zeros(10, chunklength);
+start = 1
+num_chunks = 1;
+for ii=1:num_chunks
+    chunk = data(start:start+(chunklength-1), 2);
+    %figure
+    %plot(chunk)
+    start = start + chunklength;
+    signal(ii, :) = chunk;
+end
+
+M = chunklength;
+K = M/5;
+
+% edges = [50, 120, 170, 192, 220, 234, 256, 300] ;
+% levels = [1,  0 , 1, 0, 0, 1, 0, 0];
+% idxs = zeros(1, M)  ;
+% idxs(edges(1: end-1)+1) = 1 ;
+% g = levels(cumsum(idxs)+1) ;
+% 
+% edges = [50, 120, 170, 192, 220, 234, 256, 300] ;
+% levels = [1,  0 , 1, 0, 0, 0, 0, 0];
+% idxs = zeros(1, M)  ;
+% idxs(edges(1: end-1)+1) = 1 ;
+% gstar = levels(cumsum(idxs)+1) ;
+
+Fn = LehmerMatrix(M);
+[Ln, U] = lu(Fn);
+I = eye(M);
+D = inv(Ln);
+Ft = LehmerMatrix(num_chunks);
+[Lt Ut] = lu(Ft);
+Dt = inv(Lt);
+
+F = kron(Ft, Fn);
+L = kron(Lt, Ln);
+It = eye(num_chunks);
+
+% G = [g' ; g' ; g' ; g' ; g' ; g' ; gstar' ; gstar' ; gstar' ; gstar' ]';
+% gt = vec(G);
+
+gt = signal;
+
+scores = zeros(1, length(gt));
+
+gt_noisy = gt; % + 0.1*randn(1,3000)';
+
+A = normrnd(0, 1/(K), [K, M]);
+An = kron(It, A);
+An = An/norm(An);
+y = An*gt_noisy;
+B = kron(Dt, eye(K));
+
+z = B*y;
+
+num_pieces = length(z)/K;
+
+z_pieces = zeros(num_pieces, K);
+y_pieces = zeros(num_pieces, K);
+num_groups = 0;
+
+for i=1:num_pieces
+   z_pieces(i, :) = z((i-1)*K+1:(i-1)*K+K); 
+   y_pieces(i, :) = y((i-1)*K+1:(i-1)*K+K);
+   if ~all(z((i-1)*K+1:(i-1)*K+K)) == 0
+       num_groups = num_groups + 1;
+   end
+end
+
+groups = zeros(num_groups,K);
+
+zero_pieces = find(all(z_pieces' == 0));
+
+a = zero_pieces;
+
+output = accumarray( cumsum([0; diff(a(:))] > 1)+1, a, [], @(x) {x} );
+
+estimate = zeros(num_groups, M);
+
+for i=1:num_groups
+    output{i} = [output{i}(1)-1 ; output{i}];
+    groups(i,:) = mean(y_pieces(output{i},:));
+    estimate(i, :) = smashed_filt_estimate(groups(i,:)', M, K, A, Ln, Fn);
+end
+
+%% recustruct estimate
+
+recon = zeros(1, num_pieces*M);
+start = 1;
+finish = M;
+for jj=1:num_groups
+   groups = output{jj};
+   for gg = 1:length(groups)
+       recon(1, start:finish) = estimate(jj,:);
+       start = finish + 1;
+       if finish < length(gt)
+        finish = finish + M;
+       end
+   end
+end
+
+
+%%
+tpr = 0;
+fpr = 0;
+
+m = length(gt);
+
+for kk=1:m
+    if recon(kk) == 1 && gt(kk) == 1
+        tpr = tpr + 1;
+    end
+    if recon(kk) == 1 && gt(kk) == 0
+        fpr = fpr + 1;
+    end
+    if recon(kk) == gt(kk)
+        scores(1,kk) = scores(1,kk) + 1;
+    end
+end
+
+[X, Y, T, auc] = perfcurve(gt, scores(1,:), 1);
+
+figure
+plot(X,Y)
+
+figure
+plot(gt)
+ylim([0,1.5])
+xlabel('signal (0-300 is one time slot)')
+ylabel('psd')
+
+figure
+plot(z)
+title('(D kron I)*yt')
+
+figure
+plot(1:M, estimate(1,:), 'r', 1:M, g, 'b')
+ylim([0, 1.5])
+
+figure
+plot(1:M, estimate(2,:), 'r', 1:M, gstar, 'b')
+ylim([0, 1.5])
+
+figure
+plot(1:3000, gt, 'b', 1:3000, recon, 'r')
+ylim([0,1.5])
+
+save('streaming-2.mat')

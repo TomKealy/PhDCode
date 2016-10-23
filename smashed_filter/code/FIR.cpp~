@@ -1,0 +1,4 @@
+#include "FIR.h"
+
+FIR:FIR(double *coeffs, unsigned n_taps) : coeficients_(coeffs), ntaps_(n_taps), offset(0), buffer_(new double[n_taps_]) {}
+

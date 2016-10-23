@@ -1,16 +1,14 @@
 clear all;
 close all;
 
-randn('seed', 0);
-rand('seed',0);
-
+%randn('seed', 0);
+%rand('seed',0);
 
 direct_current = pwd;                                      % Current
 direct_networks = '/home/tk12098/Documents/MATLAB/DADMMPaperCode/GenerateData/Networks';           % Networks
 % Compressed Sensing Data
 %direct_data = '/home/tk12098/Documents/MATLAB/DADMMPaperCode/GenerateData/ProblemData/CompressedSensing';
 direct_DADMM = '/home/tk12098/Documents/MATLAB/DADMMPaperCode/DADMM';
-
 
 % =========================================================================
 
@@ -40,43 +38,46 @@ for p = 1 : P
     neighbors{p} = find(Adj(p,:));
 end
 
-w_local_degree
-
+Inc = adj2inc(Adj);
+w_local_degree = local_degree(Adj);
+%weights = construct_weight_mtx(w_local_degree, Adj);
 %Create struct with network information
 vars_network = struct('P', {P}, ...
     'neighbors', {neighbors}, ...
+    'W', {w_local_degree}, ...
     'partition_colors', {partition_colors} ...
     );
 
 L = 200;
 m = 50;
 
-positions = randi(L,[1,1]);%generate random spikes for signal
+positions = randi(L,[1,3]);%generate random spikes for signal
 
 Tx_psd = zeros(1,L); %Tx PSD
 Tx_psd(positions) = 1000;
 
-S = randn(L,L);
-A_BP = S/norm(S);
-%sigma = 10^(-Eb_N0_dB\20);
+S = randn(m,L);
+A_BP = S;
+sigma = 10^(-10/20);
 eta = randn(1,m)/m;
 noise_sum = sum(eta);
-b = A_BP*Tx_psd';%$ + sigma*eta';
+b = A_BP*Tx_psd';%+ sigma*eta';
 
 lambda = sqrt(2*log(size(Tx_psd,2)));
 
-max_iter = 500;
+max_iter = 1000;
 error_i_accel = zeros(1, max_iter+1);
 path = zeros(100, L);
 
 max_eig = max(abs(eig(A_BP'*A_BP)));
 
-rho = nthroot(1/max_eig, 3);
+rho = 1/max_eig;
+rho = nthroot(rho, 3);
 
 if mod(m,P) ~= 0
     error('m divided by P must be integer');
 end
-m_p = 4 ;%m/P; 
+m_p = m/P; 
 
 % Create struct with problem data used in 'minimize_quad_prog_plus_l1_BB'
 vars_prob = struct('handler_GPSR', @GPSR_BB, ...
@@ -84,7 +85,7 @@ vars_prob = struct('handler_GPSR', @GPSR_BB, ...
     'b_BPDN', {b}, ...
     'm_p', {m_p}, ...
     'P', {P}, ...
-    'beta', {lambda}, ...
+    'beta', {lambda*max_eig}, ...
     'relax', {1}...
     );
 % =========================================================================
@@ -93,7 +94,7 @@ vars_prob = struct('handler_GPSR', @GPSR_BB, ...
 % Execute D-ADMM
 
 % Optional input
-ops = struct('rho', {2.0}, ...
+ops = struct('rho', {rho}, ...
     'max_iter', {max_iter}, ...
     'x_opt', {Tx_psd'}, ...
     'eps_opt', {1e-2} ...
@@ -101,18 +102,38 @@ ops = struct('rho', {2.0}, ...
 
 cd(direct_DADMM);
 tic
-[X, Z, vars_prob, ops_out] = DADMM_AMP(L, vars_prob, vars_network, ops);
+[W, Y, vars_prob, ops_out_admm] = DADMM(L, vars_prob, vars_network, ops);
+toc
+cd(direct_current);
+
+% =========================================================================
+
+% =========================================================================
+% Execute D-ADMM
+
+% Optional input
+ops = struct('rho', {rho}, ...
+    'max_iter', {max_iter}, ...
+    'x_opt', {Tx_psd'}, ...
+    'eps_opt', {1e-2} ...
+    );
+
+cd(direct_DADMM);
+tic
+[X, Z, vars_prob, ops_out_accel] = DADMM_accel(L, vars_prob, vars_network, ops);
 toc
 cd(direct_current);
 
 % % =========================================================================
 
 % =========================================================================
+
 % Print results
 
-iterations = ops_out.iterations;
-stop_crit = ops_out.stop_crit;
-error_i = ops_out.error_iterations_x;
+iterations = ops_out_accel.iterations;
+stop_crit = ops_out_accel.stop_crit;
+error_accel = ops_out_accel.error_iterations_z;
+error_admm = ops_out_admm.error_iterations_z;
 
 solution = spgl1(A_BP, b, 0, 0.0001, []);
 
@@ -120,12 +141,19 @@ fprintf('||A_BP*solution-b|| = %E\n', norm(A_BP*solution-b));
 fprintf('norm(solution,1) = %E\n', norm(solution,1));
 
 figure;clf;
-semilogy(1:iterations,error_i(1:iterations), 'b');
-legend('DAMP');
+semilogy(1:iterations,error_admm(1:iterations), 'b', 1:iterations,error_accel(1:iterations), 'r');
+legend('Normal', 'Accel');
+title('error\_{iterations_z}');
+
+figure;clf;
+plot(1:iterations,error_admm(1:iterations), 'b', 1:iterations,error_accel(1:iterations), 'r');
+legend('Normal', 'Accel');
 title('error\_{iterations_z}');
 
 figure
-plot(Z{1})
+plot(1:L, Z{1}, 'r', 1:L, solution, 'b')
+title('Accel')
 
 figure
-plot(solution)
+plot(1:L, W{1}, 'r', 1:L, solution, 'b')
+title('DADMM')

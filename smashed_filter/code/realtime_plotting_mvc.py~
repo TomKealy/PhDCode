@@ -1,0 +1,22 @@
+import pylab as pl
+
+class RealtimeModel(object):
+
+
+class RealtimeView(object):
+    def __init__(self):
+        xAchse=pl.arange(0,100,1)
+        yAchse=pl.array([0]*100)
+        fig = pylab.figure(1)
+        ax = fig.add_subplot(111)
+        ax.grid(True)
+        ax.set_title("Realtime Waveform Plot")
+        ax.set_xlabel("Time")
+        ax.set_ylabel("Amplitude")
+        ax.axis([0,100,-1.5,1.5])
+        line1=ax.plot(xAchse,yAchse,'-')
+
+class RealtimeController(object):
+    def __init__(self):
+        self.model = RealtimeModel()
+        self.view = RealtimeView()

@@ -1,0 +1,3 @@
+function Sk=Sk_CTFS(k,D)
+Sk=D*(sinc((k+22)/2)+sinc((k-22)/2)...
+      +(-1).^mod(k,2).*(sinc((k+26)/2) +sinc((k-26)/2)))/2;

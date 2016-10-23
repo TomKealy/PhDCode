@@ -1,0 +1,39 @@
+Each mat file contains data collected under multiple 
+lighting conditions, for a single occupancy scenario. 
+
+N is the number of lighting conditions applied, and the 
+first lighting condition is the base light. So (N-1) 
+perturbation patterns are applied. 
+
+Here all data are collected using ColorBug sensors, which 
+are mounted on the walls. 
+
+BaseLight is the base light. 
+
+Each row of TestLight is a lighting condition. And the 
+first row is the base light. The other rows are perturbation
+patterns added on the base light. 
+
+Each row of cdata contains all sensor readings under the 
+corresponding lighting condition. 
+
+mag is the magnitude of the perturbation. 
+
+imgs are four images captured by four cameras. 
+
+t is the lenght of time during which all measurements are
+made. 
+
+info contains the information about the measurements. 
+
+The file name is formatted this way:
+Class + ID 
+Class is the occupancy scenario: 0 means empty room, and 
+a letter means the part of the room being occupied. 
+  Z  X  V
+  Y  W  U
+  A = U and V
+  B = W and X
+  C = Y and Z
+ID is a randomly generated number. 
+

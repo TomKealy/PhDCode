@@ -1,0 +1,23 @@
+data = csvread('tvws_data1.csv');
+
+M = 12810 ;% = size(data);
+start = 1;
+F = LehmerMatrix(M);
+[L, U] = lu(F);
+I = eye(M);
+D = inv(L);
+A = randn(M/5, M);
+
+for ii=1:10
+    chunklength = 12810;
+    chunk = data(start:start+(chunklength-1), 2);
+    %figure
+    %plot(chunk)
+    start = start + chunklength
+    y = A*chunk;
+    estimate = smashed_filt_estimate(y, M, M/5, A, L, F);
+    h = figure;
+    plot(1:M, chunk, 'b', 1:M, estimate, 'r')
+    string = strcat('OFCOM_Chunking', int2str(ii));
+    saveas(h, string, 'epsc')
+end

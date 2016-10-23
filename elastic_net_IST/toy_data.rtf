@@ -1,0 +1,76 @@
+{\rtf1\ansi\ansicpg1252\cocoartf949\cocoasubrtf270
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww9000\viewh8400\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\ql\qnatural\pardirnatural
+
+\f0\fs24 \cf0 Both data sets are built as follows\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+\cf0 We divide the d components in 4 groups. \
+Group G
+\fs16 1 
+\fs24 consists of the \uc0\u64257 rst 5 components x
+\fs16 i,1
+\fs24 ,...,x
+\fs16 i,5  
+\fs24 which are obtained by randomly drawing a number Z
+\fs16 1
+\fs24  from a zero mean Gaussian distribution with \uc0\u963 =1 and adding to it a noise term \u1013 
+\fs16 j
+\fs24 , j =1,...,5, randomly drawn from a zero-mean Gaussian distribution with \uc0\u963 =0.01. For each x
+\fs16 i,j
+\fs24  we thus have \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\qc\pardirnatural
+\cf0 x
+\fs16 i,j
+\fs24  =Z
+\fs16 1
+\fs24 +\uc0\u1013 
+\fs16 j
+\fs24 , for j=1,...,5. \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+\cf0 The second and third sets of 5 components, belonging to groups G
+\fs16 2
+\fs24  and G
+\fs16 3
+\fs24  respectively, are built similarly and read \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\qc\pardirnatural
+\cf0 x
+\fs16 i,j
+\fs24  =Z
+\fs16 2
+\fs24 +\uc0\u1013 
+\fs16 j
+\fs24 , for j=6,...,10, \
+x
+\fs16 i,j
+\fs24  =Z
+\fs16 3
+\fs24 +\uc0\u1013 
+\fs16 j
+\fs24 , for j=11,...,15. \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+\cf0 The fourth group G
+\fs16 4
+\fs24  consists of the remaining d-15 components randomly drawn from a zero-mean Gaussian distribution with \uc0\u963 =1. By construction each of the groups G
+\fs16 1
+\fs24 , G
+\fs16 2
+\fs24 , and G
+\fs16 3 
+\fs24 consists of 5 equivalent variables. The labels y are built as  \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\qc\pardirnatural
+\cf0 y = x*\uc0\u946 +erry\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+\cf0 where the true model (of all possible models the one with largest cardinality) is written as \uc0\u946  = (3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,0,...,0), and erry is drawn from a zero mean Gaussian distribution with \u963 =1.\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\ql\qnatural\pardirnatural
+\cf0 \
+toy_dataA\
+n = 30\
+d = 40\
+\
+toy_dataB\
+n = 30\
+d = 100\
+\
+}

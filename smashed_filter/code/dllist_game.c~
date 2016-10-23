@@ -1,0 +1,178 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
+#include <time.h>
+#include "mydllist.c"
+#define PLAYERLIMIT 5
+
+int main(int argc, char *argv[]) {
+
+//Entering all player names into the doubly linked list
+printf ("Enter the names of the players. Press Enter after each new player\n");
+printf ("Must have 5 Players'.'\n\n");
+
+int i = 1;
+char name[20];
+
+while ((i <= PLAYERLIMIT)) {
+
+    printf("Player: ");
+    scanf ("%s", name);
+    InsertAtHead(name);
+    i++;
+
+}
+
+PrintHead();
+
+//Starting the Game
+
+//Initialising Variables for the game
+int nextCard;
+int currentCard;
+int score;
+char oppositeGuess[20];
+int userChoice;
+int playGame = 1;
+struct Node* CurrentPlayer = head;
+struct Node* PlayerBefore;
+
+//Setting up the random cards
+int range;
+srand(time(NULL));
+range = (13 - 1) + 1;
+
+nextCard = rand() % range + 2;
+currentCard = rand() % range + 2;
+
+while (playGame == 1) {
+
+    //Change current card to past card before creating a new current card
+    currentCard = nextCard;
+
+    //generate a random int for card
+
+    nextCard = rand() % range + 2;
+
+    if (currentCard < 11) {
+        printf("\nThe current card is a %d.\n", currentCard);
+    }
+    else if (currentCard == 11) {
+        printf("\nThe current card is a jack.\n");
+    }
+    else if (currentCard == 12) {
+        printf("\nThe current card is a queen.\n");
+    }
+    else if (currentCard == 13) {
+        printf("\nThe current card is a king.\n");
+    }
+    else if (currentCard == 14) {
+        printf("\nThe current card is an ace.\n");
+    }
+
+    printf ("***%s it is your go!***\n", CurrentPlayer->data);
+    if (CurrentPlayer->prev != sentinel) {
+        PlayerBefore = CurrentPlayer->prev;
+
+    }
+    else {
+        PlayerBefore = sentinel->next;
+
+    }
+    //        printf("\nThe CurrentPlayer is %s\n", CurrentPlayer->data);
+    //        printf("The PlayerBefore is %s\n\n", PlayerBefore->data);
+    printf("Will the next card be higher(1) or lower(2)?\n");
+    scanf("%d", &userChoice);
+    printf("\n");
+    printf ("***%s would you like to guess the opposite?***\n", PlayerBefore->data);
+    scanf("%s", oppositeGuess);
+    if (strncmp(oppositeGuess, "Yes", 4) == 0) {
+
+        if (userChoice == 1) {
+            if (currentCard < nextCard) {
+                printf("\nSorry, %s was correct. You are out!\n", CurrentPlayer->data);
+		//                    printf ("\n IM GONNA DELETE %s\n", PlayerBefore->data);
+                DeleteEntry(PlayerBefore);
+
+            }
+            else if (currentCard > nextCard) {
+                printf ("Congratulations! player %s was wrong and is now out!\n", CurrentPlayer->data);
+		//                    printf ("\n IM GONNA DELETE %s\n", CurrentPlayer->data);
+                DeleteEntry(CurrentPlayer);
+
+            }
+            else if (currentCard == nextCard){
+                printf("\nCards were equal. Next players turn.\n");
+            }
+        }
+        else if (userChoice == 2) {
+            if (currentCard < nextCard) {
+                printf("Congratulations! player %s was wrong and is now out!\n", CurrentPlayer->data);
+		//                    printf ("\n IM GONNA DELETE %s\n", CurrentPlayer->data);
+                DeleteEntry(CurrentPlayer);
+
+            }
+            else if (currentCard > nextCard) {
+                printf ("\nSorry, %s was correct. You are out!\n", CurrentPlayer->data);
+		//                    printf ("\n IM GONNA DELETE %s\n", PlayerBefore->data);
+                DeleteEntry(PlayerBefore);
+
+            }
+            else if (currentCard == nextCard){
+                printf("\nCards were equal. Next players turn.\n");
+            }
+        }
+    }
+    if (strncmp(oppositeGuess, "No", 4) == 0) {
+
+        if (userChoice == 1) {
+            if (currentCard > nextCard) {
+                printf ("\nSorry you have guessed incorrectly, you are out!\n");
+		//                    printf ("\n IM GONNA DELETE %s\n", CurrentPlayer->data);
+                DeleteEntry(CurrentPlayer);
+
+            }
+
+            else if (currentCard < nextCard) {
+                printf("\nCongratualtions you were correct, next players turn.\n");
+            }
+            else if (currentCard == nextCard) {
+                printf("\nThe cards are the same. Next players turn.\n");
+            }
+        }
+        else if (userChoice == 2) {
+            if (currentCard > nextCard) {
+                printf ("\nCongratualtions you were correct, next players turn.\n");
+
+            }
+            else if (currentCard < nextCard) {
+                printf("\nSorry you have guessed incorrectly, you are out!\n");
+		//                    printf ("\n IM GONNA DELETE %s\n", CurrentPlayer->data);
+                DeleteEntry(CurrentPlayer);
+
+
+            }
+            else if (currentCard == nextCard) {
+                printf("\nThe cards are the same. Next players turn.\n");
+            }
+        }
+        else {
+            printf("\nPlease enter a valid choice.\n");
+        }
+    }
+
+        PrintHead();
+    if (CurrentPlayer->next != sentinel) {
+        CurrentPlayer = CurrentPlayer->next;
+    }
+    else {
+        CurrentPlayer = sentinel->prev;
+    }
+
+    if ((CurrentPlayer->next == sentinel) && (CurrentPlayer->prev == sentinel)) {
+        playGame = 0;
+    }
+ }
+ printf("%s you are the Winner!\n", CurrentPlayer->data);
+}

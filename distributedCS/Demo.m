@@ -3,7 +3,15 @@
 %             Version 1.0               %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-clear,close all
+clear all ,close all
+
+%seed = rng(1234, 'twister');
+
+direct_current = pwd;                                      % Current
+direct_networks = '/home/tk12098/Documents/MATLAB/DADMMPaperCode/GenerateData/Networks';           % Networks
+% Compressed Sensing Data
+direct_data = '/home/tk12098/Documents/MATLAB/DADMMPaperCode/GenerateData/ProblemData/CompressedSensing';
+direct_DADMM = '/home/tk12098/Documents/MATLAB/DADMMPaperCode/';% mmv/'; % DADMMPaperCode/DADMM';
 
 %% Signal model
 SNR = 10;                                   % Input SNR
@@ -67,6 +75,7 @@ end
 han_win = hann(length(x))';             % Add window
 x = x.*han_win;
 x = [x, zeros(1,R*K0*L)];               % Zero padding
+fftx = fft(x-N);
 
 % Calculate original support set
 Sorig = [];
@@ -140,13 +149,14 @@ H = diag(h); %TOK
 S = SignPatterns;
 theta = exp(-j*2*pi/L);
 F = theta.^([0:L-1]'*[-L0:L0]);
+F = dftmtx(L);
 np = 1:L0;
 nn = (-L0):1:-1;
 % This is for digital input only. Note that when R -> infinity,
 % D then coincides with that of the paper
 dn = [   (1-theta.^nn)./(1-theta.^(nn/R))/(L*R)      1/L    (1-theta.^np)./(1-theta.^(np/R))/(L*R)];
 D = diag(dn);
-A = S*F*D;
+A = S%*F*D;
 A = conj(A);
 
 SNR_val = 10^(SNR/10);          % not dB
@@ -181,20 +191,102 @@ end
 
 x_rec = zeros(1,length(x));
 for ii = 1:size(hat_zt,1)                      % modulate each band to their corresponding carriers
-    x_rec = x_rec+hat_zt(ii,:).*exp(j*2*pi*(RecSuppSorted(ii)-L0-1)*fp.*t_axis);
+    x_rec = x_rec+hat_zt(ii,:).*exp(1i*2*pi*(RecSuppSorted(ii)-L0-1)*fp.*t_axis);
 end
 x_rec = real(x_rec);
 
 sig = x + noise*sqrt(CurrentSNR/SNR_val);
 
-%% Analysis & Plots
+rho = 1/(max(abs(eig(A'*A)))); 
+rho = nthroot(rho, 3);
+lambda = sqrt(2*log(195))/50;
+beta = [1,1]/mean(abs(DigitalSamples(:)));
+
+[B, cost] = lasso_admm_lucy(DigitalSamples, A, beta(1), 50*rho);
+
+C = real(vec(B)) + imag(vec(B));
+
+% figure
+% plot(C)
+% title('B')
+
+net = gengeonet(101,0.25);
+
+load Nets_50_nodes.mat;     % File with randomly generated networks
+
+% Select the network number: 1 to 7
+net_num = 4 ;
+
+Adj = Networks{net_num}.Adj;                   % Adjacency matrix
+partition_colors = Networks{net_num}.Partition;% Color partition of network
+P = length(Adj);                               % Number of nodes
+
+% Construct the cell neighbors, where neighbors{p} is a vector with the
+% neighbors of node p
+neighbors = cell(P,1);
+
+for p = 1 : P
+    neighbors{p} = find(Adj(p,:));
+end
+
+%Create struct with network information
+vars_network = struct('P', {P}, ...
+    'neighbors', {neighbors}, ...
+    'partition_colors', {partition_colors} ...
+    );
+
+%Check if matrix partition is possible (all blocks with same size)
+[K, cols] = size(A);
+if mod(K,P) ~= 0
+    error('m divided by P must be integer');
+end
+m_p = K/P;                         % Number of rows of A each node stores
+
+lambda = sqrt(2*log(195));
+
+% Create struct with problem data used in 'minimize_quad_prog_plus_l1_BB'
+vars_prob = struct('handler', @BPDN_RP_Solver,...
+    'handler_GPSR', @GPSR_BB, ...
+    'A_BPDN', {A}, ...
+    'b_BPDN', {DigitalSamples}, ...
+    'm_p', {m_p}, ...
+    'P', {P}, ...
+    'beta', {beta(1)}, ...
+    'relax', {1}...
+    );
+% =========================================================================
+
+% =========================================================================
+% Execute D-ADMM
+
+% Optional input
+ops = struct('rho', {P*rho}, ...
+    'max_iter', {500}, ...
+    'x_opt', {B}, ...
+    'eps_opt', {1e-2}, ...
+    'turn_off_eps', {0}....
+    );
+
+cd(direct_DADMM);
+tic
+[X, Z, vars_prob, ops_out_accel] = DADMM_mmv(195, 101, vars_prob, vars_network, ops);
+toc
+cd(direct_current);
+
+% %% Analysis & Plots
 figure,
-plot(t_axis,x,'r'), axis([t_axis(1) t_axis(end) 1.1*min(x) 1.1*max(x) ])
+plot(x)
 title('Original signal'), xlabel('t')
 grid on
-figure,plot(t_axis,sig,'r'), axis([t_axis(1) t_axis(end) 1.1*min(x) 1.1*max(x) ])
-title('Original noised signal'), xlabel('t')
-grid on
-figure, plot(t_axis,x_rec), axis([t_axis(1) t_axis(end) 1.1*min(x) 1.1*max(x) ]),
-grid on,
-title('Reconstructed signal'), xlabel('t')
+
+figure
+plot(195*101*C)
+% plot(t_axis,C,'r'), axis([t_axis(1) t_axis(end) 1.1*min(x) 1.1*max(x) ])
+% title('B'), xlabel('t')
+% grid on
+
+figure
+plot(195*101*real(vec(Z{1})))
+% plot(t_axis,real(vec(Z{1}))), axis([t_axis(1) t_axis(end) 1.1*min(x) 1.1*max(x) ]),
+% grid on,
+% title('DADMM Estimate'), xlabel('t')

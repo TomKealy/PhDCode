@@ -1,23 +1,43 @@
-n=200;
-m=50;
+clear all;
+
+randn('seed', 0);
+rand('seed',0);
+
+n=2000;
+m=500;
 L=n;
 
-positions = randi(L,[1,5]);%generate random spikes for signal
+positions = randi(L,[1,10]);%generate random spikes for signal
 
 Tx_psd = zeros(1,L); %Tx PSD
-Tx_psd(positions) = 1;
-Eb_N0_dB = 10;
+Tx_psd(positions) = 10;
+Eb_N0_dB = 1;
 S = randn(m,L);
-A_BP = S;
+A = S;
+A = A/norm(A);
 sigma = 10^(-Eb_N0_dB\20);
 eta = randn(1,m);
 noise_sum = sum(eta);
-b = A_BP*Tx_psd' + sigma*eta';
+b = A*Tx_psd' + sigma*eta';
 
-% For the groundtruth, we use the spgl1 solver
+x0 = Tx_psd';
 
-lambda = 0.01*norm(A_BP'*b, 'inf');
+lambda = sqrt(sigma)*sqrt(2*log(n));
 
-%solution = spgl1(A_BP, b, 0, lambda, []);
+max_eig = max(abs(eig(A'*A)));
 
-s = lasso(A_BP, b, lambda, 1, 1); 
+rho = nthroot(1/max_eig, 3);
+
+max_iter = 500;
+
+[x, history] = lasso(A, b, lambda, rho, 1.0);
+
+[z, cost] = AMP(A, b, 2.0, x0, max_iter);
+
+figure
+semilogy(1:max_iter, cost, 'b', 1:max_iter, history.objval, 'r')
+legend('AMP', 'ADMM');
+
+figure
+plot(1:n, z, 'b', 1:n, x, 'r')
+legend('AMP', 'ADMM');
